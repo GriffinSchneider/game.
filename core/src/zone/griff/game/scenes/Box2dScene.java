@@ -23,11 +23,14 @@ public class Box2dScene extends Scene {
 	// Tuning
 	private static Vector2 GRAVITY = new Vector2(0, -14);
 
-	private static float CAMERA_LERP_FACTOR = 0.2f;
+	private static float CAMERA_LERP_FACTOR = 0.1f;
 	
-	private static float PLAYER_MAX_X_VELOCITY = 2f;
-	private static float PLAYER_STOPPING_MULTIPLIER = 10f;
-	private static float PLAYER_JUMP_Y_VELOCITY = 4;
+	private static float PLAYER_MOVEMENT_X_VELOCITY = 2.3f;
+	private static float PLAYER_MOVEMENT_MULTIPLIER = 0.18f;
+	private static float PLAYER_STOPPING_MULTIPLIER = 2.0f;
+	private static float PLAYER_JUMP_Y_VELOCITY = 3;
+
+	private static float WORLD_STEP_TIME = 1.0f/60.0f;
 	
 	
 	private World world;
@@ -53,8 +56,9 @@ public class Box2dScene extends Scene {
 		Body body = world.createBody(bdef);
 		
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(50 / PPM, 5 / PPM);
 		FixtureDef fdef = new FixtureDef();
+		
+		shape.setAsBox(50 / PPM, 5 / PPM);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = B2DVars.BIT_GROUND;
 		fdef.filter.maskBits = B2DVars.BIT_PLAYER;
@@ -92,7 +96,15 @@ public class Box2dScene extends Scene {
 	
 	public void update(float dt) {
 		this.updateInput(dt);
-		world.step(dt, 6, 2);
+		world.step(WORLD_STEP_TIME, 6, 2);
+
+		Vector2 playerCenter = this.playerBody.getWorldCenter();
+		Vector3 cameraCenter = this.b2dCam.position;
+		
+		cameraCenter.x += (playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR;
+		cameraCenter.y += (playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR;
+
+		this.b2dCam.update();
 	}
 
 	public void updateInput(float dt) {
@@ -115,10 +127,9 @@ public class Box2dScene extends Scene {
 	public void movePlayer(boolean right, float dt) {
 		Vector2 playerVelocity = this.playerBody.getLinearVelocity();
 		Vector2 playerCenter = this.playerBody.getWorldCenter();
-		float desiredVel = right ? PLAYER_MAX_X_VELOCITY : -PLAYER_MAX_X_VELOCITY;
-		float velChange = desiredVel - playerVelocity.x;
+		float desiredVel = right ? PLAYER_MOVEMENT_X_VELOCITY : -PLAYER_MOVEMENT_X_VELOCITY;
+		float velChange = (desiredVel - playerVelocity.x) * PLAYER_MOVEMENT_MULTIPLIER;
 		this.playerBody.applyLinearImpulse(velChange, 0, playerCenter.x, playerCenter.y, true);
-		// this.playerBody.applyLinearImpulse(movement, this.playerBody.getWorldCenter(), true);
 	}
 
 	public void stopPlayer(float dt) {
@@ -131,13 +142,6 @@ public class Box2dScene extends Scene {
 	@Override
 	public void render() {
 
-		Vector2 playerCenter = this.playerBody.getWorldCenter();
-		Vector3 cameraCenter = this.b2dCam.position;
-		
-		cameraCenter.x += (playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR;
-		cameraCenter.y += (playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR;
-
-		this.b2dCam.update();
 		
 		b2dr.render(world, this.b2dCam.combined);
 	}
