@@ -2,7 +2,6 @@ package zone.griff.game.scenes;
 
 import zone.griff.game.SceneManager;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Scene {
@@ -15,8 +14,6 @@ public abstract class Scene {
 	
 	SceneManager sceneManager;
 	SpriteBatch sb;
-	OrthographicCamera cam;
-	OrthographicCamera hudCam;
 	
 	public Scene(SceneManager game) {
 		this.sceneManager= game;

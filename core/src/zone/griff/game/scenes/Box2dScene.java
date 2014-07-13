@@ -5,8 +5,11 @@ import zone.griff.game.B2DVars;
 import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -17,6 +20,16 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Box2dScene extends Scene {
 	
+	// Tuning
+	private static Vector2 GRAVITY = new Vector2(0, -14);
+
+	private static float CAMERA_LERP_FACTOR = 0.2f;
+	
+	private static float PLAYER_MAX_X_VELOCITY = 2f;
+	private static float PLAYER_STOPPING_MULTIPLIER = 10f;
+	private static float PLAYER_JUMP_Y_VELOCITY = 4;
+	
+	
 	private World world;
 	private MyContactListener cl;
 	private Box2DDebugRenderer b2dr;
@@ -26,7 +39,7 @@ public class Box2dScene extends Scene {
 	public Box2dScene(SceneManager sceneManager) {
 		super(sceneManager);
 
-		world = new World(new Vector2(0, -9.81f), true);
+		world = new World(GRAVITY, true);
 		
 		cl = new MyContactListener();
 		world.setContactListener(cl);
@@ -50,13 +63,13 @@ public class Box2dScene extends Scene {
 		// create player
 		bdef.position.set(160 / PPM, 200 / PPM);
 		bdef.type = BodyType.DynamicBody;
-		playerBody = world.createBody(bdef);
+		this.playerBody = world.createBody(bdef);
 		
 		shape.setAsBox(5 / PPM, 5 / PPM);
 		fdef.shape = shape;
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
-		playerBody.createFixture(fdef).setUserData("player");
+		this.playerBody.createFixture(fdef).setUserData("player");
 		
 		// create foot sensor
 		shape.setAsBox(2 / PPM, 2 / PPM, new Vector2(0, -5 / PPM), 0);
@@ -64,10 +77,10 @@ public class Box2dScene extends Scene {
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
 		fdef.isSensor = true;
-		playerBody.createFixture(fdef).setUserData("foot");
+		this.playerBody.createFixture(fdef).setUserData("foot");
 		
 		// set up box2d cam
-		b2dCam = new OrthographicCamera();
+		this.b2dCam = new OrthographicCamera();
 	}
 	 
 	@Override
@@ -78,12 +91,55 @@ public class Box2dScene extends Scene {
 	}
 	
 	public void update(float dt) {
+		this.updateInput(dt);
 		world.step(dt, 6, 2);
+	}
+
+	public void updateInput(float dt) {
+		// Jump
+		if (Gdx.input.isKeyPressed(Keys.I) ||
+				Gdx.input.isKeyPressed(Keys.SPACE)) {
+			this.playerBody.setLinearVelocity(this.playerBody.getLinearVelocity().x, PLAYER_JUMP_Y_VELOCITY);
+		}
+		
+		// Move left/right or stop
+		if (Gdx.input.isKeyPressed(Keys.J)) {
+			this.movePlayer(false, dt);
+		} else if (Gdx.input.isKeyPressed(Keys.L)) {
+			this.movePlayer(true, dt);
+		} else {
+			this.stopPlayer(dt);
+		}
+	}
+
+	public void movePlayer(boolean right, float dt) {
+		Vector2 playerVelocity = this.playerBody.getLinearVelocity();
+		Vector2 playerCenter = this.playerBody.getWorldCenter();
+		float desiredVel = right ? PLAYER_MAX_X_VELOCITY : -PLAYER_MAX_X_VELOCITY;
+		float velChange = desiredVel - playerVelocity.x;
+		this.playerBody.applyLinearImpulse(velChange, 0, playerCenter.x, playerCenter.y, true);
+		// this.playerBody.applyLinearImpulse(movement, this.playerBody.getWorldCenter(), true);
+	}
+
+	public void stopPlayer(float dt) {
+		Vector2 playerVelocity = this.playerBody.getLinearVelocity();
+		Vector2 playerCenter = this.playerBody.getWorldCenter();
+		this.playerBody.applyForce(playerVelocity.x * -PLAYER_STOPPING_MULTIPLIER,
+															 0, playerCenter.x, playerCenter.y, true);
 	}
 	
 	@Override
 	public void render() {
-		b2dr.render(world, b2dCam.combined);
+
+		Vector2 playerCenter = this.playerBody.getWorldCenter();
+		Vector3 cameraCenter = this.b2dCam.position;
+		
+		cameraCenter.x += (playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR;
+		cameraCenter.y += (playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR;
+
+		this.b2dCam.update();
+		
+		b2dr.render(world, this.b2dCam.combined);
 	}
 	
 	@Override
