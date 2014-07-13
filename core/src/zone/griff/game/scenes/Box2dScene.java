@@ -114,6 +114,13 @@ public class Box2dScene extends Scene {
 		} else {
 			this.stopPlayer(dt);
 		}
+
+		// Zoom
+		if (Gdx.input.isKeyPressed(Keys.EQUALS)) {
+			this.b2dCam.zoom += 0.03f;
+		} else if (Gdx.input.isKeyPressed(Keys.MINUS)) {
+			this.b2dCam.zoom -= 0.03f;
+		}
 	}
 
 	public void movePlayer(boolean right, float dt) {
