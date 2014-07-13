@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.gushikustudios.rube.RubeScene;
+import com.gushikustudios.rube.loader.RubeSceneLoader;
 
 public class Box2dScene extends Scene {
 	
@@ -49,20 +51,12 @@ public class Box2dScene extends Scene {
 		
 		b2dr = new Box2DDebugRenderer();
 		
-		// create platform
-		BodyDef bdef = new BodyDef();
-		bdef.position.set(160 / PPM, 120 / PPM);
-		bdef.type = BodyType.StaticBody;
-		Body body = world.createBody(bdef);
+		RubeSceneLoader loader = new RubeSceneLoader(world);
+		RubeScene scene = loader.loadScene(Gdx.files.internal("levels/json/untitled1.json"));
 		
+		BodyDef bdef = new BodyDef();
 		PolygonShape shape = new PolygonShape();
 		FixtureDef fdef = new FixtureDef();
-		
-		shape.setAsBox(50 / PPM, 5 / PPM);
-		fdef.shape = shape;
-		fdef.filter.categoryBits = B2DVars.BIT_GROUND;
-		fdef.filter.maskBits = B2DVars.BIT_PLAYER;
-		body.createFixture(fdef).setUserData("ground");
 		
 		// create player
 		bdef.position.set(160 / PPM, 200 / PPM);
@@ -71,8 +65,6 @@ public class Box2dScene extends Scene {
 		
 		shape.setAsBox(5 / PPM, 5 / PPM);
 		fdef.shape = shape;
-		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
-		fdef.filter.maskBits = B2DVars.BIT_GROUND;
 		this.playerBody.createFixture(fdef).setUserData("player");
 		
 		// create foot sensor
@@ -141,8 +133,6 @@ public class Box2dScene extends Scene {
 	
 	@Override
 	public void render() {
-
-		
 		b2dr.render(world, this.b2dCam.combined);
 	}
 	
