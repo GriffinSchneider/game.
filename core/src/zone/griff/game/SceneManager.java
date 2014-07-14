@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import zone.griff.game.scenes.Box2dScene;
 import zone.griff.game.scenes.Scene;
+import zone.griff.game.scenes.ShaderScene;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -44,8 +45,8 @@ public class SceneManager implements ApplicationListener {
 			return;
 		}
 		didStartup = true;
+		this.pushState(new ShaderScene(this));
 		this.pushState(new Box2dScene(this));
-		// this.pushState(new ShaderScene(this));
 	}
 
 	@Override
@@ -87,9 +88,10 @@ public class SceneManager implements ApplicationListener {
 		float dt = Gdx.graphics.getDeltaTime();
 		this.gameTime += dt;
 
-		Scene scene = gameStates.peek();
-		scene.update(dt);
-		scene.render();
+		for (Scene scene : gameStates) {
+			scene.update(dt);
+			scene.render();
+		}
 	}
 
 	public void setState(Scene state) {

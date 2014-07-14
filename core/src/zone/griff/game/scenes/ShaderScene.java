@@ -3,6 +3,7 @@ package zone.griff.game.scenes;
 import zone.griff.game.SceneManager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -101,10 +102,13 @@ public class ShaderScene extends Scene {
 	private Matrix4 idMatrix = new Matrix4().idt();
 	@Override
 	public void render() {
+		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+			return;
+		}
 		this.palatte.bind();
 		this.shader.begin();
 		
-		this.shader.setUniformMatrix("u_worldView", this.idMatrix);
+		this.shader.setUniformMatrix("u_projTrans", this.idMatrix);
 		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
 //		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
 		this.shader.setUniformi("palatte", 0);
@@ -113,7 +117,7 @@ public class ShaderScene extends Scene {
 		for (int x = 0; x < meshes.length; x++) {
 			for (int y = 0; y < meshes.length; y++) {
 				Mesh mesh = this.meshes[x][y];
-				this.shader.setUniform2fv("cente", this.centers[x][y], 0, 2);
+//				this.shader.setUniform2fv("center", this.centers[x][y], 0, 2);
 				mesh.render(this.shader, GL20.GL_TRIANGLES);
 			}
 		}

@@ -13,11 +13,12 @@ precision highp float;
 varying vec4 v_color;
 varying vec2 v_texCoords;
 
-uniform vec3 iResolution;
-uniform vec2 cente;
+uniform vec2 center;
 uniform float iGlobalTime;
 uniform sampler2D palatte;
 uniform float palatteSize;
+
+uniform sampler2D u_texture;
 
 float saw(float x) {
   return abs( mod( x, 2.0 ) - 1.0);
@@ -28,11 +29,10 @@ float smoothsaw(float x) {
 }
 
 void main(void) {
-  // vec2 center = iResolution.xy * 0.5;
-
-  vec2 center = cente;
-  // center = vec2(smoothsaw(iGlobalTime*0.6) * center.x,
-  // smoothsaw(iGlobalTime*0.6 + 0.4) * center.y);
+  u_texture;
+  iGlobalTime;
+  palatte;
+  palatteSize;
 
   MEDIUMP vec2 v = gl_FragCoord.xy - center;
   
