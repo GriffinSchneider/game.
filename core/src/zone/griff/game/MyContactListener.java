@@ -18,9 +18,9 @@ public class MyContactListener implements ContactListener {
 		Fixture fa = c.getFixtureA();
 		Fixture fb = c.getFixtureB();
 		
-		if(fa.getUserData() != null && fa.getUserData().equals("foot")) {
+		if(fa.getUserData() != null && fa.getUserData().equals("foot") && !fb.isSensor()) {
 			groundSensorCount++;
-		} else if(fb.getUserData() != null && fb.getUserData().equals("foot")) {
+		} else if(fb.getUserData() != null && fb.getUserData().equals("foot") && !fa.isSensor()) {
 			groundSensorCount++;
 		}
 		if (groundSensorCount > 0) {
@@ -34,9 +34,9 @@ public class MyContactListener implements ContactListener {
 		Fixture fa = c.getFixtureA();
 		Fixture fb = c.getFixtureB();
 		
-		if(fa.getUserData() != null && fa.getUserData().equals("foot")) {
+		if(fa.getUserData() != null && fa.getUserData().equals("foot") && !fb.isSensor()) {
 			groundSensorCount--;
-		} else if(fb.getUserData() != null && fb.getUserData().equals("foot")) {
+		} else if(fb.getUserData() != null && fb.getUserData().equals("foot") && !fa.isSensor()) {
 			groundSensorCount--;
 		}
 	}
