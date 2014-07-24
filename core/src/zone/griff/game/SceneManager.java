@@ -15,8 +15,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SceneManager implements ApplicationListener {
 
 	public static final float STEP = 1 / 60f;
-	public static final int V_WIDTH = 320;
-	public static final int V_HEIGHT = 240;
+	public static final int V_WIDTH = 500;
+	public static final int V_HEIGHT = 375;
 	
 	public float[] gameSizeArray;
 
@@ -45,7 +45,7 @@ public class SceneManager implements ApplicationListener {
 			return;
 		}
 		didStartup = true;
-		this.pushState(new ShaderScene(this));
+//		this.pushState(new ShaderScene(this));
 		this.pushState(new Box2dScene(this));
 	}
 

@@ -3,10 +3,10 @@ package zone.griff.game;
 public class B2DVars {
 
 	// pixel per meter ratio
-	public static final float PPM = 100;
+	public static final float PPM = 32;
 
 	// category bits
-	public static final short BIT_GROUND = 2;
-	public static final short BIT_PLAYER = 4;
+	public static final short BIT_GROUND = 1;
+	public static final short BIT_PLAYER = 2;
 
 }
