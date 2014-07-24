@@ -160,8 +160,8 @@ public class Box2dScene extends Scene {
 		
 		shape.setAsBox(10 / PPM, 10 / PPM);
 		fdef.shape = shape;
-		fdef.density = 1f;
-		fdef.friction = 1.0f;
+		fdef.density = 0f;
+		fdef.friction = 0.2f;
 		fdef.restitution = 0.0f;
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
@@ -224,21 +224,37 @@ public class Box2dScene extends Scene {
 		Array<Vector2> targetPoints = new Array<Vector2>();
 		Transform t = moving.getTransform();
 
+		Body platformBody = null;
 		Fixture platformFixture = null;
 
-		for (Fixture f : moving.getFixtureList()) {
+		for (Fixture f : new Array<Fixture>(moving.getFixtureList())) {
 			Shape shape = f.getShape();
 			if (f.isSensor()) {
 				Vector2 p = new Vector2().set(((CircleShape) shape).getPosition());
 				t.mul(p);
 				targetPoints.add(p);
 			} else {
-				platformFixture = f;
+				// Split out the actual platform fixture into a different body than the
+				// sensors, so that the debug renderer won't show the sensors moving around
+				// with the platform
+				FixtureDef fdef = new FixtureDef();
+				fdef.shape = f.getShape();
+				fdef.friction = f.getFriction();
+				fdef.restitution = f.getRestitution();
+				fdef.density = f.getDensity();
+
+				BodyDef bdef = new BodyDef();
+				bdef.type = BodyType.KinematicBody;
+				bdef.position.set(moving.getPosition());
+				platformBody = scene.getWorld().createBody(bdef);
+				platformFixture = platformBody.createFixture(fdef);
+
+				moving.destroyFixture(f);
 			}
 		}
 
 		this.movingPlatforms.add(new MovingPlatform(
-				moving, 
+				platformBody, 
 				targetPoints,
 				this.polygonSpriteForFixture(platformFixture, texreg)));
 	}
@@ -411,21 +427,21 @@ public class Box2dScene extends Scene {
 		for (PolygonSprite sprite : this.groundPolySprites) {
 			sprite.draw(this.polyBatch);
 		}
-		
+
 		Vector2 v = Vector2Pool.obtain();
 		v.set(this.playerBody.getWorldCenter());
 		this.playerSprite.setRotation(this.playerBody.getAngle() * MathUtils.radiansToDegrees);
 		this.playerSprite.setPosition(v.x, v.y);
 		this.playerSprite.draw(this.polyBatch);
 		Vector2Pool.release(v);
-		
+
 		for (MovingPlatform p : this.movingPlatforms) {
 			p.render(this.polyBatch);
 		}
-		
+
 		this.polyBatch.end();
 
-//		b2dr.render(world, this.b2dCam.combined);
+		b2dr.render(world, this.b2dCam.combined);
 	}
 	
 	@Override
