@@ -68,7 +68,7 @@ public class ShaderScene extends Scene {
 		
 		this.shader = new ShaderProgram(
 				Gdx.files.internal("shaders/default.vert"), 
-				Gdx.files.internal("shaders/moire.frag"));
+				Gdx.files.internal("shaders/wobblyCircles.frag"));
 
 		if (!this.shader.isCompiled()) {
 			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
@@ -110,9 +110,9 @@ public class ShaderScene extends Scene {
 		
 		this.shader.setUniformMatrix("u_projTrans", this.idMatrix);
 		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
-//		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
-//		this.shader.setUniformi("palatte", 0);
-//		this.shader.setUniformf("palatteSize", palatteSize);
+		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
+		this.shader.setUniformi("palatte", 0);
+		this.shader.setUniformf("palatteSize", palatteSize);
 		
 		for (int x = 0; x < meshes.length; x++) {
 			for (int y = 0; y < meshes.length; y++) {

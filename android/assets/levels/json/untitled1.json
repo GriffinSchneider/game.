@@ -30,14 +30,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -59,21 +74,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -106,19 +106,34 @@
 					{
 						"center" : 
 						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
 							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -140,21 +155,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -183,8 +183,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -206,36 +236,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -273,14 +273,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -302,21 +317,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -345,8 +345,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -368,36 +398,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -426,8 +426,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -449,36 +479,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -516,14 +516,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -545,21 +560,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -592,12 +592,12 @@
 					{
 						"center" : 
 						{
-							"x" : -6.518044948577881,
+							"x" : 2.165445804595947,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -607,19 +607,19 @@
 					{
 						"center" : 
 						{
-							"x" : 2.165445804595947,
+							"x" : -6.518044948577881,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -669,8 +669,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -692,36 +722,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -759,14 +759,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -788,21 +803,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -835,19 +835,34 @@
 					{
 						"center" : 
 						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
 							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -869,21 +884,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -921,7 +921,7 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -936,14 +936,14 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -997,12 +997,12 @@
 					{
 						"center" : 
 						{
-							"x" : -6.518044948577881,
+							"x" : 2.165445804595947,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -1012,19 +1012,19 @@
 					{
 						"center" : 
 						{
-							"x" : 2.165445804595947,
+							"x" : -6.518044948577881,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1083,7 +1083,7 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -1098,14 +1098,14 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1155,8 +1155,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1178,36 +1208,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1236,8 +1236,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1259,36 +1289,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1317,8 +1317,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1340,36 +1370,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1398,8 +1398,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1421,36 +1451,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1479,8 +1479,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1502,36 +1532,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1569,14 +1569,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1598,21 +1613,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1650,14 +1650,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1679,21 +1694,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1722,8 +1722,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1745,36 +1775,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1812,14 +1812,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1841,21 +1856,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1893,14 +1893,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -1922,21 +1937,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -1974,14 +1974,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2003,21 +2018,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -2055,14 +2055,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2084,21 +2099,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -2127,8 +2127,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2150,36 +2180,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -2217,14 +2217,29 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2246,21 +2261,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -2293,19 +2293,34 @@
 					{
 						"center" : 
 						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
 							"x" : -6.518044948577881,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2327,21 +2342,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -2374,12 +2374,12 @@
 					{
 						"center" : 
 						{
-							"x" : -2.971267223358154,
+							"x" : 5.712223529815674,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -2389,19 +2389,19 @@
 					{
 						"center" : 
 						{
-							"x" : 5.712223529815674,
+							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2460,7 +2460,7 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -2475,14 +2475,14 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2541,7 +2541,7 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -2556,14 +2556,14 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2622,7 +2622,7 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -2637,14 +2637,14 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2698,12 +2698,12 @@
 					{
 						"center" : 
 						{
-							"x" : -6.518044948577881,
+							"x" : 2.165445804595947,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -2713,19 +2713,19 @@
 					{
 						"center" : 
 						{
-							"x" : 2.165445804595947,
+							"x" : -6.518044948577881,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2775,8 +2775,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2798,36 +2828,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -2856,8 +2856,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -2879,36 +2909,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -2941,12 +2941,12 @@
 					{
 						"center" : 
 						{
-							"x" : -6.518044948577881,
+							"x" : 2.165445804595947,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -2956,19 +2956,19 @@
 					{
 						"center" : 
 						{
-							"x" : 2.165445804595947,
+							"x" : -6.518044948577881,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3022,12 +3022,12 @@
 					{
 						"center" : 
 						{
-							"x" : -2.971267223358154,
+							"x" : 5.712223529815674,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -3037,19 +3037,19 @@
 					{
 						"center" : 
 						{
-							"x" : 5.712223529815674,
+							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3103,12 +3103,12 @@
 					{
 						"center" : 
 						{
-							"x" : -6.518044948577881,
+							"x" : 2.165445804595947,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -3118,19 +3118,19 @@
 					{
 						"center" : 
 						{
-							"x" : 2.165445804595947,
+							"x" : -6.518044948577881,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3184,12 +3184,12 @@
 					{
 						"center" : 
 						{
-							"x" : -2.971267223358154,
+							"x" : 5.712223529815674,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -3199,19 +3199,19 @@
 					{
 						"center" : 
 						{
-							"x" : 5.712223529815674,
+							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3265,19 +3265,34 @@
 					{
 						"center" : 
 						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
 							"x" : -6.518044948577881,
 							"y" : 0.04617691040039062
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3299,21 +3314,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -3346,12 +3346,12 @@
 					{
 						"center" : 
 						{
-							"x" : -2.971267223358154,
+							"x" : 5.712223529815674,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -3361,19 +3361,19 @@
 					{
 						"center" : 
 						{
-							"x" : 5.712223529815674,
+							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3423,8 +3423,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3446,36 +3476,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -3504,8 +3504,23 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3534,27 +3549,12 @@
 					{
 						"center" : 
 						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
 							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				}
@@ -3594,29 +3594,14 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3638,6 +3623,21 @@
 							]
 						}
 					}
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -3666,8 +3666,23 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3701,22 +3716,7 @@
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				}
@@ -3747,38 +3747,8 @@
 			[
 				
 				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3800,6 +3770,36 @@
 							]
 						}
 					}
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -3828,8 +3828,23 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3858,27 +3873,12 @@
 					{
 						"center" : 
 						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
 							"x" : -2.971267223358154,
 							"y" : 0.07063770294189453
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				}
@@ -3913,19 +3913,64 @@
 					{
 						"center" : 
 						{
-							"x" : 0.4399533271789551,
-							"y" : -1.013829469680786
+							"x" : -3.680623531341553,
+							"y" : -0.1984281539916992
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 0.6978135108947754,
+							"y" : 2.321006774902344
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.017304897308350,
+							"y" : -1.543757438659668
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -5.466241359710693,
+							"y" : -1.543757438659668
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -3954,42 +3999,12 @@
 					{
 						"center" : 
 						{
-							"x" : -3.680623531341553,
-							"y" : -0.1984281539916992
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 0.6978135108947754,
-							"y" : 2.321006774902344
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
 							"x" : -2.017304897308350,
 							"y" : 1.293664932250977
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -3999,27 +4014,12 @@
 					{
 						"center" : 
 						{
-							"x" : -2.017304897308350,
-							"y" : -1.543757438659668
+							"x" : 0.4399533271789551,
+							"y" : -1.013829469680786
 						},
 						"radius" : 0.2953405678272247
 					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -5.466241359710693,
-							"y" : -1.543757438659668
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				}
@@ -4050,8 +4050,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4073,36 +4103,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -4131,8 +4131,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 2.165445804595947,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -6.518044948577881,
+							"y" : 0.04617691040039062
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4154,36 +4184,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 2.165445804595947,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -6.518044948577881,
-							"y" : 0.04617691040039062
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -4212,8 +4212,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 5.712223529815674,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -2.971267223358154,
+							"y" : 0.07063770294189453
+						},
+						"radius" : 0.2953405678272247
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4235,36 +4265,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 5.712223529815674,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -2.971267223358154,
-							"y" : 0.07063770294189453
-						},
-						"radius" : 0.2953405678272247
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -4293,8 +4293,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -0.06697130203247070,
+							"y" : 4.075195789337158
+						},
+						"radius" : 0.7984980344772339
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -0.06697130203247070,
+							"y" : -2.404400825500488
+						},
+						"radius" : 0.7984980344772339
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4316,36 +4346,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -0.06697130203247070,
-							"y" : -2.404400825500488
-						},
-						"radius" : 0.7984980344772339
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -0.06697130203247070,
-							"y" : 4.075195789337158
-						},
-						"radius" : 0.7984980344772339
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -4379,11 +4379,11 @@
 						"center" : 
 						{
 							"x" : -0.03878831863403320,
-							"y" : -4.8845214843750
+							"y" : 1.595075130462646
 						},
 						"radius" : 0.7984980344772339
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -4394,18 +4394,18 @@
 						"center" : 
 						{
 							"x" : -0.03878831863403320,
-							"y" : 1.595075130462646
+							"y" : -4.8845214843750
 						},
 						"radius" : 0.7984980344772339
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4460,33 +4460,18 @@
 						"center" : 
 						{
 							"x" : -0.09515810012817383,
-							"y" : -3.982658386230469
-						},
-						"radius" : 0.7984980344772339
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -0.09515810012817383,
 							"y" : 2.496938228607178
 						},
 						"radius" : 0.7984980344772339
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4508,6 +4493,21 @@
 							]
 						}
 					}
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -0.09515810012817383,
+							"y" : -3.982658386230469
+						},
+						"radius" : 0.7984980344772339
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -4537,7 +4537,7 @@
 				
 				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4571,7 +4571,7 @@
 						},
 						"radius" : 0.7984980344772339
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				},
@@ -4586,7 +4586,7 @@
 						},
 						"radius" : 0.7984980344772339
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				}
@@ -4617,8 +4617,23 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 0.1851534843444824,
+							"y" : 5.650972843170166
+						},
+						"radius" : 0.7984980344772339
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4648,26 +4663,11 @@
 						"center" : 
 						{
 							"x" : 0.1851534843444824,
-							"y" : 5.650972843170166
-						},
-						"radius" : 0.7984980344772339
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 0.1851534843444824,
 							"y" : -0.8286237716674805
 						},
 						"radius" : 0.7984980344772339
 					},
-					"friction" : 0.2,
+					"friction" : 20.0,
 					"name" : "fixture1",
 					"sensor" : true
 				}
@@ -4698,8 +4698,38 @@
 			[
 				
 				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -0.06697130203247070,
+							"y" : -2.404400825500488
+						},
+						"radius" : 0.7984980344772339
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -0.06697130203247070,
+							"y" : 4.075195789337158
+						},
+						"radius" : 0.7984980344772339
+					},
+					"friction" : 20.0,
+					"name" : "fixture1",
+					"sensor" : true
+				},
+				
+				{
 					"density" : 1,
-					"friction" : 0.8,
+					"friction" : 20.0,
 					"name" : "plat",
 					"polygon" : 
 					{
@@ -4721,36 +4751,6 @@
 							]
 						}
 					}
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -0.06697130203247070,
-							"y" : -2.404400825500488
-						},
-						"radius" : 0.7984980344772339
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				},
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -0.06697130203247070,
-							"y" : 4.075195789337158
-						},
-						"radius" : 0.7984980344772339
-					},
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
 				}
 			],
 			"linearVelocity" : 0,
@@ -4780,17 +4780,147 @@
 						{
 							"x" : 
 							[
-								18.94710350036621,
-								18.94710350036621,
-								12.48494529724121,
-								12.48494529724121
+								17.63220024108887,
+								16.63065147399902,
+								16.31209945678711,
+								17.31365013122559
 							],
 							"y" : 
 							[
-								20.50466918945312,
-								21.02017974853516,
-								21.02017974853516,
-								20.50466918945312
+								-3.508427381515503,
+								-3.189875364303589,
+								-4.191425323486328,
+								-4.509976387023926
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								14.15753746032715,
+								13.15598869323730,
+								12.83743858337402,
+								13.83898544311523
+							],
+							"y" : 
+							[
+								-4.965314865112305,
+								-4.646763801574707,
+								-5.648313522338867,
+								-5.966865539550781
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								19.45921897888184,
+								18.45767211914062,
+								18.13912010192871,
+								19.14066886901855
+							],
+							"y" : 
+							[
+								-2.623815298080444,
+								-2.305262804031372,
+								-3.306813478469849,
+								-3.625365495681763
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								14.15753746032715,
+								13.15598869323730,
+								12.83743858337402,
+								13.83898544311523
+							],
+							"y" : 
+							[
+								-4.965314865112305,
+								-4.646763801574707,
+								-5.648313522338867,
+								-5.966865539550781
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								19.45921897888184,
+								18.45767211914062,
+								18.13912010192871,
+								19.14066886901855
+							],
+							"y" : 
+							[
+								-2.623815298080444,
+								-2.305262804031372,
+								-3.306813478469849,
+								-3.625365495681763
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								15.84366798400879,
+								14.8421163558960,
+								14.52356338500977,
+								15.52511501312256
+							],
+							"y" : 
+							[
+								-4.272032737731934,
+								-3.953480005264282,
+								-4.955030441284180,
+								-5.273583412170410
 							]
 						}
 					}
@@ -4832,6 +4962,58 @@
 						{
 							"x" : 
 							[
+								14.15753746032715,
+								13.15598869323730,
+								12.83743858337402,
+								13.83898544311523
+							],
+							"y" : 
+							[
+								-4.965314865112305,
+								-4.646763801574707,
+								-5.648313522338867,
+								-5.966865539550781
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								24.21181869506836,
+								24.21181869506836,
+								23.16083335876465,
+								23.16083335876465
+							],
+							"y" : 
+							[
+								4.653119087219238,
+								5.704108238220215,
+								5.704108238220215,
+								4.653119087219238
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
 								25.68477630615234,
 								25.68477630615234,
 								24.63378715515137,
@@ -4858,17 +5040,43 @@
 						{
 							"x" : 
 							[
-								29.60728836059570,
-								28.84029197692871,
-								28.12175369262695,
-								28.88875389099121
+								22.73887252807617,
+								22.73887252807617,
+								21.68788146972656,
+								21.68788146972656
 							],
 							"y" : 
 							[
-								-0.7468178272247314,
-								-0.02827787399291992,
-								-0.7952711582183838,
-								-1.513810873031616
+								3.383333683013916,
+								4.434322357177734,
+								4.434322357177734,
+								3.383333683013916
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								25.68477630615234,
+								25.68477630615234,
+								24.63378715515137,
+								24.63378715515137
+							],
+							"y" : 
+							[
+								6.049884796142578,
+								7.100872993469238,
+								7.100872993469238,
+								6.049884796142578
 							]
 						}
 					}
@@ -4896,6 +5104,306 @@
 								2.946336746215820,
 								1.895347833633423
 							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								19.66627502441406,
+								19.66627502441406,
+								18.61528587341309,
+								18.61528587341309
+							],
+							"y" : 
+							[
+								0.4985830783843994,
+								1.549572229385376,
+								1.549572229385376,
+								0.4985830783843994
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								21.13922119140625,
+								21.13922119140625,
+								20.08823394775391,
+								20.08823394775391
+							],
+							"y" : 
+							[
+								1.895347833633423,
+								2.946336746215820,
+								2.946336746215820,
+								1.895347833633423
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								18.19332122802734,
+								18.19332122802734,
+								17.14232826232910,
+								17.14233207702637
+							],
+							"y" : 
+							[
+								-0.7712030410766602,
+								0.2797863483428955,
+								0.2797858715057373,
+								-0.7712030410766602
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								21.97013092041016,
+								21.97013092041016,
+								20.91914367675781,
+								20.91914367675781
+							],
+							"y" : 
+							[
+								8.542605400085449,
+								9.593594551086426,
+								9.593594551086426,
+								8.542605400085449
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								21.97013092041016,
+								21.97013092041016,
+								20.91914367675781,
+								20.91914367675781
+							],
+							"y" : 
+							[
+								8.542605400085449,
+								9.593594551086426,
+								9.593594551086426,
+								8.542605400085449
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								19.02423095703125,
+								19.02423095703125,
+								17.97324180603027,
+								17.97324180603027
+							],
+							"y" : 
+							[
+								5.876055240631104,
+								6.927044868469238,
+								6.927044868469238,
+								5.876055240631104
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								18.94710350036621,
+								18.94710350036621,
+								12.48494529724121,
+								12.48494529724121
+							],
+							"y" : 
+							[
+								20.50466918945312,
+								21.02017974853516,
+								21.02017974853516,
+								20.50466918945312
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								16.15460014343262,
+								16.15460014343262,
+								15.10360813140869,
+								15.10360813140869
+							],
+							"y" : 
+							[
+								3.307559013366699,
+								4.358548164367676,
+								4.358548164367676,
+								3.307559013366699
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								29.20769882202148,
+								29.20769882202148,
+								28.15670776367188,
+								28.15670776367188
+							],
+							"y" : 
+							[
+								9.474947929382324,
+								10.52593517303467,
+								10.52593517303467,
+								9.474947929382324
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								14.68164539337158,
+								14.68164539337158,
+								13.63065814971924,
+								13.63065814971924
+							],
+							"y" : 
+							[
+								2.037772655487061,
+								3.088762044906616,
+								3.088762044906616,
+								2.037772655487061
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								10.24642467498779,
+								9.286242485046387,
+								0.9525058269500732,
+								1.350242376327515
+							],
+							"y" : 
+							[
+								-2.365743398666382,
+								-1.966957330703735,
+								-3.769063711166382,
+								-5.292477607727051
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : [ 10.24642467498779, 9.955682754516602, 9.286242485046387 ],
+							"y" : [ -2.365743398666382, -1.335415363311768, -1.966957330703735 ]
 						}
 					}
 				},
@@ -4996,147 +5504,17 @@
 						{
 							"x" : 
 							[
-								23.81399345397949,
-								23.04699897766113,
-								22.32846069335938,
-								23.09545326232910
+								17.62754821777344,
+								17.62754821777344,
+								16.57656097412109,
+								16.57656097412109
 							],
 							"y" : 
 							[
-								-0.5789895057678223,
-								0.1395497322082520,
-								-0.6274440288543701,
-								-1.345984458923340
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								20.41656494140625,
-								19.41501808166504,
-								19.09646606445312,
-								20.09801483154297
-							],
-							"y" : 
-							[
-								-7.009788513183594,
-								-6.691236495971680,
-								-7.692786216735840,
-								-8.011337280273438
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								22.73887252807617,
-								22.73887252807617,
-								21.68788146972656,
-								21.68788146972656
-							],
-							"y" : 
-							[
-								3.383333683013916,
-								4.434322357177734,
-								4.434322357177734,
-								3.383333683013916
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								18.19332122802734,
-								18.19332122802734,
-								17.14232826232910,
-								17.14233207702637
-							],
-							"y" : 
-							[
-								-0.7712030410766602,
-								0.2797863483428955,
-								0.2797858715057373,
-								-0.7712030410766602
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								24.21181869506836,
-								24.21181869506836,
-								23.16083335876465,
-								23.16083335876465
-							],
-							"y" : 
-							[
-								4.653119087219238,
-								5.704108238220215,
-								5.704108238220215,
-								4.653119087219238
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								14.15753746032715,
-								13.15598869323730,
-								12.83743858337402,
-								13.83898544311523
-							],
-							"y" : 
-							[
-								-4.965314865112305,
-								-4.646763801574707,
-								-5.648313522338867,
-								-5.966865539550781
+								4.704323768615723,
+								5.755312919616699,
+								5.755312919616699,
+								4.704323768615723
 							]
 						}
 					}
@@ -5352,358 +5730,6 @@
 						{
 							"x" : 
 							[
-								36.88962554931641,
-								36.88962554931641,
-								35.83863830566406,
-								35.83863830566406
-							],
-							"y" : 
-							[
-								17.37705802917480,
-								18.42805099487305,
-								18.42805099487305,
-								17.37705802917480
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								43.37277984619141,
-								43.37277984619141,
-								42.32179260253906,
-								42.32179260253906
-							],
-							"y" : 
-							[
-								1.719626307487488,
-								2.770614624023438,
-								2.770614624023438,
-								1.719626307487488
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								43.37277984619141,
-								43.37277984619141,
-								42.32179260253906,
-								42.32179260253906
-							],
-							"y" : 
-							[
-								1.719626307487488,
-								2.770614624023438,
-								2.770614624023438,
-								1.719626307487488
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								35.07923507690430,
-								35.07923507690430,
-								34.02824783325195,
-								34.02824783325195
-							],
-							"y" : 
-							[
-								7.224191665649414,
-								8.275179862976074,
-								8.275179862976074,
-								7.224191665649414
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								15.84366798400879,
-								14.8421163558960,
-								14.52356338500977,
-								15.52511501312256
-							],
-							"y" : 
-							[
-								-4.272032737731934,
-								-3.953480005264282,
-								-4.955030441284180,
-								-5.273583412170410
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								10.24642467498779,
-								9.286242485046387,
-								0.9525058269500732,
-								1.350242376327515
-							],
-							"y" : 
-							[
-								-2.365743398666382,
-								-1.966957330703735,
-								-3.769063711166382,
-								-5.292477607727051
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : [ 10.24642467498779, 9.955682754516602, 9.286242485046387 ],
-							"y" : [ -2.365743398666382, -1.335415363311768, -1.966957330703735 ]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								22.24358558654785,
-								21.24203491210938,
-								20.92348289489746,
-								21.92503356933594
-							],
-							"y" : 
-							[
-								-6.125175476074219,
-								-5.806622505187988,
-								-6.808175086975098,
-								-7.126726150512695
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								25.68477630615234,
-								25.68477630615234,
-								24.63378715515137,
-								24.63378715515137
-							],
-							"y" : 
-							[
-								6.049884796142578,
-								7.100872993469238,
-								7.100872993469238,
-								6.049884796142578
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								14.15753746032715,
-								13.15598869323730,
-								12.83743858337402,
-								13.83898544311523
-							],
-							"y" : 
-							[
-								-4.965314865112305,
-								-4.646763801574707,
-								-5.648313522338867,
-								-5.966865539550781
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								19.66627502441406,
-								19.66627502441406,
-								18.61528587341309,
-								18.61528587341309
-							],
-							"y" : 
-							[
-								0.4985830783843994,
-								1.549572229385376,
-								1.549572229385376,
-								0.4985830783843994
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								12.33052253723145,
-								11.32897186279297,
-								11.01041889190674,
-								12.01196765899658
-							],
-							"y" : 
-							[
-								-5.849926948547363,
-								-5.531374931335449,
-								-6.532923698425293,
-								-6.851476669311523
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								27.57741737365723,
-								26.81042289733887,
-								26.09188461303711,
-								26.85887336730957
-							],
-							"y" : 
-							[
-								-0.7591238021850586,
-								-0.04058432579040527,
-								-0.8075776100158691,
-								-1.526118040084839
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								29.60728836059570,
-								28.84029197692871,
-								28.12175369262695,
-								28.88875389099121
-							],
-							"y" : 
-							[
-								-0.7468178272247314,
-								-0.02827787399291992,
-								-0.7952711582183838,
-								-1.513810873031616
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
 								17.62754821777344,
 								17.62754821777344,
 								16.57656097412109,
@@ -5715,162 +5741,6 @@
 								5.755312919616699,
 								5.755312919616699,
 								4.704323768615723
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								18.62803077697754,
-								17.62648391723633,
-								17.30793190002441,
-								18.30948257446289
-							],
-							"y" : 
-							[
-								-7.773394584655762,
-								-7.454841613769531,
-								-8.456392288208008,
-								-8.774945259094238
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								19.45921897888184,
-								18.45767211914062,
-								18.13912010192871,
-								19.14066886901855
-							],
-							"y" : 
-							[
-								-2.623815298080444,
-								-2.305262804031372,
-								-3.306813478469849,
-								-3.625365495681763
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								17.62754821777344,
-								17.62754821777344,
-								16.57656097412109,
-								16.57656097412109
-							],
-							"y" : 
-							[
-								4.704323768615723,
-								5.755312919616699,
-								5.755312919616699,
-								4.704323768615723
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								19.45921897888184,
-								18.45767211914062,
-								18.13912010192871,
-								19.14066886901855
-							],
-							"y" : 
-							[
-								-2.623815298080444,
-								-2.305262804031372,
-								-3.306813478469849,
-								-3.625365495681763
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								25.63435363769531,
-								24.86735725402832,
-								24.14881706237793,
-								24.91581535339355
-							],
-							"y" : 
-							[
-								-0.6787631511688232,
-								0.03977727890014648,
-								-0.7272167205810547,
-								-1.445755720138550
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								22.24358558654785,
-								21.24203491210938,
-								20.92348289489746,
-								21.92503356933594
-							],
-							"y" : 
-							[
-								-6.125175476074219,
-								-5.806622505187988,
-								-6.808175086975098,
-								-7.126726150512695
 							]
 						}
 					}
@@ -5912,32 +5782,6 @@
 						{
 							"x" : 
 							[
-								21.97013092041016,
-								21.97013092041016,
-								20.91914367675781,
-								20.91914367675781
-							],
-							"y" : 
-							[
-								8.542605400085449,
-								9.593594551086426,
-								9.593594551086426,
-								8.542605400085449
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
 								17.62754821777344,
 								17.62754821777344,
 								16.57656097412109,
@@ -5949,32 +5793,6 @@
 								5.755312919616699,
 								5.755312919616699,
 								4.704323768615723
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								21.13922119140625,
-								21.13922119140625,
-								20.08823394775391,
-								20.08823394775391
-							],
-							"y" : 
-							[
-								1.895347833633423,
-								2.946336746215820,
-								2.946336746215820,
-								1.895347833633423
 							]
 						}
 					}
@@ -6016,199 +5834,17 @@
 						{
 							"x" : 
 							[
-								21.78411865234375,
-								21.01712417602539,
-								20.29858589172363,
-								21.06558036804199
+								22.24358558654785,
+								21.24203491210938,
+								20.92348289489746,
+								21.92503356933594
 							],
 							"y" : 
 							[
-								-0.5912964344024658,
-								0.1272430419921875,
-								-0.6397504806518555,
-								-1.358289718627930
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								28.58407211303711,
-								27.81707763671875,
-								27.09853935241699,
-								27.86553001403809
-							],
-							"y" : 
-							[
-								-5.117895126342773,
-								-4.399353027343750,
-								-5.166345596313477,
-								-5.884884834289551
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								26.64100646972656,
-								25.87401580810547,
-								25.15547561645508,
-								25.92246818542480
-							],
-							"y" : 
-							[
-								-5.037531852722168,
-								-4.318991661071777,
-								-5.085986137390137,
-								-5.804524421691895
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								14.15753746032715,
-								13.15598869323730,
-								12.83743858337402,
-								13.83898544311523
-							],
-							"y" : 
-							[
-								-4.965314865112305,
-								-4.646763801574707,
-								-5.648313522338867,
-								-5.966865539550781
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								23.81399345397949,
-								23.04699897766113,
-								22.32846069335938,
-								23.09545326232910
-							],
-							"y" : 
-							[
-								-0.5789895057678223,
-								0.1395497322082520,
-								-0.6274440288543701,
-								-1.345984458923340
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								21.97013092041016,
-								21.97013092041016,
-								20.91914367675781,
-								20.91914367675781
-							],
-							"y" : 
-							[
-								8.542605400085449,
-								9.593594551086426,
-								9.593594551086426,
-								8.542605400085449
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								14.15753746032715,
-								13.15598869323730,
-								12.83743858337402,
-								13.83898544311523
-							],
-							"y" : 
-							[
-								-4.965314865112305,
-								-4.646763801574707,
-								-5.648313522338867,
-								-5.966865539550781
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								17.63220024108887,
-								16.63065147399902,
-								16.31209945678711,
-								17.31365013122559
-							],
-							"y" : 
-							[
-								-3.508427381515503,
-								-3.189875364303589,
-								-4.191425323486328,
-								-4.509976387023926
+								-6.125175476074219,
+								-5.806622505187988,
+								-6.808175086975098,
+								-7.126726150512695
 							]
 						}
 					}
@@ -6250,17 +5886,17 @@
 						{
 							"x" : 
 							[
-								19.02423095703125,
-								19.02423095703125,
-								17.97324180603027,
-								17.97324180603027
+								36.88962554931641,
+								36.88962554931641,
+								35.83863830566406,
+								35.83863830566406
 							],
 							"y" : 
 							[
-								5.876055240631104,
-								6.927044868469238,
-								6.927044868469238,
-								5.876055240631104
+								17.37705802917480,
+								18.42805099487305,
+								18.42805099487305,
+								17.37705802917480
 							]
 						}
 					}
@@ -6276,17 +5912,17 @@
 						{
 							"x" : 
 							[
-								14.68164539337158,
-								14.68164539337158,
-								13.63065814971924,
-								13.63065814971924
+								43.37277984619141,
+								43.37277984619141,
+								42.32179260253906,
+								42.32179260253906
 							],
 							"y" : 
 							[
-								2.037772655487061,
-								3.088762044906616,
-								3.088762044906616,
-								2.037772655487061
+								1.719626307487488,
+								2.770614624023438,
+								2.770614624023438,
+								1.719626307487488
 							]
 						}
 					}
@@ -6302,17 +5938,69 @@
 						{
 							"x" : 
 							[
-								29.20769882202148,
-								29.20769882202148,
-								28.15670776367188,
-								28.15670776367188
+								43.37277984619141,
+								43.37277984619141,
+								42.32179260253906,
+								42.32179260253906
 							],
 							"y" : 
 							[
-								9.474947929382324,
-								10.52593517303467,
-								10.52593517303467,
-								9.474947929382324
+								1.719626307487488,
+								2.770614624023438,
+								2.770614624023438,
+								1.719626307487488
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								42.98134231567383,
+								42.98134231567383,
+								41.93035507202148,
+								41.93035507202148
+							],
+							"y" : 
+							[
+								11.04069137573242,
+								12.09167957305908,
+								12.09167957305908,
+								11.04069137573242
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								42.98134231567383,
+								42.98134231567383,
+								41.93035507202148,
+								41.93035507202148
+							],
+							"y" : 
+							[
+								11.04069137573242,
+								12.09167957305908,
+								12.09167957305908,
+								11.04069137573242
 							]
 						}
 					}
@@ -6354,43 +6042,17 @@
 						{
 							"x" : 
 							[
-								42.98134231567383,
-								42.98134231567383,
-								41.93035507202148,
-								41.93035507202148
+								35.07923507690430,
+								35.07923507690430,
+								34.02824783325195,
+								34.02824783325195
 							],
 							"y" : 
 							[
-								11.04069137573242,
-								12.09167957305908,
-								12.09167957305908,
-								11.04069137573242
-							]
-						}
-					}
-				},
-				
-				{
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture2",
-					"polygon" : 
-					{
-						"vertices" : 
-						{
-							"x" : 
-							[
-								42.98134231567383,
-								42.98134231567383,
-								41.93035507202148,
-								41.93035507202148
-							],
-							"y" : 
-							[
-								11.04069137573242,
-								12.09167957305908,
-								12.09167957305908,
-								11.04069137573242
+								7.224191665649414,
+								8.275179862976074,
+								8.275179862976074,
+								7.224191665649414
 							]
 						}
 					}
@@ -6578,6 +6240,58 @@
 						{
 							"x" : 
 							[
+								28.58407211303711,
+								27.81707763671875,
+								27.09853935241699,
+								27.86553001403809
+							],
+							"y" : 
+							[
+								-5.117895126342773,
+								-4.399353027343750,
+								-5.166345596313477,
+								-5.884884834289551
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								26.64100646972656,
+								25.87401580810547,
+								25.15547561645508,
+								25.92246818542480
+							],
+							"y" : 
+							[
+								-5.037531852722168,
+								-4.318991661071777,
+								-5.085986137390137,
+								-5.804524421691895
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
 								21.78411865234375,
 								21.01712417602539,
 								20.29858589172363,
@@ -6604,17 +6318,303 @@
 						{
 							"x" : 
 							[
-								16.15460014343262,
-								16.15460014343262,
-								15.10360813140869,
-								15.10360813140869
+								29.60728836059570,
+								28.84029197692871,
+								28.12175369262695,
+								28.88875389099121
 							],
 							"y" : 
 							[
-								3.307559013366699,
-								4.358548164367676,
-								4.358548164367676,
-								3.307559013366699
+								-0.7468178272247314,
+								-0.02827787399291992,
+								-0.7952711582183838,
+								-1.513810873031616
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								27.57741737365723,
+								26.81042289733887,
+								26.09188461303711,
+								26.85887336730957
+							],
+							"y" : 
+							[
+								-0.7591238021850586,
+								-0.04058432579040527,
+								-0.8075776100158691,
+								-1.526118040084839
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								21.78411865234375,
+								21.01712417602539,
+								20.29858589172363,
+								21.06558036804199
+							],
+							"y" : 
+							[
+								-0.5912964344024658,
+								0.1272430419921875,
+								-0.6397504806518555,
+								-1.358289718627930
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								25.63435363769531,
+								24.86735725402832,
+								24.14881706237793,
+								24.91581535339355
+							],
+							"y" : 
+							[
+								-0.6787631511688232,
+								0.03977727890014648,
+								-0.7272167205810547,
+								-1.445755720138550
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								23.81399345397949,
+								23.04699897766113,
+								22.32846069335938,
+								23.09545326232910
+							],
+							"y" : 
+							[
+								-0.5789895057678223,
+								0.1395497322082520,
+								-0.6274440288543701,
+								-1.345984458923340
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								29.60728836059570,
+								28.84029197692871,
+								28.12175369262695,
+								28.88875389099121
+							],
+							"y" : 
+							[
+								-0.7468178272247314,
+								-0.02827787399291992,
+								-0.7952711582183838,
+								-1.513810873031616
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								23.81399345397949,
+								23.04699897766113,
+								22.32846069335938,
+								23.09545326232910
+							],
+							"y" : 
+							[
+								-0.5789895057678223,
+								0.1395497322082520,
+								-0.6274440288543701,
+								-1.345984458923340
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								14.15753746032715,
+								13.15598869323730,
+								12.83743858337402,
+								13.83898544311523
+							],
+							"y" : 
+							[
+								-4.965314865112305,
+								-4.646763801574707,
+								-5.648313522338867,
+								-5.966865539550781
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								22.24358558654785,
+								21.24203491210938,
+								20.92348289489746,
+								21.92503356933594
+							],
+							"y" : 
+							[
+								-6.125175476074219,
+								-5.806622505187988,
+								-6.808175086975098,
+								-7.126726150512695
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								20.41656494140625,
+								19.41501808166504,
+								19.09646606445312,
+								20.09801483154297
+							],
+							"y" : 
+							[
+								-7.009788513183594,
+								-6.691236495971680,
+								-7.692786216735840,
+								-8.011337280273438
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								18.62803077697754,
+								17.62648391723633,
+								17.30793190002441,
+								18.30948257446289
+							],
+							"y" : 
+							[
+								-7.773394584655762,
+								-7.454841613769531,
+								-8.456392288208008,
+								-8.774945259094238
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								12.33052253723145,
+								11.32897186279297,
+								11.01041889190674,
+								12.01196765899658
+							],
+							"y" : 
+							[
+								-5.849926948547363,
+								-5.531374931335449,
+								-6.532923698425293,
+								-6.851476669311523
 							]
 						}
 					}
@@ -6624,8 +6624,8 @@
 			"name" : "body1",
 			"position" : 
 			{
-				"x" : -5.888908386230469,
-				"y" : -3.276981115341187
+				"x" : -7.861492156982422,
+				"y" : -3.200999259948730
 			},
 			"type" : 0
 		}

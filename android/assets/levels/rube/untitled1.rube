@@ -2065,8 +2065,8 @@
         "name" : "body1",
         "position" : 
         {
-          "x" : -5.888908386230469,
-          "y" : -3.276981115341187
+          "x" : -7.861492156982422,
+          "y" : -3.200999259948730
         },
         "type" : "static"
       },
@@ -2088,7 +2088,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 137,
             "name" : "plat",
             "shapes" : 
@@ -2118,7 +2118,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 138,
             "name" : "fixture1",
             "sensor" : true,
@@ -2138,7 +2138,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 140,
             "name" : "fixture1",
             "sensor" : true,
@@ -2185,7 +2185,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 141,
             "name" : "plat",
             "shapes" : 
@@ -2215,7 +2215,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 142,
             "name" : "fixture1",
             "sensor" : true,
@@ -2235,7 +2235,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 143,
             "name" : "fixture1",
             "sensor" : true,
@@ -2282,7 +2282,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 144,
             "name" : "plat",
             "shapes" : 
@@ -2312,7 +2312,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 145,
             "name" : "fixture1",
             "sensor" : true,
@@ -2332,7 +2332,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 146,
             "name" : "fixture1",
             "sensor" : true,
@@ -2379,7 +2379,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 147,
             "name" : "plat",
             "shapes" : 
@@ -2409,7 +2409,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 148,
             "name" : "fixture1",
             "sensor" : true,
@@ -2429,7 +2429,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 149,
             "name" : "fixture1",
             "sensor" : true,
@@ -2476,7 +2476,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 150,
             "name" : "plat",
             "shapes" : 
@@ -2506,7 +2506,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 151,
             "name" : "fixture1",
             "sensor" : true,
@@ -2526,7 +2526,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 152,
             "name" : "fixture1",
             "sensor" : true,
@@ -2573,7 +2573,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 153,
             "name" : "plat",
             "shapes" : 
@@ -2603,7 +2603,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 154,
             "name" : "fixture1",
             "sensor" : true,
@@ -2623,7 +2623,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 155,
             "name" : "fixture1",
             "sensor" : true,
@@ -2670,7 +2670,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 157,
             "name" : "plat",
             "shapes" : 
@@ -2700,7 +2700,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 160,
             "name" : "fixture1",
             "sensor" : true,
@@ -2720,7 +2720,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 161,
             "name" : "fixture1",
             "sensor" : true,
@@ -2767,7 +2767,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 162,
             "name" : "plat",
             "shapes" : 
@@ -2797,7 +2797,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 163,
             "name" : "fixture1",
             "sensor" : true,
@@ -2817,7 +2817,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 164,
             "name" : "fixture1",
             "sensor" : true,
@@ -2864,7 +2864,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 165,
             "name" : "plat",
             "shapes" : 
@@ -2894,7 +2894,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 166,
             "name" : "fixture1",
             "sensor" : true,
@@ -2914,7 +2914,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 167,
             "name" : "fixture1",
             "sensor" : true,
@@ -2961,7 +2961,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 168,
             "name" : "plat",
             "shapes" : 
@@ -2991,7 +2991,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 169,
             "name" : "fixture1",
             "sensor" : true,
@@ -3011,7 +3011,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 171,
             "name" : "fixture1",
             "sensor" : true,
@@ -3031,7 +3031,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 172,
             "name" : "fixture1",
             "sensor" : true,
@@ -3051,7 +3051,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 173,
             "name" : "fixture1",
             "sensor" : true,
@@ -3071,7 +3071,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 174,
             "name" : "fixture1",
             "sensor" : true,
@@ -3091,7 +3091,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 175,
             "name" : "fixture1",
             "sensor" : true,
@@ -3138,7 +3138,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 176,
             "name" : "plat",
             "shapes" : 
@@ -3168,7 +3168,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 177,
             "name" : "fixture1",
             "sensor" : true,
@@ -3188,7 +3188,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 178,
             "name" : "fixture1",
             "sensor" : true,
@@ -3235,7 +3235,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 179,
             "name" : "plat",
             "shapes" : 
@@ -3265,7 +3265,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 180,
             "name" : "fixture1",
             "sensor" : true,
@@ -3285,7 +3285,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 181,
             "name" : "fixture1",
             "sensor" : true,
@@ -3332,7 +3332,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 194,
             "name" : "plat",
             "shapes" : 
@@ -3362,7 +3362,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 195,
             "name" : "fixture1",
             "sensor" : true,
@@ -3382,7 +3382,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 196,
             "name" : "fixture1",
             "sensor" : true,
@@ -3429,7 +3429,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 197,
             "name" : "plat",
             "shapes" : 
@@ -3459,7 +3459,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 198,
             "name" : "fixture1",
             "sensor" : true,
@@ -3479,7 +3479,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 199,
             "name" : "fixture1",
             "sensor" : true,
@@ -3526,7 +3526,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 200,
             "name" : "plat",
             "shapes" : 
@@ -3556,7 +3556,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 201,
             "name" : "fixture1",
             "sensor" : true,
@@ -3576,7 +3576,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 202,
             "name" : "fixture1",
             "sensor" : true,
@@ -3623,7 +3623,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 203,
             "name" : "plat",
             "shapes" : 
@@ -3653,7 +3653,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 204,
             "name" : "fixture1",
             "sensor" : true,
@@ -3673,7 +3673,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 205,
             "name" : "fixture1",
             "sensor" : true,
@@ -3720,7 +3720,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 206,
             "name" : "plat",
             "shapes" : 
@@ -3750,7 +3750,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 207,
             "name" : "fixture1",
             "sensor" : true,
@@ -3770,7 +3770,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 208,
             "name" : "fixture1",
             "sensor" : true,
@@ -3817,7 +3817,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 209,
             "name" : "plat",
             "shapes" : 
@@ -3847,7 +3847,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 210,
             "name" : "fixture1",
             "sensor" : true,
@@ -3867,7 +3867,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 211,
             "name" : "fixture1",
             "sensor" : true,
@@ -3914,7 +3914,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 212,
             "name" : "plat",
             "shapes" : 
@@ -3944,7 +3944,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 213,
             "name" : "fixture1",
             "sensor" : true,
@@ -3964,7 +3964,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 214,
             "name" : "fixture1",
             "sensor" : true,
@@ -4011,7 +4011,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 215,
             "name" : "plat",
             "shapes" : 
@@ -4041,7 +4041,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 216,
             "name" : "fixture1",
             "sensor" : true,
@@ -4061,7 +4061,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 217,
             "name" : "fixture1",
             "sensor" : true,
@@ -4108,7 +4108,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 218,
             "name" : "plat",
             "shapes" : 
@@ -4138,7 +4138,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 219,
             "name" : "fixture1",
             "sensor" : true,
@@ -4158,7 +4158,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 220,
             "name" : "fixture1",
             "sensor" : true,
@@ -4205,7 +4205,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 221,
             "name" : "plat",
             "shapes" : 
@@ -4235,7 +4235,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 222,
             "name" : "fixture1",
             "sensor" : true,
@@ -4255,7 +4255,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 223,
             "name" : "fixture1",
             "sensor" : true,
@@ -4302,7 +4302,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 224,
             "name" : "plat",
             "shapes" : 
@@ -4332,7 +4332,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 225,
             "name" : "fixture1",
             "sensor" : true,
@@ -4352,7 +4352,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 226,
             "name" : "fixture1",
             "sensor" : true,
@@ -4399,7 +4399,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 227,
             "name" : "plat",
             "shapes" : 
@@ -4429,7 +4429,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 228,
             "name" : "fixture1",
             "sensor" : true,
@@ -4449,7 +4449,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 229,
             "name" : "fixture1",
             "sensor" : true,
@@ -4496,7 +4496,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 230,
             "name" : "plat",
             "shapes" : 
@@ -4526,7 +4526,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 231,
             "name" : "fixture1",
             "sensor" : true,
@@ -4546,7 +4546,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 232,
             "name" : "fixture1",
             "sensor" : true,
@@ -4593,7 +4593,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 233,
             "name" : "plat",
             "shapes" : 
@@ -4623,7 +4623,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 234,
             "name" : "fixture1",
             "sensor" : true,
@@ -4643,7 +4643,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 235,
             "name" : "fixture1",
             "sensor" : true,
@@ -4690,7 +4690,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 236,
             "name" : "plat",
             "shapes" : 
@@ -4720,7 +4720,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 237,
             "name" : "fixture1",
             "sensor" : true,
@@ -4740,7 +4740,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 238,
             "name" : "fixture1",
             "sensor" : true,
@@ -4787,7 +4787,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 239,
             "name" : "plat",
             "shapes" : 
@@ -4817,7 +4817,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 240,
             "name" : "fixture1",
             "sensor" : true,
@@ -4837,7 +4837,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 241,
             "name" : "fixture1",
             "sensor" : true,
@@ -4884,7 +4884,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 242,
             "name" : "plat",
             "shapes" : 
@@ -4914,7 +4914,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 243,
             "name" : "fixture1",
             "sensor" : true,
@@ -4934,7 +4934,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 244,
             "name" : "fixture1",
             "sensor" : true,
@@ -4981,7 +4981,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 245,
             "name" : "plat",
             "shapes" : 
@@ -5011,7 +5011,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 246,
             "name" : "fixture1",
             "sensor" : true,
@@ -5031,7 +5031,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 247,
             "name" : "fixture1",
             "sensor" : true,
@@ -5078,7 +5078,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 248,
             "name" : "plat",
             "shapes" : 
@@ -5108,7 +5108,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 249,
             "name" : "fixture1",
             "sensor" : true,
@@ -5128,7 +5128,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 250,
             "name" : "fixture1",
             "sensor" : true,
@@ -5175,7 +5175,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 251,
             "name" : "plat",
             "shapes" : 
@@ -5205,7 +5205,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 252,
             "name" : "fixture1",
             "sensor" : true,
@@ -5225,7 +5225,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 253,
             "name" : "fixture1",
             "sensor" : true,
@@ -5272,7 +5272,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 254,
             "name" : "plat",
             "shapes" : 
@@ -5302,7 +5302,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 255,
             "name" : "fixture1",
             "sensor" : true,
@@ -5322,7 +5322,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 256,
             "name" : "fixture1",
             "sensor" : true,
@@ -5369,7 +5369,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 257,
             "name" : "plat",
             "shapes" : 
@@ -5399,7 +5399,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 258,
             "name" : "fixture1",
             "sensor" : true,
@@ -5419,7 +5419,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 259,
             "name" : "fixture1",
             "sensor" : true,
@@ -5466,7 +5466,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 260,
             "name" : "plat",
             "shapes" : 
@@ -5496,7 +5496,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 261,
             "name" : "fixture1",
             "sensor" : true,
@@ -5516,7 +5516,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 262,
             "name" : "fixture1",
             "sensor" : true,
@@ -5563,7 +5563,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 263,
             "name" : "plat",
             "shapes" : 
@@ -5593,7 +5593,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 264,
             "name" : "fixture1",
             "sensor" : true,
@@ -5613,7 +5613,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 265,
             "name" : "fixture1",
             "sensor" : true,
@@ -5660,7 +5660,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 266,
             "name" : "plat",
             "shapes" : 
@@ -5690,7 +5690,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 267,
             "name" : "fixture1",
             "sensor" : true,
@@ -5710,7 +5710,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 268,
             "name" : "fixture1",
             "sensor" : true,
@@ -5757,7 +5757,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 269,
             "name" : "plat",
             "shapes" : 
@@ -5787,7 +5787,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 270,
             "name" : "fixture1",
             "sensor" : true,
@@ -5807,7 +5807,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 271,
             "name" : "fixture1",
             "sensor" : true,
@@ -5854,7 +5854,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 272,
             "name" : "plat",
             "shapes" : 
@@ -5884,7 +5884,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 273,
             "name" : "fixture1",
             "sensor" : true,
@@ -5904,7 +5904,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 274,
             "name" : "fixture1",
             "sensor" : true,
@@ -5951,7 +5951,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 275,
             "name" : "plat",
             "shapes" : 
@@ -5981,7 +5981,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 276,
             "name" : "fixture1",
             "sensor" : true,
@@ -6001,7 +6001,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 277,
             "name" : "fixture1",
             "sensor" : true,
@@ -6048,7 +6048,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 278,
             "name" : "plat",
             "shapes" : 
@@ -6078,7 +6078,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 279,
             "name" : "fixture1",
             "sensor" : true,
@@ -6098,7 +6098,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 280,
             "name" : "fixture1",
             "sensor" : true,
@@ -6145,7 +6145,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 281,
             "name" : "plat",
             "shapes" : 
@@ -6175,7 +6175,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 282,
             "name" : "fixture1",
             "sensor" : true,
@@ -6195,7 +6195,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 283,
             "name" : "fixture1",
             "sensor" : true,
@@ -6242,7 +6242,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 284,
             "name" : "plat",
             "shapes" : 
@@ -6272,7 +6272,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 285,
             "name" : "fixture1",
             "sensor" : true,
@@ -6292,7 +6292,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 286,
             "name" : "fixture1",
             "sensor" : true,
@@ -6339,7 +6339,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 287,
             "name" : "plat",
             "shapes" : 
@@ -6369,7 +6369,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 288,
             "name" : "fixture1",
             "sensor" : true,
@@ -6389,7 +6389,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 289,
             "name" : "fixture1",
             "sensor" : true,
@@ -6436,7 +6436,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 290,
             "name" : "plat",
             "shapes" : 
@@ -6466,7 +6466,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 291,
             "name" : "fixture1",
             "sensor" : true,
@@ -6486,7 +6486,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 292,
             "name" : "fixture1",
             "sensor" : true,
@@ -6533,7 +6533,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 293,
             "name" : "plat",
             "shapes" : 
@@ -6563,7 +6563,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 294,
             "name" : "fixture1",
             "sensor" : true,
@@ -6583,7 +6583,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 295,
             "name" : "fixture1",
             "sensor" : true,
@@ -6630,7 +6630,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 296,
             "name" : "plat",
             "shapes" : 
@@ -6660,7 +6660,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 297,
             "name" : "fixture1",
             "sensor" : true,
@@ -6680,7 +6680,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 298,
             "name" : "fixture1",
             "sensor" : true,
@@ -6727,7 +6727,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 299,
             "name" : "plat",
             "shapes" : 
@@ -6757,7 +6757,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 300,
             "name" : "fixture1",
             "sensor" : true,
@@ -6777,7 +6777,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 301,
             "name" : "fixture1",
             "sensor" : true,
@@ -6824,7 +6824,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 302,
             "name" : "plat",
             "shapes" : 
@@ -6854,7 +6854,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 303,
             "name" : "fixture1",
             "sensor" : true,
@@ -6874,7 +6874,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 304,
             "name" : "fixture1",
             "sensor" : true,
@@ -6921,7 +6921,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 305,
             "name" : "plat",
             "shapes" : 
@@ -6951,7 +6951,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 306,
             "name" : "fixture1",
             "sensor" : true,
@@ -6971,7 +6971,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 307,
             "name" : "fixture1",
             "sensor" : true,
@@ -7018,7 +7018,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 308,
             "name" : "plat",
             "shapes" : 
@@ -7048,7 +7048,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 309,
             "name" : "fixture1",
             "sensor" : true,
@@ -7068,7 +7068,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 310,
             "name" : "fixture1",
             "sensor" : true,
@@ -7115,7 +7115,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 311,
             "name" : "plat",
             "shapes" : 
@@ -7145,7 +7145,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 312,
             "name" : "fixture1",
             "sensor" : true,
@@ -7165,7 +7165,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 313,
             "name" : "fixture1",
             "sensor" : true,
@@ -7212,7 +7212,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 314,
             "name" : "plat",
             "shapes" : 
@@ -7242,7 +7242,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 315,
             "name" : "fixture1",
             "sensor" : true,
@@ -7262,7 +7262,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 316,
             "name" : "fixture1",
             "sensor" : true,
@@ -7309,7 +7309,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 317,
             "name" : "plat",
             "shapes" : 
@@ -7339,7 +7339,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 318,
             "name" : "fixture1",
             "sensor" : true,
@@ -7359,7 +7359,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 319,
             "name" : "fixture1",
             "sensor" : true,
@@ -7406,7 +7406,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 320,
             "name" : "plat",
             "shapes" : 
@@ -7436,7 +7436,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 321,
             "name" : "fixture1",
             "sensor" : true,
@@ -7456,7 +7456,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 322,
             "name" : "fixture1",
             "sensor" : true,
@@ -7503,7 +7503,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 323,
             "name" : "plat",
             "shapes" : 
@@ -7533,7 +7533,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 324,
             "name" : "fixture1",
             "sensor" : true,
@@ -7553,7 +7553,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 325,
             "name" : "fixture1",
             "sensor" : true,
@@ -7600,7 +7600,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 326,
             "name" : "plat",
             "shapes" : 
@@ -7630,7 +7630,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 327,
             "name" : "fixture1",
             "sensor" : true,
@@ -7650,7 +7650,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 328,
             "name" : "fixture1",
             "sensor" : true,
@@ -7697,7 +7697,7 @@
           
           {
             "density" : 1,
-            "friction" : 0.8,
+            "friction" : 20.0,
             "id" : 329,
             "name" : "plat",
             "shapes" : 
@@ -7727,7 +7727,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 330,
             "name" : "fixture1",
             "sensor" : true,
@@ -7747,7 +7747,7 @@
           },
           
           {
-            "friction" : 0.2,
+            "friction" : 20.0,
             "id" : 331,
             "name" : "fixture1",
             "sensor" : true,

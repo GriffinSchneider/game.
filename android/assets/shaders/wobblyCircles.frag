@@ -15,6 +15,7 @@ varying vec2 v_texCoords;
 
 uniform vec2 center;
 uniform float iGlobalTime;
+uniform vec3 iResolution;
 uniform sampler2D palatte;
 uniform float palatteSize;
 
@@ -33,18 +34,23 @@ void main(void) {
   iGlobalTime;
   palatte;
   palatteSize;
+  iResolution;
 
   MEDIUMP vec2 v = gl_FragCoord.xy - center;
   
   float dist = length(v);
   
-  dist += 15.0 * saw(4.25 * 3.14 * atan(v.y, v.x));
+  dist += 30.0 * saw(4.25 * 3.14 * atan(v.y, v.x));
 
-  float d = mod(dist*0.03 - iGlobalTime*10.0, palatteSize);
+  float d = mod(dist*0.03 -       iGlobalTime*10.0, palatteSize);
   
-  float palatteIndex = d/palatteSize;
+  float palatteIndex1 = d / palatteSize;
+  float palatteIndex2 = mod(d+1.0, palatteSize) / palatteSize;
 
-  vec4 col = texture2D(palatte, vec2(palatteIndex, 0.0));
+  vec4 col1 = texture2D(palatte, vec2(palatteIndex1, 0.0));
+  vec4 col2 = texture2D(palatte, vec2(palatteIndex2, 0.0));
+
+  vec4 col = mix(col1, col2, smoothstep(0.0, 1.0, fract(d)));
 
   gl_FragColor = vec4(col.x, col.y, col.z, 1 );
 }

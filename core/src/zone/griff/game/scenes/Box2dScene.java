@@ -1,11 +1,10 @@
 package zone.griff.game.scenes;
 
 import static zone.griff.game.B2DVars.PPM;
-import zone.griff.game.B2DVars;
 import zone.griff.game.MovingPlatform;
 import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
-import zone.griff.game.pools.Vector2Pool;
+import zone.griff.game.scenes.Player.MoveDirection;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -16,13 +15,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.EarClippingTriangulator;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -32,7 +28,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.Transform;
 import com.badlogic.gdx.physics.box2d.World;
@@ -47,21 +42,15 @@ public class Box2dScene extends Scene {
 
 	private static float CAMERA_LERP_FACTOR = 0.1f;
 	
-	private static float PLAYER_MOVEMENT_X_VELOCITY = 8.f;
-	private static float PLAYER_MOVEMENT_MULTIPLIER = 0.4f;
-	private static float PLAYER_STOPPING_MULTIPLIER = 1.1f;
-	private static float PLAYER_JUMP_Y_VELOCITY = 15;  
 
 	private static float WORLD_STEP_TIME = 1.0f/60.0f;
 	
 	
 	private World world;
 	private Box2DDebugRenderer b2dr;
-	private Body playerBody;
-	private Body playerJumpSensor;
-	private PolygonSprite playerSprite;
 	private OrthographicCamera b2dCam;
 
+	private Player player;
 	private Array<MovingPlatform> movingPlatforms;
 	
 	private PolygonSpriteBatch polyBatch;
@@ -89,8 +78,7 @@ public class Box2dScene extends Scene {
 
 		this.setupScene();
 		this.setupShader();
-		this.setupPlayerBody();
-		this.setupPlayerJumpSensor();
+		this.player = new Player(this.world);
 		
 		final Box2dScene t = this;
 		Gdx.input.setInputProcessor(new InputProcessor() {
@@ -145,57 +133,6 @@ public class Box2dScene extends Scene {
 			}
 		});
 	}
-	
-	public void setupPlayerBody() {
-		BodyDef bdef = new BodyDef();
-		PolygonShape shape = new PolygonShape();
-		FixtureDef fdef = new FixtureDef();
-		
-		// create player
-//		Vector2 playerPos = new Vector2(160/PPM, 200/PPM);
-		Vector2 playerPos = new Vector2(0, 0);
-//		bdef.position.set(playerPos);
-		bdef.type = BodyType.DynamicBody;
-		this.playerBody = world.createBody(bdef);
-		
-		shape.setAsBox(10 / PPM, 10 / PPM);
-		fdef.shape = shape;
-		fdef.density = 0f;
-		fdef.friction = 0.2f;
-		fdef.restitution = 0.0f;
-		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
-		fdef.filter.maskBits = B2DVars.BIT_GROUND;
-		
-		this.playerBody.createFixture(fdef).setUserData("player");
-		
-		this.playerBody.setAngularDamping(10); 
-		
-		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
-	  textureGround.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-	  TextureRegion texreg = new TextureRegion(textureGround,0,0,1,1);
-	  texreg.setTexture(textureGround);
-		
-		this.playerSprite = this.polygonSpriteForFixture(this.playerBody.getFixtureList().get(0), texreg);
-		this.playerSprite.setOrigin(playerPos.x, playerPos.y);
-	}
-	
-	public void setupPlayerJumpSensor() {
-		BodyDef bdef = new BodyDef();
-		PolygonShape shape = new PolygonShape();
-		FixtureDef fdef = new FixtureDef();
-
-		bdef.type = BodyType.DynamicBody;
-		this.playerJumpSensor = world.createBody(bdef);
-		
-		// create foot sensor
-		shape.setAsBox(6 / PPM, 6 / PPM, new Vector2(0, -8 / PPM), 0);
-		fdef.shape = shape;
-		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
-		fdef.filter.maskBits = B2DVars.BIT_GROUND;
-		fdef.isSensor = true;
-		this.playerJumpSensor.createFixture(fdef).setUserData("foot");
-	}
-	
 	
 	private static final String MOVING = "moving";
 	
@@ -256,7 +193,7 @@ public class Box2dScene extends Scene {
 		this.movingPlatforms.add(new MovingPlatform(
 				platformBody, 
 				targetPoints,
-				this.polygonSpriteForFixture(platformFixture, texreg)));
+				Box2DHelper.polygonSpriteForFixture(platformFixture, texreg)));
 	}
 	
 	public boolean isMovingPlatformType(String platformType) {
@@ -270,33 +207,10 @@ public class Box2dScene extends Scene {
 	
 	public void setupGroundPlatform(Body body, TextureRegion texreg, RubeScene scene) {
 		for (Fixture fixture : body.getFixtureList()) {
-			this.groundPolySprites.add(this.polygonSpriteForFixture(fixture, texreg));
+			this.groundPolySprites.add(Box2DHelper.polygonSpriteForFixture(fixture, texreg));
 		}
 	}
 	
-	public PolygonSprite polygonSpriteForFixture(Fixture fixture, TextureRegion texreg) {
-		PolygonShape shape = (PolygonShape)fixture.getShape();
-		Body body = fixture.getBody();
-		
-		Vector2 tmp = Vector2Pool.obtain();
-				
-		int vertexCount = shape.getVertexCount();
-		float[] vertices = new float[vertexCount * 2];
-		for (int k = 0; k < vertexCount; k++) {
-			shape.getVertex(k, tmp);
-			tmp.rotate(body.getAngle() * MathUtils.radiansToDegrees);
-			tmp.add(body.getPosition());
-			vertices[k * 2] = tmp.x;
-			vertices[k * 2 + 1] = tmp.y;
-		}
-
-		Vector2Pool.release(tmp);
-
-		short triangles[] = new EarClippingTriangulator().computeTriangles(vertices).toArray();
-		PolygonRegion region = new PolygonRegion(texreg, vertices, triangles);
-
-		return new PolygonSprite(region);
-	}
 	
 	Texture palatte;
 	int palatteSize;
@@ -332,11 +246,11 @@ public class Box2dScene extends Scene {
 	public void update(float dt) {
 		this.updateInput(WORLD_STEP_TIME);
 		this.updateMovingPlatforms(WORLD_STEP_TIME);
-		this.updateJumpSensor(WORLD_STEP_TIME);
+		this.player.update(WORLD_STEP_TIME);
 
 		world.step(WORLD_STEP_TIME, 6, 2);
 
-		Vector2 playerCenter = this.playerBody.getWorldCenter();
+		Vector2 playerCenter = this.player.body.getWorldCenter();
 		Vector3 cameraCenter = this.b2dCam.position;
 		
 		cameraCenter.x += (playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR;
@@ -345,16 +259,6 @@ public class Box2dScene extends Scene {
 		this.b2dCam.update();
 	}
 	
-	public void updateJumpSensor(float dt) {
-		Vector2 v = Vector2Pool.obtain().set(this.playerBody.getWorldCenter());
-		Vector2 v2 = Vector2Pool.obtain(this.playerBody.getLinearVelocity());
-		v.add(v2.scl(dt));
-		v.sub(this.playerJumpSensor.getWorldCenter());
-		v.scl(1.0f/dt);
-		this.playerJumpSensor.setLinearVelocity(v);
-		Vector2Pool.release(v);
-		Vector2Pool.release(v2);
-	}
 	
 	public void updateMovingPlatforms(float dt) {
 		for (MovingPlatform plat : this.movingPlatforms) {
@@ -363,21 +267,20 @@ public class Box2dScene extends Scene {
 	}
 
 	public void jumpPressed() {
-		// Jump
 		if (this.contactListener.isPlayerOnGround()) {
 			this.contactListener.playerJumped();
-			this.playerBody.setLinearVelocity(this.playerBody.getLinearVelocity().x, PLAYER_JUMP_Y_VELOCITY);
+			this.player.jump();
 		}
 	}
 
 	public void updateInput(float dt) {
 		// Move left/right or stop
 		if (Gdx.input.isKeyPressed(Keys.J)) {
-			this.movePlayer(false, dt);
+			this.player.setMoveDir(MoveDirection.LEFT);
 		} else if (Gdx.input.isKeyPressed(Keys.L)) {
-			this.movePlayer(true, dt);
+			this.player.setMoveDir(MoveDirection.RIGHT);
 		} else {
-			this.stopPlayer(dt);
+			this.player.setMoveDir(MoveDirection.NONE);
 		}
 		// Zoom
 		if (Gdx.input.isKeyPressed(Keys.EQUALS)) {
@@ -387,21 +290,6 @@ public class Box2dScene extends Scene {
 		}
 	}
 
-	public void movePlayer(boolean right, float dt) {
-		Vector2 playerVelocity = this.playerBody.getLinearVelocity();
-		Vector2 playerCenter = this.playerBody.getWorldCenter();
-		float desiredVel = right ? PLAYER_MOVEMENT_X_VELOCITY : -PLAYER_MOVEMENT_X_VELOCITY;
-		float velChange = (desiredVel - playerVelocity.x) * PLAYER_MOVEMENT_MULTIPLIER;
-		this.playerBody.applyLinearImpulse(velChange*this.playerBody.getMass(), 0, playerCenter.x, playerCenter.y, true);
-	}
-
-	public void stopPlayer(float dt) {
-		Vector2 playerVelocity = this.playerBody.getLinearVelocity();
-		Vector2 playerCenter = this.playerBody.getWorldCenter();
-		this.playerBody.applyForce(playerVelocity.x * -PLAYER_STOPPING_MULTIPLIER,
-				0, playerCenter.x, playerCenter.y, true);
-	}
-	
 	@Override
 	public void render() {
 
@@ -428,12 +316,7 @@ public class Box2dScene extends Scene {
 			sprite.draw(this.polyBatch);
 		}
 
-		Vector2 v = Vector2Pool.obtain();
-		v.set(this.playerBody.getWorldCenter());
-		this.playerSprite.setRotation(this.playerBody.getAngle() * MathUtils.radiansToDegrees);
-		this.playerSprite.setPosition(v.x, v.y);
-		this.playerSprite.draw(this.polyBatch);
-		Vector2Pool.release(v);
+		this.player.draw(this.polyBatch);
 
 		for (MovingPlatform p : this.movingPlatforms) {
 			p.render(this.polyBatch);
