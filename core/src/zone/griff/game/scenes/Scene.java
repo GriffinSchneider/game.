@@ -2,6 +2,7 @@ package zone.griff.game.scenes;
 
 import zone.griff.game.SceneManager;
 
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Scene {

@@ -4,6 +4,7 @@ import static zone.griff.game.B2DVars.PPM;
 import zone.griff.game.MovingPlatform;
 import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
+import zone.griff.game.ShaderBackground;
 import zone.griff.game.scenes.Player.MoveDirection;
 
 import com.badlogic.gdx.Gdx;
@@ -14,10 +15,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -42,9 +46,7 @@ public class Box2dScene extends Scene {
 
 	private static float CAMERA_LERP_FACTOR = 0.1f;
 	
-
 	private static float WORLD_STEP_TIME = 1.0f/60.0f;
-	
 	
 	private World world;
 	private Box2DDebugRenderer b2dr;
@@ -56,7 +58,14 @@ public class Box2dScene extends Scene {
 	private PolygonSpriteBatch polyBatch;
 	private Array<PolygonSprite> groundPolySprites;
 	
+	private ShaderBackground background;
+	
 	private MyContactListener contactListener;
+
+	// "buttons"
+	static final float moveLeftEnd = 0.1f;
+	static final float moveRightEnd = 0.3f;
+	static final float jumpStart = 0.7f;
 	
 	public Box2dScene(SceneManager sceneManager) {
 		super(sceneManager);
@@ -76,6 +85,8 @@ public class Box2dScene extends Scene {
 
 		this.groundPolySprites = new Array<PolygonSprite>();
 
+		this.background = new ShaderBackground(sceneManager);
+
 		this.setupScene();
 		this.setupShader();
 		this.player = new Player(this.world);
@@ -83,47 +94,23 @@ public class Box2dScene extends Scene {
 		final Box2dScene t = this;
 		Gdx.input.setInputProcessor(new InputProcessor() {
 			@Override
-			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
+			public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
 			@Override
-			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
+			public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
 			@Override
-			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-				// TODO Auto-generated method stub
+			public boolean touchDown(int screenX, int screenY, int pointer, int button) { 
+				if (screenX/(float)t.sceneManager.screenWidth > jumpStart) {
+					t.jumpPressed();
+				}
 				return false;
 			}
-			
 			@Override
-			public boolean scrolled(int amount) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
+			public boolean scrolled(int amount) { return false; }
+			@Override public boolean mouseMoved(int screenX, int screenY) { return false; }
 			@Override
-			public boolean mouseMoved(int screenX, int screenY) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
+			public boolean keyUp(int keycode) { return false; }
 			@Override
-			public boolean keyUp(int keycode) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean keyTyped(char character) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
+			public boolean keyTyped(char character) { return false; }
 			@Override
 			public boolean keyDown(int keycode) {
 				if (keycode == Keys.SPACE) {
@@ -147,7 +134,7 @@ public class Box2dScene extends Scene {
 		
 		for (Body body : scene.getBodies()) {
 			String platformType = this.getPlatformType(body, scene); 
-			Gdx.app.log("", platformType);
+			Gdx.app.log("", "" + platformType);
 			if (this.isMovingPlatformType(platformType)) {
 				this.setupMovingPlatform(body, texreg, scene);
 			} else {
@@ -155,6 +142,7 @@ public class Box2dScene extends Scene {
 			}
 		}
 	}
+	
 
 	public void setupMovingPlatform(Body moving, TextureRegion texreg, RubeScene scene) {
 		
@@ -211,7 +199,6 @@ public class Box2dScene extends Scene {
 		}
 	}
 	
-	
 	Texture palatte;
 	int palatteSize;
 	ShaderProgram shader;
@@ -241,6 +228,7 @@ public class Box2dScene extends Scene {
 		float camWidth = SceneManager.V_WIDTH / PPM;
 		float camHeight = ((float)height)/((float)width)*camWidth;
 		b2dCam.setToOrtho(false, camWidth, camHeight);
+		this.background.resize(width, height);
 	}
 	
 	public void update(float dt) {
@@ -257,6 +245,9 @@ public class Box2dScene extends Scene {
 		cameraCenter.y += (playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR;
 
 		this.b2dCam.update();
+		
+		this.background.parallaxX = cameraCenter.x*0.0004f;
+		this.background.parallaxY = cameraCenter.y*0.0004f;
 	}
 	
 	
@@ -274,24 +265,45 @@ public class Box2dScene extends Scene {
 	}
 
 	public void updateInput(float dt) {
-		// Move left/right or stop
-		if (Gdx.input.isKeyPressed(Keys.J)) {
-			this.player.setMoveDir(MoveDirection.LEFT);
-		} else if (Gdx.input.isKeyPressed(Keys.L)) {
-			this.player.setMoveDir(MoveDirection.RIGHT);
-		} else {
-			this.player.setMoveDir(MoveDirection.NONE);
+
+		boolean foundLeftOrRight = false;
+
+		for (int i = 0; i < 4; i++) {
+			if (Gdx.input.isTouched(i)) {
+				float touchUV = Gdx.input.getX(i) / (float)this.sceneManager.screenWidth;
+				Gdx.app.log("", "IT HAS OCCURRED__  " + touchUV);
+				if (touchUV < moveLeftEnd) {
+					foundLeftOrRight = true;
+					this.player.setMoveDir(MoveDirection.LEFT);
+				} else if (touchUV < moveRightEnd) {
+					foundLeftOrRight = true;
+					this.player.setMoveDir(MoveDirection.RIGHT);
+				}
+			}
 		}
-		// Zoom
-		if (Gdx.input.isKeyPressed(Keys.EQUALS)) {
-			this.b2dCam.zoom += 0.03f;
-		} else if (Gdx.input.isKeyPressed(Keys.MINUS)) {
-			this.b2dCam.zoom -= 0.03f;
+
+		if (!foundLeftOrRight) {
+			// Move left/right or stop
+			if (Gdx.input.isKeyPressed(Keys.J)) {
+				this.player.setMoveDir(MoveDirection.LEFT);
+			} else if (Gdx.input.isKeyPressed(Keys.L)) {
+				this.player.setMoveDir(MoveDirection.RIGHT);
+			} else {
+				this.player.setMoveDir(MoveDirection.NONE);
+			}
+			// Zoom
+			if (Gdx.input.isKeyPressed(Keys.EQUALS)) {
+				this.b2dCam.zoom += 0.03f;
+			} else if (Gdx.input.isKeyPressed(Keys.MINUS)) {
+				this.b2dCam.zoom -= 0.03f;
+			}
 		}
 	}
 
 	@Override
 	public void render() {
+		
+		this.background.draw();
 
 		this.polyBatch.setProjectionMatrix(this.b2dCam.combined);
 		this.polyBatch.begin();
@@ -299,7 +311,7 @@ public class Box2dScene extends Scene {
 
 		this.polyBatch.setShader(this.shader);
 		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
-//		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
+		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
 		this.shader.setUniformf("palatteSize", palatteSize);
 		this.shader.setUniform2fv("center", this.sceneManager.gameSizeArray, 0, 2);
 
@@ -324,7 +336,7 @@ public class Box2dScene extends Scene {
 
 		this.polyBatch.end();
 
-		b2dr.render(world, this.b2dCam.combined);
+//		b2dr.render(world, this.b2dCam.combined);
 	}
 	
 	@Override
@@ -334,7 +346,9 @@ public class Box2dScene extends Scene {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		this.palatte.dispose();
+		this.polyBatch.dispose();
+		this.background.dispose();
 	}
 
 }
