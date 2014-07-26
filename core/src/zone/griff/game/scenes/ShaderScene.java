@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 
@@ -21,6 +24,9 @@ public class ShaderScene extends Scene {
 	float centers[][][];
 	Texture palatte;
 	int palatteSize;
+
+	FrameBuffer fbo;
+	SpriteBatch fboBatch;
 
 	public ShaderScene(SceneManager game) {
 		super(game);
@@ -34,6 +40,8 @@ public class ShaderScene extends Scene {
 		pixmap.drawPixel(4, 0, 0xFA6900FF);
 		this.palatte = new Texture(pixmap);
 		pixmap.dispose();
+		
+		this.setupFBO();
 
 	}
 
@@ -73,6 +81,8 @@ public class ShaderScene extends Scene {
 		if (!this.shader.isCompiled()) {
 			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
 		}
+		
+		this.setupFBO();
 	}
 	
 	public float[] squareVertices(float x, float y, float width, float height) {
@@ -87,6 +97,26 @@ public class ShaderScene extends Scene {
 				right, top, 0,
 		};
 	}
+	
+	public void setupFBO() {
+	   if (fbo != null) {
+	  	 fbo.dispose();
+	   }
+
+	   fbo = new FrameBuffer(
+	  		 Pixmap.Format.RGB888, 
+	  		 this.sceneManager.screenWidth,
+	  		 this.sceneManager.screenHeight,
+	  		 true);
+	   fbo.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+	 
+	   if(fboBatch != null) {
+	  	 fboBatch.dispose();
+	   }
+
+	   fboBatch = new SpriteBatch();
+	}
+
 
 	@Override
 	public void handleInput() {
@@ -105,6 +135,9 @@ public class ShaderScene extends Scene {
 		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
 			return;
 		}
+		
+		fbo.begin();
+		
 		this.palatte.bind();
 		this.shader.begin();
 		
@@ -123,11 +156,22 @@ public class ShaderScene extends Scene {
 		}
 		
 		this.shader.end();
+		
+		fbo.end();
+		fboBatch.begin();
+		fboBatch.draw(
+				fbo.getColorBufferTexture(), 
+				0, 0, 
+				this.sceneManager.screenWidth, this.sceneManager.screenHeight, 
+				0, 0, 1, 1);
+		fboBatch.end();
 	}
 	
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		shader.dispose();
+		fbo.dispose();
+		fboBatch.dispose();
 	}
 
 

@@ -19,6 +19,8 @@ public class SceneManager implements ApplicationListener {
 	public static final int V_HEIGHT = 375;
 	
 	public float[] gameSizeArray;
+	public int screenWidth;
+	public int screenHeight;
 
 	public float gameTime;
 	
@@ -68,12 +70,14 @@ public class SceneManager implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
-		this.gameSizeArray = new float[]{width, height, 1.0f};
+		this.screenWidth = width;
+		this.screenHeight = height;
+		this.gameSizeArray = new float[]{this.screenWidth, this.screenHeight, 1.0f};
 
 		this.startup();
 
 		for (Scene s : this.gameStates) {
-			s.resize(width, height);
+			s.resize(this.screenWidth, this.screenHeight);
 		}
 		
 	}
