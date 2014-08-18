@@ -234,7 +234,7 @@ public class Box2dScene extends Scene {
 	public void update(float dt) {
 		this.updateInput(WORLD_STEP_TIME);
 		this.updateMovingPlatforms(WORLD_STEP_TIME);
-		this.player.update(WORLD_STEP_TIME);
+		this.player.update(WORLD_STEP_TIME, this.contactListener.currentPlayerKinematicGround());
 
 		world.step(WORLD_STEP_TIME, 6, 2);
 

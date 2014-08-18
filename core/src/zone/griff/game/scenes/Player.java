@@ -98,25 +98,35 @@ public class Player {
 		this.body.setLinearVelocity(this.body.getLinearVelocity().x, PLAYER_JUMP_Y_VELOCITY);
 	}
 	
-	private void move(float dt) {
+	private void move(float dt, Body currentPlayerKinematicGround) {
+		Vector2 groundVelocity = Vector2Pool.obtain().set(0,0);
+		if (currentPlayerKinematicGround != null) {
+			groundVelocity.set(currentPlayerKinematicGround.getLinearVelocity());
+		}
+
 		if (this.moveDir == MoveDirection.NONE) {
 			Vector2 playerVelocity = this.body.getLinearVelocity();
 			Vector2 playerCenter = this.body.getWorldCenter();
-			this.body.applyForce(playerVelocity.x * -PLAYER_STOPPING_MULTIPLIER,
-					0, playerCenter.x, playerCenter.y, true);
-			
+			this.body.applyForce(
+					(playerVelocity.x - groundVelocity.x) * -PLAYER_STOPPING_MULTIPLIER, 0,
+					playerCenter.x, playerCenter.y,
+					true);
 		} else {
 			Vector2 playerVelocity = this.body.getLinearVelocity();
 			Vector2 playerCenter = this.body.getWorldCenter();
 			float desiredVel = this.moveDir == MoveDirection.RIGHT ? PLAYER_MOVEMENT_X_VELOCITY : -PLAYER_MOVEMENT_X_VELOCITY;
+			desiredVel += groundVelocity.x;
 			float velChange = (desiredVel - playerVelocity.x) * PLAYER_MOVEMENT_MULTIPLIER;
 			this.body.applyLinearImpulse(velChange*this.body.getMass(), 0, playerCenter.x, playerCenter.y, true);
 		}
+		
+		Vector2Pool.release(groundVelocity);
 	}
 	
-	public void update(float dt) {
+	
+	public void update(float dt, Body currentPlayerKinematicGround) {
 		this.updateJumpSensor(dt);
-		this.move(dt);
+		this.move(dt, currentPlayerKinematicGround);
 	}
 	
 	private void updateJumpSensor(float dt) {
