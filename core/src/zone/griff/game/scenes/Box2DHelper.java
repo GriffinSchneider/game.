@@ -17,7 +17,10 @@ public class Box2DHelper {
 	public static PolygonSprite polygonSpriteForFixture(Fixture fixture, TextureRegion texreg) {
 		PolygonShape shape = (PolygonShape)fixture.getShape();
 		Body body = fixture.getBody();
-		
+		return polygonSpriteForShapeOnBody(shape, body, texreg);
+	}
+
+	public static PolygonSprite polygonSpriteForShapeOnBody(PolygonShape shape, Body body, TextureRegion texreg) {
 		Vector2 tmp = Vector2Pool.obtain();
 				
 		int vertexCount = shape.getVertexCount();
@@ -36,6 +39,7 @@ public class Box2DHelper {
 		PolygonRegion region = new PolygonRegion(texreg, vertices, triangles);
 
 		return new PolygonSprite(region);
+		
 	}
 
 }

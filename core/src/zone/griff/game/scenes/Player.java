@@ -56,7 +56,7 @@ public class Player {
 		bdef.type = BodyType.DynamicBody;
 		this.body = world.createBody(bdef);
 		
-		float middleFixtureHalfWidth = 9 / PPM;
+		float middleFixtureHalfWidth = 8 / PPM;
 		float middleFixtureHalfHeight = 10 / PPM;
 		float sideFixtureHalfHeight = 8 / PPM;
 		float sideFixtureHalfWidth = 1 / PPM;
@@ -91,7 +91,6 @@ public class Player {
 		fdef.friction = 0f;
 		this.body.createFixture(fdef).setUserData("player");
 		
-		
 		this.body.setAngularDamping(10); 
 		
 		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -99,7 +98,10 @@ public class Player {
 	  TextureRegion texreg = new TextureRegion(textureGround,0,0,1,1);
 	  texreg.setTexture(textureGround);
 		
-		this.sprite = Box2DHelper.polygonSpriteForFixture(this.body.getFixtureList().get(0), texreg);
+	  shape.setAsBox(
+	  		middleFixtureHalfWidth + 2 * sideFixtureHalfWidth,
+	  		middleFixtureHalfHeight);
+		this.sprite = Box2DHelper.polygonSpriteForShapeOnBody(shape, this.body, texreg);
 		this.sprite.setOrigin(playerPos.x, playerPos.y);
 	}
 	
