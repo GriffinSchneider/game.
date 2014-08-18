@@ -56,15 +56,41 @@ public class Player {
 		bdef.type = BodyType.DynamicBody;
 		this.body = world.createBody(bdef);
 		
-		shape.setAsBox(10 / PPM, 10 / PPM);
+		float middleFixtureHalfWidth = 9 / PPM;
+		float middleFixtureHalfHeight = 10 / PPM;
+		float sideFixtureHalfHeight = 8 / PPM;
+		float sideFixtureHalfWidth = 1 / PPM;
+		
+		// Middle fixture
+		shape.setAsBox(middleFixtureHalfWidth, middleFixtureHalfHeight);
 		fdef.shape = shape;
 		fdef.density = 0f;
 		fdef.friction = 0.2f;
 		fdef.restitution = 0.0f;
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
-		
 		this.body.createFixture(fdef).setUserData("player");
+		
+		// Left fixture
+		shape.setAsBox(
+				sideFixtureHalfWidth, 
+				sideFixtureHalfHeight, 
+				new Vector2(-middleFixtureHalfWidth - sideFixtureHalfWidth, 0), 
+				0);
+		fdef.shape = shape;
+		fdef.friction = 0f;
+		this.body.createFixture(fdef).setUserData("player");
+		
+		// Right fixture
+		shape.setAsBox(
+				sideFixtureHalfWidth, 
+				sideFixtureHalfHeight, 
+				new Vector2(middleFixtureHalfWidth + sideFixtureHalfWidth, 0), 
+				0);
+		fdef.shape = shape;
+		fdef.friction = 0f;
+		this.body.createFixture(fdef).setUserData("player");
+		
 		
 		this.body.setAngularDamping(10); 
 		
