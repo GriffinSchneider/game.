@@ -1,5 +1,7 @@
 package zone.griff.game;
 
+import zone.griff.game.scenes.Player;
+
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -10,11 +12,28 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class MyContactListener implements ContactListener {
 	
-	private int groundSensorCount;
-	private int remainingJumpCount;
 	private int jumpsPerContact = 2;
 	
+	private int groundSensorCount;
+	private int remainingJumpCount;
+
 	private Body currentPlayerKinematicGround;
+	public Body currentPlayerKinematicGround() { return currentPlayerKinematicGround; }
+
+	private Player player;
+	
+	public MyContactListener(Player player) {
+		this.player = player;
+	}
+	
+	private boolean isFoot(Fixture fixture) {
+		return fixture.getUserData() != null &&
+				fixture.getUserData().equals("foot");
+	}
+	private boolean isPlayer(Fixture fixture) {
+		return fixture.getUserData() != null &&
+				((String)fixture.getUserData()).startsWith("player");
+	}
 	
 	// called when two fixtures start to collide
 	public void beginContact(Contact c) {
@@ -22,12 +41,12 @@ public class MyContactListener implements ContactListener {
 		Fixture fa = c.getFixtureA();
 		Fixture fb = c.getFixtureB();
 		
-		if(fa.getUserData() != null && fa.getUserData().equals("foot") && !fb.isSensor()) {
+		if(isFoot(fa) && !fb.isSensor()) {
 			groundSensorCount++;
 			if (fb.getBody().getType() == BodyType.KinematicBody) {
 				currentPlayerKinematicGround = fb.getBody();
 			}
-		} else if(fb.getUserData() != null && fb.getUserData().equals("foot") && !fa.isSensor()) {
+		} else if(isFoot(fb) && !fa.isSensor()) {
 			groundSensorCount++;
 			if (fa.getBody().getType() == BodyType.KinematicBody) {
 				currentPlayerKinematicGround = fa.getBody();
@@ -57,6 +76,22 @@ public class MyContactListener implements ContactListener {
 		}
 	}
 	
+	
+	public void preSolve(Contact c, Manifold m) {
+		Fixture fa = c.getFixtureA();
+		Fixture fb = c.getFixtureB();
+
+		if(isPlayer(fa) || isPlayer(fb)) {
+			if (this.player.getMoveDir() != Player.MoveDirection.NONE) {
+				c.setFriction(0.0f);
+			} else {
+				c.setFriction(this.player.mainFixture.getFriction());
+			}
+		}
+	}
+	
+	public void postSolve(Contact c, ContactImpulse ci) {}
+	
 	public boolean isPlayerOnGround() { 
 		return groundSensorCount > 0 || remainingJumpCount > 0; 
 	}
@@ -64,11 +99,5 @@ public class MyContactListener implements ContactListener {
 	public void playerJumped() {
 		remainingJumpCount--;
 	}
-	
-	public Body currentPlayerKinematicGround() { return currentPlayerKinematicGround; }
-	
-	
-	public void preSolve(Contact c, Manifold m) {}
-	public void postSolve(Contact c, ContactImpulse ci) {}
 	
 }

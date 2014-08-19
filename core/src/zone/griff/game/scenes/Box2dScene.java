@@ -72,9 +72,6 @@ public class Box2dScene extends Scene {
 
 		this.world = new World(GRAVITY, true);
 		
-		this.contactListener = new MyContactListener();
-		this.world.setContactListener(this.contactListener);
-		
 		this.b2dr = new Box2DDebugRenderer();
 		
 		this.b2dCam = new OrthographicCamera();
@@ -90,6 +87,9 @@ public class Box2dScene extends Scene {
 		this.setupScene();
 		this.setupShader();
 		this.player = new Player(this.world);
+		
+		this.contactListener = new MyContactListener(this.player);
+		this.world.setContactListener(this.contactListener);
 		
 		final Box2dScene t = this;
 		Gdx.input.setInputProcessor(new InputProcessor() {

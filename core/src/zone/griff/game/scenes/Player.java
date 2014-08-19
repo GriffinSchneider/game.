@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -33,14 +34,14 @@ public class Player {
 	}
 	
 	public Body body;
+	public Fixture mainFixture;
 	public Body jumpSensor;
 	
 	public PolygonSprite sprite;
 	
 	private MoveDirection moveDir;
-	public void setMoveDir(MoveDirection d) {
-		this.moveDir = d;
-	}
+	public void setMoveDir(MoveDirection d) { this.moveDir = d; }
+	public MoveDirection getMoveDir() { return this.moveDir; }
 	
 	public Player(World world) {
 		this.setupPlayerBody(world);
@@ -65,12 +66,13 @@ public class Player {
 		shape.setAsBox(middleFixtureHalfWidth, middleFixtureHalfHeight);
 		fdef.shape = shape;
 		fdef.density = 0f;
-		fdef.friction = 0.2f;
+		fdef.friction = 0.3f;
 		fdef.restitution = 0.0f;
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
-		this.body.createFixture(fdef).setUserData("player");
-		
+		this.mainFixture = this.body.createFixture(fdef);
+		this.mainFixture.setUserData("player");
+
 		// Left fixture
 		shape.setAsBox(
 				sideFixtureHalfWidth, 
@@ -78,7 +80,7 @@ public class Player {
 				new Vector2(-middleFixtureHalfWidth - sideFixtureHalfWidth, 0), 
 				0);
 		fdef.shape = shape;
-		fdef.friction = 0f;
+		fdef.friction = 0.18f;
 		this.body.createFixture(fdef).setUserData("player");
 		
 		// Right fixture
@@ -88,7 +90,7 @@ public class Player {
 				new Vector2(middleFixtureHalfWidth + sideFixtureHalfWidth, 0), 
 				0);
 		fdef.shape = shape;
-		fdef.friction = 0f;
+		fdef.friction = 0.18f;
 		this.body.createFixture(fdef).setUserData("player");
 		
 		this.body.setAngularDamping(10); 
