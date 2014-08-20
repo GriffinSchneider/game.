@@ -312,7 +312,7 @@ public class Box2dScene extends Scene {
 		this.polyBatch.disableBlending();
 
 		this.polyBatch.setShader(this.shader);
-//		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
+		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
 		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
 		this.shader.setUniformf("xOffset", this.b2dCam.position.x*PPM*(this.sceneManager.screenWidth/500f));
 		this.shader.setUniformf("yOffset", this.b2dCam.position.y*PPM*(this.sceneManager.screenWidth/500f));

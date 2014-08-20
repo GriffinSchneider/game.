@@ -10,6 +10,7 @@ precision highp float;
 #define MEDIUMP ;
 #endif
 
+uniform float iGlobalTime;
 uniform vec3 iResolution;
 uniform float xOffset;
 uniform float yOffset;
@@ -27,10 +28,14 @@ float smoothsaw(float x) {
 void main(void) {
   u_texture;
   iResolution;
+  iGlobalTime;
   
   vec2 offset = vec2(xOffset, yOffset);
   vec2 thing = gl_FragCoord.xy + offset;
   vec2 uv = thing / iResolution.xy;
+
+  uv.y += sin((iGlobalTime*0.05+uv.x)*20.)*0.01;
+  uv.x += sin((iGlobalTime*0.04+uv.y)*20.)*0.01;
     
   float index = uv.y*20.;
   index += saw(uv.x*20.);
