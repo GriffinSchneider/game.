@@ -216,7 +216,7 @@ public class Box2dScene extends Scene {
 
 		this.shader = new ShaderProgram(
 				Gdx.files.internal("shaders/default.vert"), 
-				Gdx.files.internal("shaders/wobblyCircles.frag"));
+				Gdx.files.internal("shaders/angularGround.frag"));
 
 		if (!this.shader.isCompiled()) {
 			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
@@ -310,19 +310,19 @@ public class Box2dScene extends Scene {
 		this.polyBatch.disableBlending();
 
 		this.polyBatch.setShader(this.shader);
-		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
+//		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
 		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
-		this.shader.setUniformf("palatteSize", palatteSize);
-		this.shader.setUniform2fv("center", this.sceneManager.gameSizeArray, 0, 2);
-
-		// sprite.draw() will call bind() on the sprite's texture.
-		// So, bind the palatte to texture #1, and then set the active texture to #0
-		// to stop sprite.draw() from binding over the palatte.
-		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE1);
-		this.palatte.bind();
-		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0);
-
-		this.shader.setUniformi("palatte", 1);
+//		this.shader.setUniformf("palatteSize", palatteSize);
+//		this.shader.setUniform2fv("center", this.sceneManager.gameSizeArray, 0, 2);
+//
+//		// sprite.draw() will call bind() on the sprite's texture.
+//		// So, bind the palatte to texture #1, and then set the active texture to #0
+//		// to stop sprite.draw() from binding over the palatte.
+//		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE1);
+//		this.palatte.bind();
+//		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0);
+//
+//		this.shader.setUniformi("palatte", 1);
 
 		for (PolygonSprite sprite : this.groundPolySprites) {
 			sprite.draw(this.polyBatch);
