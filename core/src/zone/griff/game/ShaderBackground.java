@@ -86,8 +86,8 @@ public class ShaderBackground {
 
 	   this.fbo = new FrameBuffer(
 	  		 Pixmap.Format.RGB888, 
-	  		 this.sceneManager.screenWidth / 4,
-	  		 this.sceneManager.screenHeight / 4,
+	  		 this.sceneManager.screenWidth / 2,
+	  		 this.sceneManager.screenHeight / 2,
 	  		 true);
 	   this.fbo.getColorBufferTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	 
@@ -103,14 +103,18 @@ public class ShaderBackground {
 	public void draw() {
 		this.fbo.begin();
 		
-		this.palatte.bind();
+//		this.palatte.bind();
+		this.fbo.getColorBufferTexture().bind();
 		this.shader.begin();
 		
 		this.shader.setUniformMatrix("u_projTrans", this.idMatrix);
 		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
 		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
+//		this.shader.setUniformi("previousFrame", 0);
 //		this.shader.setUniformi("palatte", 0);
 //		this.shader.setUniformf("palatteSize", palatteSize);
+		
+		
 
 		this.shader.setUniformf("parallaxX", this.parallaxX);
 		this.shader.setUniformf("parallaxY", this.parallaxY);

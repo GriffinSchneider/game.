@@ -29,6 +29,36 @@ float smoothsaw(float x) {
   return smoothstep( 0.0, 1.0, saw( x ));
 }
 
+#define ANTI_ALIAS_AMOUNT 0.005
+
+// void main(void)
+// {
+//   u_texture;
+//   iGlobalTime;
+//   palatte;
+//   palatteSize;
+//   iResolution;
+//   vec2 uv = gl_FragCoord.xy / iResolution.xy;
+	
+//   float xForFunc1 = uv.x;
+//   xForFunc1 += iGlobalTime/4.;
+	
+//   float sawed1 = saw(xForFunc1 * 4.0);
+//   float stepped1 = smoothstep(uv.y, uv.y+ANTI_ALIAS_AMOUNT, sawed1);
+	
+//   float xForFunc2 = uv.x;
+//   xForFunc2 += iGlobalTime/2.;
+//   float sawed2 = saw(xForFunc2 * 3.0);
+//   float stepped2 = smoothstep(uv.y, uv.y+ANTI_ALIAS_AMOUNT, sawed2);
+	
+//   float xForFunc3 = uv.x;
+//   xForFunc3 += iGlobalTime/3.;
+//   float sawed3 = saw(xForFunc3 * 5.0);
+//   float stepped3 = smoothstep(uv.y, uv.y+ANTI_ALIAS_AMOUNT, sawed3);
+	
+//   gl_FragColor = vec4(stepped1,stepped2,stepped3,1.0);
+// }
+
 void main(void) {
   u_texture;
   iGlobalTime;
