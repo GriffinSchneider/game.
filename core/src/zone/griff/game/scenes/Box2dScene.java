@@ -231,25 +231,27 @@ public class Box2dScene extends Scene {
 		this.background.resize(width, height);
 	}
 	
+	
 	public void update(float dt) {
 		this.updateInput(WORLD_STEP_TIME);
 		this.updateMovingPlatforms(WORLD_STEP_TIME);
 		this.player.update(WORLD_STEP_TIME, this.contactListener.currentPlayerKinematicGround());
-
 		world.step(WORLD_STEP_TIME, 6, 2);
-
+		this.updateCamera(dt);
+	}
+	
+	public void updateCamera(float dt) {
 		Vector2 playerCenter = this.player.body.getWorldCenter();
 		Vector3 cameraCenter = this.b2dCam.position;
 		
-		cameraCenter.x += (playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR;
-		cameraCenter.y += (playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR;
-
+		this.b2dCam.translate(
+				(playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR,
+				(playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR);
 		this.b2dCam.update();
-		
+
 		this.background.parallaxX = cameraCenter.x*0.0004f;
 		this.background.parallaxY = cameraCenter.y*0.0004f;
 	}
-	
 	
 	public void updateMovingPlatforms(float dt) {
 		for (MovingPlatform plat : this.movingPlatforms) {
@@ -312,6 +314,8 @@ public class Box2dScene extends Scene {
 		this.polyBatch.setShader(this.shader);
 //		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
 		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
+		this.shader.setUniformf("xOffset", this.b2dCam.position.x*PPM*(this.sceneManager.screenWidth/500f));
+		this.shader.setUniformf("yOffset", this.b2dCam.position.y*PPM*(this.sceneManager.screenWidth/500f));
 //		this.shader.setUniformf("palatteSize", palatteSize);
 //		this.shader.setUniform2fv("center", this.sceneManager.gameSizeArray, 0, 2);
 //

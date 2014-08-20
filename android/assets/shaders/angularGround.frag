@@ -11,6 +11,8 @@ precision highp float;
 #endif
 
 uniform vec3 iResolution;
+uniform float xOffset;
+uniform float yOffset;
 
 uniform sampler2D u_texture;
 
@@ -24,11 +26,14 @@ float smoothsaw(float x) {
 
 void main(void) {
   u_texture;
+  iResolution;
   
-  vec2 uv = gl_FragCoord.xy / iResolution.xy;
+  vec2 offset = vec2(xOffset, yOffset);
+  vec2 thing = gl_FragCoord.xy + offset;
+  vec2 uv = thing / iResolution.xy;
     
-  float index = uv.y*10.;
-  index += saw(uv.x*10.);
+  float index = uv.y*20.;
+  index += saw(uv.x*20.);
   index = mod(index, 1.);
     
   gl_FragColor = 
