@@ -5,6 +5,7 @@ import zone.griff.game.MovingPlatform;
 import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
 import zone.griff.game.ShaderBackground;
+import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Player.MoveDirection;
 
 import com.badlogic.gdx.Gdx;
@@ -67,6 +68,14 @@ public class Box2dScene extends Scene {
 	static final float moveRightEnd = 0.3f;
 	static final float jumpStart = 0.7f;
 	
+	class CameraBounds {
+		public float minX=0;
+		public float minY=0;
+		public float maxX=0;
+		public float maxY=0;
+	}
+	private CameraBounds cameraBounds;
+	
 	public Box2dScene(SceneManager sceneManager) {
 		super(sceneManager);
 
@@ -122,10 +131,11 @@ public class Box2dScene extends Scene {
 	}
 	
 	private static final String MOVING = "moving";
+	private static final String CAMERA_BOUNDS = "cameraBounds";
 	
 	public void setupScene() {
 		RubeSceneLoader loader = new RubeSceneLoader(world);
-		RubeScene scene = loader.loadScene(Gdx.files.internal("levels/json/untitled1.json"));
+		RubeScene scene = loader.loadScene(Gdx.files.internal("levels/json/room0.json"));
 		
 		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
 	  textureGround.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
@@ -137,6 +147,8 @@ public class Box2dScene extends Scene {
 			Gdx.app.log("", "" + platformType);
 			if (this.isMovingPlatformType(platformType)) {
 				this.setupMovingPlatform(body, texreg, scene);
+			} else if (this.isCameraBoundsPlatformType(platformType)) {
+				this.setupCameraBounds(body, scene);
 			} else {
 				this.setupGroundPlatform(body, texreg, scene);
 			}
@@ -187,7 +199,24 @@ public class Box2dScene extends Scene {
 	public boolean isMovingPlatformType(String platformType) {
 		return platformType != null && platformType.equals(MOVING);
 	}
-
+	
+	public void setupCameraBounds(Body body, RubeScene scene) {
+		this.cameraBounds = new CameraBounds();
+		Transform t = body.getTransform();
+		for (Fixture f : new Array<Fixture>(body.getFixtureList())) {
+			Shape shape = f.getShape();
+			Vector2 p = new Vector2().set(((CircleShape) shape).getPosition());
+			t.mul(p);
+		  this.cameraBounds.minX = Math.min(p.x, this.cameraBounds.minX);
+			this.cameraBounds.minY = Math.min(p.y, this.cameraBounds.minY);
+			this.cameraBounds.maxX = Math.max(p.x, this.cameraBounds.maxX);
+			this.cameraBounds.maxY = Math.max(p.y, this.cameraBounds.maxY);
+		}
+	}
+	
+	public boolean isCameraBoundsPlatformType(String platformType) {
+		return platformType != null && platformType.equals(CAMERA_BOUNDS);
+	}
 
 	public String getPlatformType(Body body, RubeScene scene) {
 		return (String)scene.getCustom(body, "platformType");
@@ -244,13 +273,22 @@ public class Box2dScene extends Scene {
 		Vector2 playerCenter = this.player.body.getWorldCenter();
 		Vector3 cameraCenter = this.b2dCam.position;
 		
-		this.b2dCam.translate(
+		cameraCenter.add(
 				(playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR,
-				(playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR);
+				(playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR,
+				0);
+		
+		if (this.cameraBounds != null) {
+			cameraCenter.x = Math.max(this.cameraBounds.minX + (this.b2dCam.viewportWidth/2f), cameraCenter.x);
+			cameraCenter.y = Math.max(this.cameraBounds.minY + (this.b2dCam.viewportHeight/2f), cameraCenter.y);
+			cameraCenter.x = Math.min(this.cameraBounds.maxX - (this.b2dCam.viewportWidth/2f), cameraCenter.x);
+			cameraCenter.y = Math.min(this.cameraBounds.maxY - (this.b2dCam.viewportHeight/2f), cameraCenter.y);
+		}
+
 		this.b2dCam.update();
 
 		this.background.parallaxX = cameraCenter.x*0.0004f;
-		this.background.parallaxY = cameraCenter.y*0.0004f;
+		this.background.parallaxY = (cameraCenter.y + 500f)*0.0004f;
 	}
 	
 	public void updateMovingPlatforms(float dt) {
