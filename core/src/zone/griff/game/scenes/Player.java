@@ -57,7 +57,7 @@ public class Player {
 		bdef.type = BodyType.DynamicBody;
 		this.body = world.createBody(bdef);
 		
-		float middleFixtureHalfWidth = 8 / PPM;
+		float middleFixtureHalfWidth = 10 / PPM;
 		float middleFixtureHalfHeight = 10 / PPM;
 		float sideFixtureHalfHeight = 8 / PPM;
 		float sideFixtureHalfWidth = 1 / PPM;
@@ -73,26 +73,6 @@ public class Player {
 		this.mainFixture = this.body.createFixture(fdef);
 		this.mainFixture.setUserData("player");
 
-		// Left fixture
-		shape.setAsBox(
-				sideFixtureHalfWidth, 
-				sideFixtureHalfHeight, 
-				new Vector2(-middleFixtureHalfWidth - sideFixtureHalfWidth, 0), 
-				0);
-		fdef.shape = shape;
-		fdef.friction = 0.18f;
-		this.body.createFixture(fdef).setUserData("player");
-		
-		// Right fixture
-		shape.setAsBox(
-				sideFixtureHalfWidth, 
-				sideFixtureHalfHeight, 
-				new Vector2(middleFixtureHalfWidth + sideFixtureHalfWidth, 0), 
-				0);
-		fdef.shape = shape;
-		fdef.friction = 0.18f;
-		this.body.createFixture(fdef).setUserData("player");
-		
 		this.body.setAngularDamping(10); 
 		
 		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -101,7 +81,7 @@ public class Player {
 	  texreg.setTexture(textureGround);
 		
 	  shape.setAsBox(
-	  		middleFixtureHalfWidth + 2 * sideFixtureHalfWidth,
+	  		middleFixtureHalfWidth,
 	  		middleFixtureHalfHeight);
 		this.sprite = Box2DHelper.polygonSpriteForShapeOnBody(shape, this.body, texreg);
 		this.sprite.setOrigin(playerPos.x, playerPos.y);
