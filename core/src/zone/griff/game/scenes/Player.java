@@ -37,6 +37,8 @@ public class Player {
 	public Fixture mainFixture;
 	public Body jumpSensor;
 	
+	public Vector2 originalBodyWorldCenter;
+	
 	public PolygonSprite sprite;
 	
 	private MoveDirection moveDir;
@@ -46,6 +48,7 @@ public class Player {
 	public Player(World world) {
 		this.setupPlayerBody(world);
 		this.setupPlayerJumpSensor(world);
+		this.originalBodyWorldCenter = new Vector2(this.body.getWorldCenter());
 	}
 	
 	private void setupPlayerBody(World world) {

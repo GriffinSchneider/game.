@@ -13,14 +13,14 @@ public class MovingPlatform {
 	
 	public static float MOVING_PALATFORM_VELOCITY = 3f;
 	
-	private Body platformBody;
+	public Body platformBody;
 
 	private Array<Vector2> targetBodies;
 	private int currentTargetBodyIndex;
 	
 	private PolygonSprite platformSprite;
 	
-	private Vector2 originalBodyPosition;
+	public Vector2 originalBodyWorldCenter;
 	private Vector2 originalSpritePosition;
 	
 	private float previousXDistanceToNextTarget;
@@ -32,7 +32,7 @@ public class MovingPlatform {
 		this.currentTargetBodyIndex = 0;
 		this.platformSprite = sprite;
 		
-		this.originalBodyPosition = new Vector2(this.platformBody.getWorldCenter());
+		this.originalBodyWorldCenter = new Vector2(this.platformBody.getWorldCenter());
 		this.originalSpritePosition = new Vector2( 
 				this.platformSprite.getX(),
 				this.platformSprite.getY());
@@ -68,7 +68,7 @@ public class MovingPlatform {
 		Vector2 v = Vector2Pool.obtain();
 		
 		v.set(this.platformBody.getWorldCenter());
-		v.sub(this.originalBodyPosition);
+		v.sub(this.originalBodyWorldCenter);
 		
 		v.add(originalSpritePosition);
 		

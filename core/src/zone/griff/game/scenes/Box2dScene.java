@@ -342,6 +342,7 @@ public class Box2dScene extends Scene {
 
 	@Override
 	public void render() {
+		Vector2 v = Vector2Pool.obtain();
 		
 		this.background.draw();
 
@@ -352,8 +353,10 @@ public class Box2dScene extends Scene {
 		this.polyBatch.setShader(this.shader);
 		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
 		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
-		this.shader.setUniformf("xOffset", this.b2dCam.position.x*PPM*(this.sceneManager.screenWidth/500f));
-		this.shader.setUniformf("yOffset", this.b2dCam.position.y*PPM*(this.sceneManager.screenWidth/500f));
+		v.set( this.b2dCam.position.x, this.b2dCam.position.y);
+		v.scl(PPM*this.sceneManager.screenWidth/500f);
+		this.shader.setUniformf("xOffset", v.x);
+		this.shader.setUniformf("yOffset", v.y);
 //		this.shader.setUniformf("palatteSize", palatteSize);
 //		this.shader.setUniform2fv("center", this.sceneManager.gameSizeArray, 0, 2);
 //
@@ -365,20 +368,36 @@ public class Box2dScene extends Scene {
 //		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0);
 //
 //		this.shader.setUniformi("palatte", 1);
-
+		
 		for (PolygonSprite sprite : this.groundPolySprites) {
 			sprite.draw(this.polyBatch);
 		}
 
+		this.polyBatch.flush();
+		this.setupShaderForBody(v, this.player.body, this.player.originalBodyWorldCenter, this.shader);
 		this.player.draw(this.polyBatch);
-
+		
+		this.polyBatch.flush();
 		for (MovingPlatform p : this.movingPlatforms) {
+			this.setupShaderForBody(v, p.platformBody, p.originalBodyWorldCenter, this.shader);
 			p.render(this.polyBatch);
+			this.polyBatch.flush();
 		}
 
 		this.polyBatch.end();
 
 //		b2dr.render(world, this.b2dCam.combined);
+
+		Vector2Pool.release(v);
+	}
+	
+	private void setupShaderForBody(Vector2 tempVector, Body body, Vector2 originalWorldCenter, ShaderProgram shader) {
+		tempVector.set(originalWorldCenter);
+		tempVector.sub(body.getWorldCenter());
+		tempVector.add(this.b2dCam.position.x, this.b2dCam.position.y);
+		tempVector.scl(PPM*this.sceneManager.screenWidth/500);
+		shader.setUniformf("xOffset", tempVector.x);
+		shader.setUniformf("yOffset", tempVector.y);
 	}
 	
 	@Override
