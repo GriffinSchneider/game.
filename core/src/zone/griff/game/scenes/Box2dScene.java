@@ -311,7 +311,6 @@ public class Box2dScene extends Scene {
 		for (int i = 0; i < 4; i++) {
 			if (Gdx.input.isTouched(i)) {
 				float touchUV = Gdx.input.getX(i) / (float)this.sceneManager.screenWidth;
-				Gdx.app.log("", "IT HAS OCCURRED__  " + touchUV);
 				if (touchUV < moveLeftEnd) {
 					foundLeftOrRight = true;
 					this.player.setMoveDir(MoveDirection.LEFT);
