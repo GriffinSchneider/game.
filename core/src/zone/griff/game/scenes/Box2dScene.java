@@ -130,12 +130,14 @@ public class Box2dScene extends Scene {
 		});
 	}
 	
-	private static final String MOVING = "moving";
-	private static final String CAMERA_BOUNDS = "cameraBounds";
+	private static final String BODY_TYPE = "type";
+	private static final String BODY_TYPE_MOVING = "moving";
+	private static final String BODY_TYPE_DOOR = "door";
+	private static final String BODY_TYPE_CAMERA_BOUNDS = "cameraBounds";
 	
 	public void setupScene() {
 		RubeSceneLoader loader = new RubeSceneLoader(world);
-		RubeScene scene = loader.loadScene(Gdx.files.internal("levels/json/room0.json"));
+		RubeScene scene = loader.loadScene(Gdx.files.internal("levels/json/untitled1.json"));
 		
 		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
 	  textureGround.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
@@ -143,11 +145,11 @@ public class Box2dScene extends Scene {
 	  texreg.setTexture(textureGround);
 		
 		for (Body body : scene.getBodies()) {
-			String platformType = this.getPlatformType(body, scene); 
-			Gdx.app.log("", "" + platformType);
-			if (this.isMovingPlatformType(platformType)) {
+			String type = this.getBodyType(body, scene); 
+			Gdx.app.log("", "" + type);
+			if (this.isMovingPlatformType(type)) {
 				this.setupMovingPlatform(body, texreg, scene);
-			} else if (this.isCameraBoundsPlatformType(platformType)) {
+			} else if (this.isCameraBoundsType(type)) {
 				this.setupCameraBounds(body, scene);
 			} else {
 				this.setupGroundPlatform(body, texreg, scene);
@@ -196,8 +198,8 @@ public class Box2dScene extends Scene {
 				Box2DHelper.polygonSpriteForFixture(platformFixture, texreg)));
 	}
 	
-	public boolean isMovingPlatformType(String platformType) {
-		return platformType != null && platformType.equals(MOVING);
+	public boolean isMovingPlatformType(String type) {
+		return type != null && type.equals(BODY_TYPE_MOVING);
 	}
 	
 	public void setupCameraBounds(Body body, RubeScene scene) {
@@ -214,12 +216,12 @@ public class Box2dScene extends Scene {
 		}
 	}
 	
-	public boolean isCameraBoundsPlatformType(String platformType) {
-		return platformType != null && platformType.equals(CAMERA_BOUNDS);
+	public boolean isCameraBoundsType(String type) {
+		return type != null && type.equals(BODY_TYPE_CAMERA_BOUNDS);
 	}
 
-	public String getPlatformType(Body body, RubeScene scene) {
-		return (String)scene.getCustom(body, "platformType");
+	public String getBodyType(Body body, RubeScene scene) {
+		return (String)scene.getCustom(body, BODY_TYPE);
 	}
 	
 	public void setupGroundPlatform(Body body, TextureRegion texreg, RubeScene scene) {
