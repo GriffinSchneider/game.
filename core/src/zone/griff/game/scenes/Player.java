@@ -3,6 +3,7 @@ package zone.griff.game.scenes;
 import static zone.griff.game.B2DVars.PPM;
 import zone.griff.game.B2DVars;
 import zone.griff.game.pools.Vector2Pool;
+import zone.griff.game.scenes.Box2DHelper.SpriteAndOutline;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,7 +40,7 @@ public class Player {
 	
 	public Vector2 originalBodyWorldCenter;
 	
-	public PolygonSprite sprite;
+	public SpriteAndOutline spriteAndOutline;
 	
 	private MoveDirection moveDir;
 	public void setMoveDir(MoveDirection d) { this.moveDir = d; }
@@ -86,8 +87,9 @@ public class Player {
 	  shape.setAsBox(
 	  		middleFixtureHalfWidth,
 	  		middleFixtureHalfHeight);
-		this.sprite = Box2DHelper.polygonSpriteForShapeOnBody(shape, this.body, texreg);
-		this.sprite.setOrigin(playerPos.x, playerPos.y);
+		this.spriteAndOutline = Box2DHelper.polygonSpriteForShapeOnBody(shape, this.body, texreg);
+		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
+		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
 	}
 	
 	private void setupPlayerJumpSensor(World world) {
@@ -156,10 +158,14 @@ public class Player {
 	public void draw(PolygonSpriteBatch batch) {
 		Vector2 v = Vector2Pool.obtain();
 		v.set(this.body.getWorldCenter());
-		this.sprite.setRotation(this.body.getAngle() * MathUtils.radiansToDegrees);
-		this.sprite.setPosition(v.x, v.y);
-		this.sprite.draw(batch);
+		this.spriteAndOutline.setRotation(this.body.getAngle() * MathUtils.radiansToDegrees);
+		this.spriteAndOutline.setPosition(v.x, v.y);
+		this.spriteAndOutline.sprite.draw(batch);
 		Vector2Pool.release(v);
+	}
+
+	public void drawOutline(PolygonSpriteBatch batch) {
+		this.spriteAndOutline.outline.draw(batch);
 	}
 
 }

@@ -1,6 +1,7 @@
 package zone.griff.game;
 
 import zone.griff.game.pools.Vector2Pool;
+import zone.griff.game.scenes.Box2DHelper.SpriteAndOutline;
 
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
@@ -18,7 +19,7 @@ public class MovingPlatform {
 	private Array<Vector2> targetBodies;
 	private int currentTargetBodyIndex;
 	
-	private PolygonSprite platformSprite;
+	private SpriteAndOutline platformSprite;
 	
 	public Vector2 originalBodyWorldCenter;
 	private Vector2 originalSpritePosition;
@@ -26,7 +27,7 @@ public class MovingPlatform {
 	private float previousXDistanceToNextTarget;
 	private float previousYDistanceToNextTarget;
 
-	public MovingPlatform(Body platform, Array<Vector2> targets, PolygonSprite sprite) {
+	public MovingPlatform(Body platform, Array<Vector2> targets, SpriteAndOutline sprite) {
 		this.platformBody = platform;
 		this.targetBodies = targets;
 		this.currentTargetBodyIndex = 0;
@@ -34,8 +35,8 @@ public class MovingPlatform {
 		
 		this.originalBodyWorldCenter = new Vector2(this.platformBody.getWorldCenter());
 		this.originalSpritePosition = new Vector2( 
-				this.platformSprite.getX(),
-				this.platformSprite.getY());
+				this.platformSprite.sprite.getX(),
+				this.platformSprite.sprite.getY());
 	}
 	
 	public void update(float dt) {
@@ -74,8 +75,13 @@ public class MovingPlatform {
 		
 		this.platformSprite.setRotation(this.platformBody.getAngle() * MathUtils.radiansToDegrees);
 		this.platformSprite.setPosition(v.x, v.y);
-		this.platformSprite.draw(batch);
+		this.platformSprite.sprite.draw(batch);
+
 		Vector2Pool.release(v);
+	}
+
+	public void renderOutline(PolygonSpriteBatch batch) {
+		this.platformSprite.outline.draw(batch);
 	}
 
 }

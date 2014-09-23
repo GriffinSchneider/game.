@@ -6,6 +6,7 @@ import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
 import zone.griff.game.ShaderBackground;
 import zone.griff.game.pools.Vector2Pool;
+import zone.griff.game.scenes.Box2DHelper.SpriteAndOutline;
 import zone.griff.game.scenes.Player.MoveDirection;
 
 import com.badlogic.gdx.Gdx;
@@ -57,7 +58,7 @@ public class Box2dScene extends Scene {
 	private Array<MovingPlatform> movingPlatforms;
 	
 	private PolygonSpriteBatch polyBatch;
-	private Array<PolygonSprite> groundPolySprites;
+	private Array<SpriteAndOutline> groundPolySprites;
 	
 	private ShaderBackground background;
 	
@@ -89,7 +90,7 @@ public class Box2dScene extends Scene {
 
 		this.polyBatch = new PolygonSpriteBatch();
 
-		this.groundPolySprites = new Array<PolygonSprite>();
+		this.groundPolySprites = new Array<SpriteAndOutline>();
 
 		this.background = new ShaderBackground(sceneManager);
 
@@ -358,6 +359,7 @@ public class Box2dScene extends Scene {
 		v.scl(PPM*this.sceneManager.screenWidth/500f);
 		this.shader.setUniformf("xOffset", v.x);
 		this.shader.setUniformf("yOffset", v.y);
+
 //		this.shader.setUniformf("palatteSize", palatteSize);
 //		this.shader.setUniform2fv("center", this.sceneManager.gameSizeArray, 0, 2);
 //
@@ -370,8 +372,8 @@ public class Box2dScene extends Scene {
 //
 //		this.shader.setUniformi("palatte", 1);
 		
-		for (PolygonSprite sprite : this.groundPolySprites) {
-			sprite.draw(this.polyBatch);
+		for (SpriteAndOutline spriteAndOutline : this.groundPolySprites) {
+			spriteAndOutline.sprite.draw(this.polyBatch);
 		}
 
 		this.polyBatch.flush();
@@ -383,6 +385,16 @@ public class Box2dScene extends Scene {
 			this.setupShaderForBody(v, p.platformBody, p.originalBodyWorldCenter, this.shader);
 			p.render(this.polyBatch);
 			this.polyBatch.flush();
+		}
+		
+		this.polyBatch.flush();
+		this.polyBatch.setShader(null);
+		this.player.drawOutline(this.polyBatch);
+		for (SpriteAndOutline spriteAndOutline : this.groundPolySprites) {
+			spriteAndOutline.outline.draw(this.polyBatch);
+		}
+		for (MovingPlatform p : this.movingPlatforms) {
+			p.renderOutline(this.polyBatch);
 		}
 
 		this.polyBatch.end();
