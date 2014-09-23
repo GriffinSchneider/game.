@@ -4,7 +4,6 @@ import java.util.Stack;
 
 import zone.griff.game.scenes.Box2dScene;
 import zone.griff.game.scenes.Scene;
-import zone.griff.game.scenes.ShaderScene;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;

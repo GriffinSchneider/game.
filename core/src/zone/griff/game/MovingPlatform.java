@@ -3,7 +3,6 @@ package zone.griff.game;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Box2DHelper.SpriteAndOutline;
 
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;

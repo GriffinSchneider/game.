@@ -1,10 +1,7 @@
 package zone.griff.game.scenes;
 
-import java.util.Arrays;
-
 import zone.griff.game.pools.Vector2Pool;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
