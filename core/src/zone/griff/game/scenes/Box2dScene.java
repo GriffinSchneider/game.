@@ -221,9 +221,10 @@ public class Box2dScene extends Scene {
 	}
 	
 	public void setupGroundPlatform(Body body, TextureRegion texreg, RubeScene scene) {
-		for (Fixture fixture : body.getFixtureList()) {
-			this.groundPolySprites.add(Box2DHelper.polygonSpriteForFixture(fixture, texreg));
-		}
+			this.groundPolySprites.add(Box2DHelper.polygonSpriteForBody(body, texreg));
+//		for (Fixture fixture : body.getFixtureList()) {
+//			this.groundPolySprites.add(Box2DHelper.polygonSpriteForFixture(fixture, texreg));
+//		}
 	}
 	
 	Texture palatte;
@@ -368,7 +369,7 @@ public class Box2dScene extends Scene {
 //		this.shader.setUniformi("palatte", 1);
 		
 		for (SpriteAndOutline spriteAndOutline : this.groundPolySprites) {
-			spriteAndOutline.sprite.draw(this.polyBatch);
+			spriteAndOutline.drawSprite(this.polyBatch);
 		}
 
 		this.polyBatch.flush();
@@ -394,7 +395,7 @@ public class Box2dScene extends Scene {
 
 		this.polyBatch.end();
 
-//		b2dr.render(world, this.b2dCam.combined);
+		// b2dr.render(world, this.b2dCam.combined);
 
 		Vector2Pool.release(v);
 	}

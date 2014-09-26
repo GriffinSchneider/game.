@@ -34,8 +34,8 @@ public class MovingPlatform {
 		
 		this.originalBodyWorldCenter = new Vector2(this.platformBody.getWorldCenter());
 		this.originalSpritePosition = new Vector2( 
-				this.platformSprite.sprite.getX(),
-				this.platformSprite.sprite.getY());
+				this.platformSprite.sprites.get(0).getX(),
+				this.platformSprite.sprites.get(0).getY());
 	}
 	
 	public void update(float dt) {
@@ -74,7 +74,7 @@ public class MovingPlatform {
 		
 		this.platformSprite.setRotation(this.platformBody.getAngle() * MathUtils.radiansToDegrees);
 		this.platformSprite.setPosition(v.x, v.y);
-		this.platformSprite.sprite.draw(batch);
+		this.platformSprite.drawSprite(batch);
 
 		Vector2Pool.release(v);
 	}

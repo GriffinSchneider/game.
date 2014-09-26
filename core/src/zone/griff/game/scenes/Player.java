@@ -159,7 +159,7 @@ public class Player {
 		v.set(this.body.getWorldCenter());
 		this.spriteAndOutline.setRotation(this.body.getAngle() * MathUtils.radiansToDegrees);
 		this.spriteAndOutline.setPosition(v.x, v.y);
-		this.spriteAndOutline.sprite.draw(batch);
+		this.spriteAndOutline.drawSprite(batch);
 		Vector2Pool.release(v);
 	}
 
