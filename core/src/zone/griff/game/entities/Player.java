@@ -36,7 +36,6 @@ public class Player {
 	
 	public Body body;
 	public Fixture mainFixture;
-	public Body jumpSensor;
 	
 	public Vector2 originalBodyWorldCenter;
 	
@@ -48,7 +47,6 @@ public class Player {
 	
 	public Player(World world) {
 		this.setupPlayerBody(world);
-		this.setupPlayerJumpSensor(world);
 		this.originalBodyWorldCenter = new Vector2(this.body.getWorldCenter());
 	}
 	
@@ -75,36 +73,22 @@ public class Player {
 		this.mainFixture = this.body.createFixture(fdef);
 		this.mainFixture.setUserData("player");
 
-		this.body.setAngularDamping(10); 
+		// Jump sensor
+		shape.setAsBox(6 / PPM, 6 / PPM, new Vector2(0, -8 / PPM), 0);
+		fdef.shape = shape;
+		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
+		fdef.filter.maskBits = B2DVars.BIT_GROUND;
+		fdef.isSensor = true;
+		this.body.createFixture(fdef).setUserData("foot");;
 		
 		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
 	  textureGround.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 	  TextureRegion texreg = new TextureRegion(textureGround,0,0,1,1);
 	  texreg.setTexture(textureGround);
 		
-	  shape.setAsBox(
-	  		middleFixtureHalfWidth,
-	  		middleFixtureHalfHeight);
 		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(this.body, texreg);
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
-	}
-	
-	private void setupPlayerJumpSensor(World world) {
-		BodyDef bdef = new BodyDef();
-		PolygonShape shape = new PolygonShape();
-		FixtureDef fdef = new FixtureDef();
-
-		bdef.type = BodyType.DynamicBody;
-		this.jumpSensor = world.createBody(bdef);
-		
-		// create foot sensor
-		shape.setAsBox(6 / PPM, 6 / PPM, new Vector2(0, -8 / PPM), 0);
-		fdef.shape = shape;
-		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
-		fdef.filter.maskBits = B2DVars.BIT_GROUND;
-		fdef.isSensor = true;
-		this.jumpSensor.createFixture(fdef).setUserData("foot");
 	}
 	
 	public void jump() {
@@ -138,19 +122,7 @@ public class Player {
 	
 	
 	public void update(float dt, Body currentPlayerKinematicGround) {
-		this.updateJumpSensor(dt);
 		this.move(dt, currentPlayerKinematicGround);
-	}
-	
-	private void updateJumpSensor(float dt) {
-		Vector2 v = Vector2Pool.obtain().set(this.body.getWorldCenter());
-		Vector2 v2 = Vector2Pool.obtain(this.body.getLinearVelocity());
-		v.add(v2.scl(dt));
-		v.sub(this.jumpSensor.getWorldCenter());
-		v.scl(1.0f/dt);
-		this.jumpSensor.setLinearVelocity(v);
-		Vector2Pool.release(v);
-		Vector2Pool.release(v2);
 	}
 	
 	public void draw(PolygonSpriteBatch batch) {
