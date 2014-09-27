@@ -22,7 +22,9 @@ public class Box2DHelper {
 
 		ArrayList<PolygonSprite> sprites = new ArrayList<PolygonSprite>();
 		for (Fixture fixture : body.getFixtureList()) {
-			sprites.add(spriteForFixture(fixture, texreg));
+			if (!fixture.isSensor()) {
+				sprites.add(spriteForFixture(fixture, texreg));
+			}
 		}
 
 		PolygonSprite outline = outlineForBody(body, texreg);
