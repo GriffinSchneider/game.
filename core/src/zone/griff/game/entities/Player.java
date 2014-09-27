@@ -1,9 +1,10 @@
-package zone.griff.game.scenes;
+package zone.griff.game.entities;
 
-import static zone.griff.game.B2DVars.PPM;
-import zone.griff.game.B2DVars;
+import static zone.griff.game.scenes.box2d.B2DVars.PPM;
 import zone.griff.game.pools.Vector2Pool;
-import zone.griff.game.scenes.Box2DHelper.SpriteAndOutline;
+import zone.griff.game.scenes.box2d.B2DVars;
+import zone.griff.game.util.Box2DHelper;
+import zone.griff.game.util.SpriteAndOutline;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -62,8 +63,6 @@ public class Player {
 		
 		float middleFixtureHalfWidth = 10 / PPM;
 		float middleFixtureHalfHeight = 10 / PPM;
-		float sideFixtureHalfHeight = 8 / PPM;
-		float sideFixtureHalfWidth = 1 / PPM;
 		
 		// Middle fixture
 		shape.setAsBox(middleFixtureHalfWidth, middleFixtureHalfHeight);
@@ -86,7 +85,7 @@ public class Player {
 	  shape.setAsBox(
 	  		middleFixtureHalfWidth,
 	  		middleFixtureHalfHeight);
-		this.spriteAndOutline = Box2DHelper.polygonSpriteForShapeOnBody(shape, this.body, texreg);
+		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(this.body, texreg);
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
 	}
@@ -164,7 +163,7 @@ public class Player {
 	}
 
 	public void drawOutline(PolygonSpriteBatch batch) {
-		this.spriteAndOutline.outline.draw(batch);
+		this.spriteAndOutline.drawOutline(batch);
 	}
 
 }

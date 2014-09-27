@@ -12,7 +12,7 @@ public abstract class Scene {
 	public abstract void dispose();
 	public abstract void resize(int width, int height);
 	
-	SceneManager sceneManager;
+	public SceneManager sceneManager;
 	SpriteBatch sb;
 	
 	public Scene(SceneManager game) {

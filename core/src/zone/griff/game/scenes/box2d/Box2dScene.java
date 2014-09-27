@@ -1,13 +1,16 @@
-package zone.griff.game.scenes;
+package zone.griff.game.scenes.box2d;
 
-import static zone.griff.game.B2DVars.PPM;
-import zone.griff.game.MovingPlatform;
+import static zone.griff.game.scenes.box2d.B2DVars.PPM;
 import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
-import zone.griff.game.ShaderBackground;
+import zone.griff.game.entities.MovingPlatform;
+import zone.griff.game.entities.Player;
+import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.pools.Vector2Pool;
-import zone.griff.game.scenes.Box2DHelper.SpriteAndOutline;
-import zone.griff.game.scenes.Player.MoveDirection;
+import zone.griff.game.scenes.Scene;
+import zone.griff.game.scenes.shader.ShaderBackground;
+import zone.griff.game.util.Box2DHelper;
+import zone.griff.game.util.SpriteAndOutline;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -160,12 +163,11 @@ public class Box2dScene extends Scene {
 		Transform t = moving.getTransform();
 
 		Body platformBody = null;
-		Fixture platformFixture = null;
 
 		for (Fixture f : new Array<Fixture>(moving.getFixtureList())) {
-			Shape shape = f.getShape();
 			if (f.isSensor()) {
-				Vector2 p = new Vector2().set(((CircleShape) shape).getPosition());
+				CircleShape shape = (CircleShape)f.getShape();
+				Vector2 p = new Vector2().set(shape.getPosition());
 				t.mul(p);
 				targetPoints.add(p);
 			} else {
@@ -182,7 +184,7 @@ public class Box2dScene extends Scene {
 				bdef.type = BodyType.KinematicBody;
 				bdef.position.set(moving.getPosition());
 				platformBody = scene.getWorld().createBody(bdef);
-				platformFixture = platformBody.createFixture(fdef);
+				platformBody.createFixture(fdef);
 
 				moving.destroyFixture(f);
 			}
@@ -191,7 +193,7 @@ public class Box2dScene extends Scene {
 		this.movingPlatforms.add(new MovingPlatform(
 				platformBody, 
 				targetPoints,
-				Box2DHelper.polygonSpriteForFixture(platformFixture, texreg)));
+				Box2DHelper.polygonSpriteForBody(platformBody, texreg)));
 	}
 	
 	public boolean isMovingPlatformType(String type) {
@@ -222,9 +224,6 @@ public class Box2dScene extends Scene {
 	
 	public void setupGroundPlatform(Body body, TextureRegion texreg, RubeScene scene) {
 			this.groundPolySprites.add(Box2DHelper.polygonSpriteForBody(body, texreg));
-//		for (Fixture fixture : body.getFixtureList()) {
-//			this.groundPolySprites.add(Box2DHelper.polygonSpriteForFixture(fixture, texreg));
-//		}
 	}
 	
 	Texture palatte;
@@ -387,7 +386,7 @@ public class Box2dScene extends Scene {
 		this.polyBatch.setShader(null);
 		this.player.drawOutline(this.polyBatch);
 		for (SpriteAndOutline spriteAndOutline : this.groundPolySprites) {
-			spriteAndOutline.outline.draw(this.polyBatch);
+			spriteAndOutline.drawOutline(this.polyBatch);
 		}
 		for (MovingPlatform p : this.movingPlatforms) {
 			p.renderOutline(this.polyBatch);

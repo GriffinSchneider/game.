@@ -1,4 +1,6 @@
-package zone.griff.game;
+package zone.griff.game.scenes.shader;
+
+import zone.griff.game.SceneManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

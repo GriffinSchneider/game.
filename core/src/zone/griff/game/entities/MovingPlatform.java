@@ -1,7 +1,7 @@
-package zone.griff.game;
+package zone.griff.game.entities;
 
 import zone.griff.game.pools.Vector2Pool;
-import zone.griff.game.scenes.Box2DHelper.SpriteAndOutline;
+import zone.griff.game.util.SpriteAndOutline;
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -34,8 +34,8 @@ public class MovingPlatform {
 		
 		this.originalBodyWorldCenter = new Vector2(this.platformBody.getWorldCenter());
 		this.originalSpritePosition = new Vector2( 
-				this.platformSprite.sprites.get(0).getX(),
-				this.platformSprite.sprites.get(0).getY());
+				this.platformSprite.getSprites().get(0).getX(),
+				this.platformSprite.getSprites().get(0).getY());
 	}
 	
 	public void update(float dt) {
@@ -80,7 +80,7 @@ public class MovingPlatform {
 	}
 
 	public void renderOutline(PolygonSpriteBatch batch) {
-		this.platformSprite.outline.draw(batch);
+		this.platformSprite.drawOutline(batch);
 	}
 
 }

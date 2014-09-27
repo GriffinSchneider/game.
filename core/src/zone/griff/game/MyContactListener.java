@@ -1,6 +1,6 @@
 package zone.griff.game;
 
-import zone.griff.game.scenes.Player;
+import zone.griff.game.entities.Player;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;

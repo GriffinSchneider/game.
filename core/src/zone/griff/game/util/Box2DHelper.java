@@ -1,7 +1,6 @@
-package zone.griff.game.scenes;
+package zone.griff.game.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import zone.griff.game.pools.Vector2Pool;
@@ -9,7 +8,6 @@ import zone.griff.game.pools.Vector2Pool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
@@ -20,82 +18,45 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public class Box2DHelper {
 	
-	public static class SpriteAndOutline {
-		public ArrayList<PolygonSprite> sprites;
-		public PolygonSprite outline;
-		public void drawSprite(PolygonSpriteBatch batch) {
-			for (PolygonSprite sprite : this.sprites) {
-				sprite.draw(batch);
-			}
-		}
-		public void setRotation (float degrees) {
-			for (PolygonSprite sprite : this.sprites) {
-				sprite.setRotation(degrees);
-			}
-			this.outline.setRotation(degrees);
-		}
-		public void setPosition (float x, float y) {
-			for (PolygonSprite sprite : this.sprites) {
-				sprite.setPosition(x, y);
-			}
-			this.outline.setPosition(x, y);
-		}
-		public void setOrigin (float x, float y) {
-			for (PolygonSprite sprite : this.sprites) {
-				sprite.setOrigin(x, y);
-			}
-			this.outline.setOrigin(x, y);
-		}
-	}
-
 	public static SpriteAndOutline polygonSpriteForBody(Body body, TextureRegion texreg) {
-		SpriteAndOutline retVal = new SpriteAndOutline();
-		retVal.sprites = new ArrayList<PolygonSprite>();
+
+		ArrayList<PolygonSprite> sprites = new ArrayList<PolygonSprite>();
 		for (Fixture fixture : body.getFixtureList()) {
-			retVal.sprites.add(sprite((PolygonShape)fixture.getShape(), body, texreg));
+			sprites.add(spriteForFixture(fixture, texreg));
 		}
-		retVal.outline = outline(body, texreg);
-		return retVal;
+
+		PolygonSprite outline = outlineForBody(body, texreg);
+
+		return new SpriteAndOutline(sprites, outline);
 	}
 
-	public static SpriteAndOutline polygonSpriteForFixture(Fixture fixture, TextureRegion texreg) {
-		PolygonShape shape = (PolygonShape)fixture.getShape();
+	private static PolygonSprite spriteForFixture(Fixture fixture, TextureRegion texreg) {
 		Body body = fixture.getBody();
-		return polygonSpriteForShapeOnBody(shape, body, texreg);
-	}
+		PolygonShape shape = (PolygonShape)fixture.getShape();
 
-	public static SpriteAndOutline polygonSpriteForShapeOnBody(PolygonShape shape, Body body, TextureRegion texreg) {
-		SpriteAndOutline retVal = new SpriteAndOutline();
-		retVal.sprites = new ArrayList<PolygonSprite>();
-		retVal.sprites.add(sprite(shape, body, texreg));
-		retVal.outline = outline(body, texreg);
-		return retVal;
-	}
-	
-	private static PolygonSprite sprite(PolygonShape shape, Body body, TextureRegion texreg) {
 		Vector2 tmp = Vector2Pool.obtain();
 
+		// Copy the shape's vertices into an array, adjusting them into world space.
 		int vertexCount = shape.getVertexCount();
 		float[] vertices = new float[vertexCount * 2];
 		for (int k = 0; k < vertexCount; k++) {
 			shape.getVertex(k, tmp);
-			tmp.rotate(body.getAngle() * MathUtils.radiansToDegrees);
-			tmp.add(body.getPosition());
+			adjustPointForBody(tmp, body);
 			vertices[k * 2] = tmp.x;
 			vertices[k * 2 + 1] = tmp.y;
 		}
+
 		short triangles[] = new EarClippingTriangulator().computeTriangles(vertices).toArray();
 
 		Vector2Pool.release(tmp);
 		
-//		Gdx.app.log("", "verts::"+Arrays.toString(vertices));
-//		Gdx.app.log("", "tris:"+Arrays.toString(triangles));
+//		Gdx.app.log("", "sprite verts:"+Arrays.toString(vertices));
+//		Gdx.app.log("", "sprite tris:"+Arrays.toString(triangles));
 
 		return new PolygonSprite(new PolygonRegion(texreg, vertices, triangles));
 	}
 
-	private static PolygonSprite outline(Body body, TextureRegion texreg) {
-		// https://forum.libcinder.org/topic/smooth-thick-lines-using-geometry-shader#23286000001269127
+	private static PolygonSprite outlineForBody(Body body, TextureRegion texreg) {
 
 		Vector2 p0 = Vector2Pool.obtain();
 		Vector2 p1 = Vector2Pool.obtain();
@@ -112,40 +73,36 @@ public class Box2DHelper {
 		float[] vertices = new float[vertexCount * 2 * 2];
 		
 		for (int k = 0; k < vertexCount; k++) {
+			// Calculate indices
 			int index0 = (k>0 ? (k-1) : vertexCount - 1);
 			int index1 = k;
 			int index2 = (k+1) % vertexCount;
 			
+			// Index verts to get vertices
 			PointNode pp0 = verts.get(index0);
 			p0.set(pp0.x, pp0.y);
-			p0.rotate(body.getAngle() * MathUtils.radiansToDegrees);
-			p0.add(body.getPosition());
+			adjustPointForBody(p0, body);
 
 			PointNode pp1 = verts.get(index1);
 			p1.set(pp1.x, pp1.y);
-			p1.rotate(body.getAngle() * MathUtils.radiansToDegrees);
-			p1.add(body.getPosition());
+			adjustPointForBody(p1, body);
 
 			PointNode pp2 = verts.get(index2);
 			p2.set(pp2.x, pp2.y);
-			p2.rotate(body.getAngle() * MathUtils.radiansToDegrees);
-			p2.add(body.getPosition());
+			adjustPointForBody(p2, body);
 
-			////
+			// Calculate the 2 outline line vertices that we're going to make for this vertex.
+			// https://forum.libcinder.org/topic/smooth-thick-lines-using-geometry-shader#23286000001269127
 			Vector2 tangent = new Vector2().set(p2).sub(p1).nor().add(new Vector2().set(p1).sub(p0).nor()).nor();
 			Vector2 miter = new Vector2(-tangent.y, tangent.x);
-
 			Vector2 line = new Vector2().set(p2).sub(p1);
 			Vector2 normal = new Vector2().set(-line.y, line.x).nor();
 			float miterLength = 0.03f / miter.dot(normal);
-			
 			miter.scl(miterLength);
-			
-			////
 
-			vertices[k * 4] = p1.x + miter.x;
+			// Fill the array
+			vertices[k * 4 + 0] = p1.x + miter.x;
 			vertices[k * 4 + 1] = p1.y + miter.y;
-
 			vertices[k * 4 + 2] = p1.x - miter.x;
 			vertices[k * 4 + 3] = p1.y - miter.y;
 		}
@@ -153,22 +110,27 @@ public class Box2DHelper {
 		short[] triangles = new short[vertexCount * 2 * 3];
 		int vertexCountOfOutline = vertexCount * 2;
 		for (short k = 0; k < vertexCount; k++) {
-			triangles[k*6 + 0] = (short) (((k*2)+0) % vertexCountOfOutline);
-			triangles[k*6 + 1] = (short) (((k*2)+1) % vertexCountOfOutline);
-			triangles[k*6 + 2] = (short) (((k*2)+2) % vertexCountOfOutline);
-			triangles[k*6 + 3] = (short) (((k*2)+1) % vertexCountOfOutline);
-			triangles[k*6 + 4] = (short) (((k*2)+3) % vertexCountOfOutline);
-			triangles[k*6 + 5] = (short) (((k*2)+2) % vertexCountOfOutline);
+			triangles[k * 6 + 0] = (short) (((k*2)+0) % vertexCountOfOutline);
+			triangles[k * 6 + 1] = (short) (((k*2)+1) % vertexCountOfOutline);
+			triangles[k * 6 + 2] = (short) (((k*2)+2) % vertexCountOfOutline);
+			triangles[k * 6 + 3] = (short) (((k*2)+1) % vertexCountOfOutline);
+			triangles[k * 6 + 4] = (short) (((k*2)+3) % vertexCountOfOutline);
+			triangles[k * 6 + 5] = (short) (((k*2)+2) % vertexCountOfOutline);
 		}
 		
 		Vector2Pool.release(p0);
 		Vector2Pool.release(p1);
 		Vector2Pool.release(p2);
 
-//		Gdx.app.log("", "verts::"+Arrays.toString(vertices));
-//		Gdx.app.log("", "tris:"+Arrays.toString(triangles));
+//		Gdx.app.log("", "outline verts:"+Arrays.toString(vertices));
+//		Gdx.app.log("", "outline tris:"+Arrays.toString(triangles));
 
 		return new PolygonSprite(new PolygonRegion(texreg, vertices, triangles));
+	}
+	
+	private static void adjustPointForBody(Vector2 point, Body body) {
+		point.rotate(body.getAngle() * MathUtils.radiansToDegrees);
+		point.add(body.getPosition());
 	}
 	
 	private static ArrayList<PointNode> thing(ArrayList<PolygonShape> shapes, Body body) {

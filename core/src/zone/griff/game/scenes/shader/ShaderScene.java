@@ -1,7 +1,7 @@
-package zone.griff.game.scenes;
+package zone.griff.game.scenes.shader;
 
 import zone.griff.game.SceneManager;
-import zone.griff.game.ShaderBackground;
+import zone.griff.game.scenes.Scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

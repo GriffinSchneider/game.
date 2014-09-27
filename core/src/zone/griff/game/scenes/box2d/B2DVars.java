@@ -1,4 +1,4 @@
-package zone.griff.game;
+package zone.griff.game.scenes.box2d;
 
 public class B2DVars {
 
