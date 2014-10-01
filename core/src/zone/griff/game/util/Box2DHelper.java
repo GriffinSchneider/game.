@@ -135,11 +135,19 @@ public class Box2DHelper {
 		point.add(body.getPosition());
 	}
 	
+	// General algorithm:
+	// - Make a graph where there's a node for every vertex in all the shapes
+	// - Make a directed edge from node A to node B iff B comes directly after A
+	//   in the vertices array of one of the shapes
+	// - Remove all edges in 2-node-cycles, i.e. A has edge to B and B has edge to A,
+	//   so remove both edges.
+	// - If all the shapes form a contiguous polygon with shared vertices, then we're 
+	//   left with 1 big cycle in  the graph. Read that cycle out and return it in an array.
 	private static ArrayList<PointNode> thing(ArrayList<PolygonShape> shapes, Body body) {
 		Vector2 point = Vector2Pool.obtain();
 		Vector2 nextPoint = Vector2Pool.obtain();
 		
-		HashMap<Float, PointNode> map = new HashMap<Float, PointNode>();
+		HashMap<String, PointNode> map = new HashMap<String, PointNode>();
 		
 		for (PolygonShape shape : shapes) {
 			int vertexCount = shape.getVertexCount();
@@ -208,11 +216,11 @@ public class Box2DHelper {
 			this.nexts = new ArrayList<PointNode>();
 		}
 
-		public Float hashKey() {
+		public String hashKey() {
 			return hashKey(x, y);
 		}
-		public static Float hashKey(float x, float y) {
-			return x*y*(x-y);
+		public static String hashKey(float x, float y) {
+			return Float.toHexString(x) + Float.toHexString(y);
 		}
 	}
 
