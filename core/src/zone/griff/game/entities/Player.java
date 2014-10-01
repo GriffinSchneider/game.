@@ -59,11 +59,31 @@ public class Player {
 		bdef.type = BodyType.DynamicBody;
 		this.body = world.createBody(bdef);
 		
-		float middleFixtureHalfWidth = 10 / PPM;
-		float middleFixtureHalfHeight = 10 / PPM;
+		float w = 10 / PPM;
+		float h = 10 / PPM;
+
+		float corner = 2f / PPM;
+
+		Vector2[] verts = new Vector2[8];
 		
-		// Middle fixture
-		shape.setAsBox(middleFixtureHalfWidth, middleFixtureHalfHeight);
+		// Bottom Left
+		verts[0] = new Vector2(-w, -h + corner);
+		verts[1] = new Vector2(-w + corner, -h);
+
+		// Bottom Right
+		verts[2] = new Vector2(w - corner, -h);
+		verts[3] = new Vector2(w, -h + corner);
+
+		// Top Right
+		verts[4] = new Vector2(w, h - corner);
+		verts[5] = new Vector2(w - corner, h);
+
+		// Top Left
+		verts[6] = new Vector2(-w + corner, h);
+		verts[7] = new Vector2(-w, h - corner);
+
+		shape.set(verts);
+		
 		fdef.shape = shape;
 		fdef.density = 0f;
 		fdef.friction = 0.3f;
@@ -79,7 +99,7 @@ public class Player {
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
 		fdef.isSensor = true;
-		this.body.createFixture(fdef).setUserData("foot");;
+		this.body.createFixture(fdef).setUserData("foot");
 		
 		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
 	  textureGround.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
