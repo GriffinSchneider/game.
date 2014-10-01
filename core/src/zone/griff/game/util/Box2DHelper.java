@@ -66,7 +66,9 @@ public class Box2DHelper {
 		
 		ArrayList<PolygonShape> shapes = new ArrayList<PolygonShape>();
 		for (Fixture fixture : body.getFixtureList()) {
-			shapes.add((PolygonShape) fixture.getShape());
+			if (!fixture.isSensor()) {
+				shapes.add((PolygonShape) fixture.getShape());
+			}
 		}
 				
 		ArrayList<PointNode> verts = thing(shapes, body);
