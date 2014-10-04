@@ -22,6 +22,9 @@ public class MyContactListener implements ContactListener {
 
 	private Player player;
 	
+	// TODO: refactor.
+	public boolean hasDoorCollision;
+	
 	public MyContactListener(Player player) {
 		this.player = player;
 	}
@@ -33,6 +36,10 @@ public class MyContactListener implements ContactListener {
 	private boolean isPlayer(Fixture fixture) {
 		return fixture.getUserData() != null &&
 				((String)fixture.getUserData()).startsWith("player");
+	}
+	private boolean isDoor(Fixture fixture) {
+		return fixture.getUserData() != null &&
+				((String)fixture.getUserData()).equals("door");
 	}
 	
 	// called when two fixtures start to collide
@@ -51,11 +58,15 @@ public class MyContactListener implements ContactListener {
 			if (fa.getBody().getType() == BodyType.KinematicBody) {
 				currentPlayerKinematicGround = fa.getBody();
 			}
+
+		} else if (isPlayer(fa) && isDoor(fb) || isPlayer(fb) && isDoor(fa)) {
+			this.hasDoorCollision = true;
 		}
+		
 		if (groundSensorCount > 0) {
 			remainingJumpCount = jumpsPerContact;
 		}
-	}
+	} 
 	
 	// called when two fixtures no longer collide
 	public void endContact(Contact c) {
@@ -63,12 +74,12 @@ public class MyContactListener implements ContactListener {
 		Fixture fa = c.getFixtureA();
 		Fixture fb = c.getFixtureB();
 		
-		if(fa.getUserData() != null && fa.getUserData().equals("foot") && !fb.isSensor()) {
+		if(isFoot(fa) && !fb.isSensor()) {
 			groundSensorCount--;
 			if (currentPlayerKinematicGround == fb.getBody()) {
 				currentPlayerKinematicGround = null;
 			}
-		} else if(fb.getUserData() != null && fb.getUserData().equals("foot") && !fa.isSensor()) {
+		} else if(isFoot(fb) && !fa.isSensor()) {
 			groundSensorCount--;
 			if (currentPlayerKinematicGround == fa.getBody()) {
 				currentPlayerKinematicGround = null;
