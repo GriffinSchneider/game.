@@ -58,6 +58,7 @@ public class Player {
 		Vector2 playerPos = new Vector2(0, 0);
 		bdef.type = BodyType.DynamicBody;
 		this.body = world.createBody(bdef);
+		this.body.setUserData("player");
 		
 		float w = 10 / PPM;
 		float h = 10 / PPM;

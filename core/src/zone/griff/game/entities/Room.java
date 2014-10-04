@@ -1,6 +1,9 @@
 package zone.griff.game.entities;
 
 import static zone.griff.game.scenes.box2d.B2DVars.PPM;
+
+import java.util.ArrayList;
+
 import zone.griff.game.SceneManager;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.util.Box2DHelper;
@@ -49,7 +52,10 @@ public class Room {
 	private int palatteSize;
 
 	private Array<SpriteAndOutline> groundPolySprites;
+
 	private Array<MovingPlatform> movingPlatforms;
+	
+	private Array<Body> doors;
 	
 	public Room(FileHandle roomFile, World world) {
 		this.roomFile = roomFile;
@@ -57,6 +63,7 @@ public class Room {
 		
 		this.movingPlatforms = new Array<MovingPlatform>();
 		this.groundPolySprites = new Array<SpriteAndOutline>();
+		this.doors = new Array<Body>();
 		
 		this.setupShader();
 
@@ -85,7 +92,7 @@ public class Room {
 	
 	
 	public void loadFromFile() {
-		RubeSceneLoader loader = new RubeSceneLoader(world);
+		RubeSceneLoader loader = new RubeSceneLoader(this.world);
 		RubeScene scene = loader.loadScene(this.roomFile);
 		
 		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
@@ -101,34 +108,43 @@ public class Room {
 			} else if (this.isCameraBoundsType(type)) {
 				this.setupCameraBounds(body, scene);
 			} else if (this.isDoorType(type)) {
-				body.getFixtureList().get(0).setUserData("door");
+				this.setupDoor(body, scene);
 			} else {
 				this.setupGroundPlatform(body, texreg, scene);
 			}
 		}
 	}
 	
-
+	public Body putPlayerAtDoor(Player player, Vector2 offsetFromDoor) {
+		Vector2 doorCenter = this.doors.get(0).getWorldCenter();
+		player.body.setTransform(doorCenter.x + offsetFromDoor.x, doorCenter.y + offsetFromDoor.y, player.body.getAngle());
+		return this.doors.get(0);
+	}
 
 	private static final String BODY_TYPE = "type";
 	private static final String BODY_TYPE_MOVING = "moving";
 	private static final String BODY_TYPE_DOOR = "door";
 	private static final String BODY_TYPE_CAMERA_BOUNDS = "cameraBounds";
 
-	public String getBodyType(Body body, RubeScene scene) {
+	private String getBodyType(Body body, RubeScene scene) {
 		return (String)scene.getCustom(body, BODY_TYPE);
 	}
 
-	public boolean isCameraBoundsType(String type) {
+	private boolean isCameraBoundsType(String type) {
 		return type != null && type.equals(BODY_TYPE_CAMERA_BOUNDS);
 	}
 
-	public boolean isDoorType(String type) {
+	private boolean isDoorType(String type) {
 		return type != null && type.equals(BODY_TYPE_DOOR);
 	}
 
-	public boolean isMovingPlatformType(String type) {
+	private boolean isMovingPlatformType(String type) {
 		return type != null && type.equals(BODY_TYPE_MOVING);
+	}
+
+	public void setupDoor(Body body, RubeScene scene) {
+		this.doors.add(body);
+		body.getFixtureList().get(0).setUserData("door");
 	}
 
 	public void setupCameraBounds(Body body, RubeScene scene) {
@@ -252,7 +268,6 @@ public class Room {
 		batch.end();
 
 		Vector2Pool.release(v);
-
 	}
 	
 	private void setupShaderForBody(Vector2 tempVector, Body body, Vector2 originalWorldCenter, ShaderProgram shader, Camera camera, SceneManager sceneManager) {
@@ -265,7 +280,19 @@ public class Room {
 	}
 
 	public void dispose() {
+		Array<Body> bodies = new Array<Body>();
+		this.world.getBodies(bodies);
+		for (Body body : bodies) {
+			if (!Box2DHelper.isPlayerBody(body)) {
+				world.destroyBody(body);
+			}
+		}
+
+		this.groundPolySprites = null;
+		this.movingPlatforms = null;
+		
 		this.palatte.dispose();
 	}
+
 
 }

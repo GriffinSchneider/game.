@@ -23,7 +23,7 @@ public class MyContactListener implements ContactListener {
 	private Player player;
 	
 	// TODO: refactor.
-	public boolean hasDoorCollision;
+	public Body collidedDoor;
 	
 	public MyContactListener(Player player) {
 		this.player = player;
@@ -59,8 +59,10 @@ public class MyContactListener implements ContactListener {
 				currentPlayerKinematicGround = fa.getBody();
 			}
 
-		} else if (isPlayer(fa) && isDoor(fb) || isPlayer(fb) && isDoor(fa)) {
-			this.hasDoorCollision = true;
+		} else if (isPlayer(fa) && isDoor(fb)) {
+			this.collidedDoor = fb.getBody();
+		} else if (isPlayer(fb) && isDoor(fa)) {
+			this.collidedDoor = fa.getBody();
 		}
 		
 		if (groundSensorCount > 0) {
@@ -84,6 +86,11 @@ public class MyContactListener implements ContactListener {
 			if (currentPlayerKinematicGround == fa.getBody()) {
 				currentPlayerKinematicGround = null;
 			}
+
+		} else if (isPlayer(fa) && isDoor(fb)) {
+			this.collidedDoor = null;
+		} else if (isPlayer(fb) && isDoor(fa)) {
+			this.collidedDoor = null;
 		}
 	}
 	

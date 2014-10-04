@@ -18,6 +18,14 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public class Box2DHelper {
 	
+	
+	public static boolean isPlayerBody(Body body) {
+		Object ud = body.getUserData();
+		return ud != null && ud instanceof String && ((String)ud).equals("player");
+	}
+	
+	
+	
 	public static SpriteAndOutline polygonSpriteForBody(Body body, TextureRegion texreg) {
 
 		ArrayList<PolygonSprite> sprites = new ArrayList<PolygonSprite>();

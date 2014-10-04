@@ -6,6 +6,7 @@ import zone.griff.game.SceneManager;
 import zone.griff.game.entities.Player;
 import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.entities.Room;
+import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.scenes.shader.ShaderBackground;
 
@@ -16,6 +17,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
  
@@ -31,6 +33,8 @@ public class Box2dScene extends Scene {
 	private World world;
 	private Box2DDebugRenderer b2dr;
 	private OrthographicCamera b2dCam;
+	
+	private boolean roomtoggle;
 	private Room currentRoom;
 
 	private Player player;
@@ -107,6 +111,7 @@ public class Box2dScene extends Scene {
 	}
 	
 	
+	private Body lastDoor;
 	public void update(float dt) {
 		this.updateInput(WORLD_STEP_TIME);
 		this.currentRoom.update(WORLD_STEP_TIME);
@@ -114,8 +119,27 @@ public class Box2dScene extends Scene {
 		world.step(WORLD_STEP_TIME, 6, 2);
 		this.updateCamera(dt);
 		
-		if (this.contactListener.hasDoorCollision) {
-			this.contactListener.hasDoorCollision = false;
+		Body collidedDoor = this.contactListener.collidedDoor;
+		if (collidedDoor == null) {
+			this.lastDoor = null;
+		} else if (collidedDoor != this.lastDoor) {
+			Vector2 offset = Vector2Pool.obtain().set(this.player.body.getWorldCenter());
+			offset.sub(this.contactListener.collidedDoor.getWorldCenter());
+			offset.scl(-1, 1);
+
+			this.currentRoom.dispose();
+			if (roomtoggle) {
+				this.currentRoom = new Room(Gdx.files.internal("levels/json/room0.json"), this.world);
+			} else {
+				this.currentRoom = new Room(Gdx.files.internal("levels/json/room1.json"), this.world);
+			}
+			roomtoggle = !roomtoggle;
+
+			this.currentRoom.loadFromFile();
+			
+			lastDoor = this.currentRoom.putPlayerAtDoor(this.player, offset);
+			
+			Vector2Pool.release(offset);
 		}
 
 	}
