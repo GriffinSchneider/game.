@@ -48,6 +48,8 @@ public class Room {
 	private World world;
 	
 	private ShaderProgram shader;
+	private ShaderProgram outlineShader;
+
 	private Texture palatte;
 	private int palatteSize;
 
@@ -78,11 +80,20 @@ public class Room {
 		pixmap.drawPixel(3, 0, 0xF38630FF);
 		pixmap.drawPixel(4, 0, 0xFA6900FF);
 		this.palatte = new Texture(pixmap);
+	  this.palatte.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		pixmap.dispose();
 
 		this.shader = new ShaderProgram(
 				Gdx.files.internal("shaders/default.vert"), 
 				Gdx.files.internal("shaders/wobblyCircles.frag"));
+
+		if (!this.shader.isCompiled()) {
+			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
+		}
+
+		this.outlineShader = new ShaderProgram(
+				Gdx.files.internal("shaders/default.vert"), 
+				Gdx.files.internal("shaders/outline.frag"));
 
 		if (!this.shader.isCompiled()) {
 			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
@@ -95,10 +106,7 @@ public class Room {
 		RubeSceneLoader loader = new RubeSceneLoader(this.world);
 		RubeScene scene = loader.loadScene(this.roomFile);
 		
-		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
-	  textureGround.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-	  TextureRegion texreg = new TextureRegion(textureGround,0,0,1,1);
-	  texreg.setTexture(textureGround);
+	  TextureRegion texreg = new TextureRegion(this.palatte,0,0,this.palatteSize,1);
 		
 		for (Body body : scene.getBodies()) {
 			String type = this.getBodyType(body, scene); 
@@ -256,7 +264,7 @@ public class Room {
 		}
 		
 		batch.flush();
-		batch.setShader(null);
+		batch.setShader(this.outlineShader);
 		player.drawOutline(batch);
 		for (SpriteAndOutline spriteAndOutline : this.groundPolySprites) {
 			spriteAndOutline.drawOutline(batch);
