@@ -30,6 +30,9 @@ public class Player {
 	private static float PLAYER_JUMP_Y_VELOCITY = 15;  
 	private static float PLAYER_STOPPING_MULTIPLIER = 4f;
 
+	private static float PLAYER_DASH_X_VELOCITY = 18.0f;
+	private static float PLAYER_DASH_TIME = 0.22f;
+
 	public enum MoveDirection {
 		NONE, RIGHT, LEFT
 	}
@@ -42,8 +45,20 @@ public class Player {
 	public SpriteAndOutline spriteAndOutline;
 	
 	private MoveDirection moveDir;
-	public void setMoveDir(MoveDirection d) { this.moveDir = d; }
+	private MoveDirection lastMovingDir;
+	public void setMoveDir(MoveDirection d) { 
+		if (this.isDashing) {
+			return;
+		}
+		this.moveDir = d; 
+		if (d != MoveDirection.NONE) {
+			this.lastMovingDir = d;
+		}
+	}
 	public MoveDirection getMoveDir() { return this.moveDir; }
+	
+	private float dashTimer;
+	private boolean isDashing;
 	
 	public Player(World world) {
 		this.setupPlayerBody(world);
@@ -116,6 +131,13 @@ public class Player {
 		this.body.setLinearVelocity(this.body.getLinearVelocity().x, PLAYER_JUMP_Y_VELOCITY);
 	}
 	
+	public void dash() {
+		if (!this.isDashing) {
+			this.dashTimer = 0;
+			this.isDashing = true;
+		}
+	}
+	
 	private void move(float dt, Body currentPlayerKinematicGround) {
 		Vector2 groundVelocity = Vector2Pool.obtain().set(0,0);
 		if (currentPlayerKinematicGround != null) {
@@ -135,7 +157,17 @@ public class Player {
 			float desiredVel = this.moveDir == MoveDirection.RIGHT ? PLAYER_MOVEMENT_X_VELOCITY : -PLAYER_MOVEMENT_X_VELOCITY;
 			desiredVel += groundVelocity.x;
 			float velChange = (desiredVel - playerVelocity.x) * PLAYER_MOVEMENT_MULTIPLIER;
-			this.body.applyLinearImpulse(velChange*this.body.getMass(), 0, playerCenter.x, playerCenter.y, true);
+
+			// Only apply the movement velocity if it's going to make the player's velocity
+			// closer to the desired velocity
+			if (velChange * desiredVel > 0) {
+				this.body.applyLinearImpulse(velChange*this.body.getMass(), 0, playerCenter.x, playerCenter.y, true);
+			} else {
+				this.body.applyForce(
+						(playerVelocity.x - desiredVel) * -PLAYER_STOPPING_MULTIPLIER, 0,
+						playerCenter.x, playerCenter.y,
+						true);
+			}
 		}
 		
 		Vector2Pool.release(groundVelocity);
@@ -143,7 +175,16 @@ public class Player {
 	
 	
 	public void update(float dt, Body currentPlayerKinematicGround) {
-		this.move(dt, currentPlayerKinematicGround);
+		if (this.isDashing) {
+			this.dashTimer += dt;
+			this.body.setLinearVelocity(PLAYER_DASH_X_VELOCITY * (this.lastMovingDir == MoveDirection.RIGHT ? 1 : -1), 0);
+			this.body.applyForceToCenter(0, 50, true);
+			if (dashTimer >= PLAYER_DASH_TIME) {
+				this.isDashing = false;
+			}
+		} else {
+			this.move(dt, currentPlayerKinematicGround);
+		}
 	}
 	
 	public void draw(PolygonSpriteBatch batch) {

@@ -96,6 +96,8 @@ public class Box2dScene extends Scene {
 			public boolean keyDown(int keycode) {
 				if (keycode == Keys.SPACE) {
 					t.jumpPressed();
+				} else if (keycode == Keys.ENTER) {
+					t.dashPressed();
 				}
 				return false;
 			}
@@ -172,6 +174,10 @@ public class Box2dScene extends Scene {
 			this.player.jump();
 		}
 	}
+	
+	public void dashPressed() {
+		this.player.dash();
+	}
 
 	public void updateInput(float dt) {
 
@@ -210,12 +216,9 @@ public class Box2dScene extends Scene {
 
 	@Override
 	public void render() {
-		
 		this.background.draw();
 		this.currentRoom.draw(this.polyBatch, this.player, this.b2dCam, this.sceneManager);
-
 //		b2dr.render(world, this.b2dCam.combined);
-
 	}
 	
 	
