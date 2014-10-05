@@ -1,16 +1,13 @@
 package zone.griff.game.scenes.box2d;
 
 import static zone.griff.game.scenes.box2d.B2DVars.PPM;
-
-import java.util.HashMap;
-
 import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
+import zone.griff.game.entities.Floor;
+import zone.griff.game.entities.Floor.DoorNode;
 import zone.griff.game.entities.Player;
 import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.entities.Room;
-import zone.griff.game.entities.Room.DoorNode;
-import zone.griff.game.entities.Room.RoomNode;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.scenes.shader.ShaderBackground;
@@ -40,6 +37,8 @@ public class Box2dScene extends Scene {
 	private OrthographicCamera b2dCam;
 	
 	private Room currentRoom;
+
+	private Floor currentFloor;
 
 	private Player player;
 	
@@ -73,8 +72,11 @@ public class Box2dScene extends Scene {
 		
 		this.contactListener = new MyContactListener(this.player);
 		this.world.setContactListener(this.contactListener);
-		
-		this.setupDoorGraph();
+
+		this.currentFloor = new Floor();
+		this.currentFloor.generate();
+		this.currentRoom = new Room(this.currentFloor.firstRoom, world);
+		this.currentRoom.loadFromFile();
 		
 		
 		final Box2dScene t = this;
@@ -109,31 +111,6 @@ public class Box2dScene extends Scene {
 		});
 	}
 	
-	public void setupDoorGraph() {
-		RoomNode r0 = new RoomNode(Gdx.files.internal("levels/json/room0.json"));
-		RoomNode r1 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
-		RoomNode r2 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
-		RoomNode r3 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
-
-		DoorNode d00 = new DoorNode(3, 1, r0);
-
-		DoorNode d10 = new DoorNode(0, 1, r1);
-		DoorNode d11 = new DoorNode(3, 1, r1);
-
-		DoorNode d20 = new DoorNode(0, 1, r2);
-		DoorNode d21 = new DoorNode(3, 1, r2);
-
-		DoorNode d30 = new DoorNode(0, 1, r3);
-		DoorNode d31 = new DoorNode(3, 1, r3);
-		
-		d00.link(d10);
-		d11.link(d20);
-		d21.link(d30);
-		
-		this.currentRoom = new Room(r0, world);
-		this.currentRoom.loadFromFile();
-	}
-	
 	@Override
 	public void resize (int width, int height) {
 		float camWidth = SceneManager.V_WIDTH / PPM;
@@ -163,11 +140,12 @@ public class Box2dScene extends Scene {
 			DoorNode collidedNode = this.currentRoom.nodeForDoorBody(collidedDoor);
 			
 			if (collidedNode != this.doorJustEntered) {
+				DoorNode linkedNode = collidedNode.getLinkedNode();
 				this.currentRoom.dispose();
-				this.currentRoom = new Room(collidedNode.linkedNode.room, this.world);
+				this.currentRoom = new Room(linkedNode.getRoom(), this.world);
 				this.currentRoom.loadFromFile();
-				this.currentRoom.putPlayerAtDoor(player, collidedNode.linkedNode, offset);
-				this.doorJustEntered = collidedNode.linkedNode;
+				this.currentRoom.putPlayerAtDoor(player, linkedNode, offset);
+				this.doorJustEntered = linkedNode;
 				Vector2Pool.release(offset);
 			}
 		}

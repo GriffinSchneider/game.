@@ -1,21 +1,19 @@
 package zone.griff.game.entities;
 
 import static zone.griff.game.scenes.box2d.B2DVars.PPM;
-
-import java.util.ArrayList;
-
 import zone.griff.game.SceneManager;
+import zone.griff.game.entities.Floor.DoorNode;
+import zone.griff.game.entities.Floor.RoomNode;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.util.Box2DHelper;
 import zone.griff.game.util.SpriteAndOutline;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -57,52 +55,6 @@ public class Room {
 	private Array<MovingPlatform> movingPlatforms;
 	
 	
-	public static class RoomNode {
-		FileHandle file;
-		Array<DoorNode> doors;
-		
-		public RoomNode(FileHandle file) {
-			this.file = file;
-			doors = new Array<DoorNode>();
-		}
-		
-		public DoorNode doorNodeForBodyPosition(Vector2 bodyPos) {
-			int gridX = Box2DHelper.gridifyX(bodyPos);
-			int gridY = Box2DHelper.gridifyY(bodyPos);
-			for (DoorNode door : this.doors) {
-				if (door.gridX == gridX && door.gridY == gridY) {
-					return door;
-				}
-			}
-			throw new IllegalArgumentException("Couldn't find a door at that position!");
-		}
-
-		public void addDoor(DoorNode door) {
-			this.doors.add(door);
-			door.room = this;
-		}
-	}
-	
-	public static class DoorNode {
-		public int gridX;
-		public int gridY;
-		public RoomNode room;
-		public DoorNode linkedNode;
-		public Body body;
-		public DoorNode(int gridX, int gridY, RoomNode room) {
-			this.gridX = gridX;
-			this.gridY = gridY;
-			room.addDoor(this);
-		}
-		public void link(DoorNode other) {
-			this.linkedNode = other;
-			other.linkedNode = this;
-		}
-		public DoorNode(Vector2 gridPosition) {
-			this.gridX = (int)Math.floor(gridPosition.x);
-			this.gridY = (int)Math.floor(gridPosition.y);
-		}
-	}
 	
 	public DoorNode nodeForDoorBody(Body body) {
 		return (DoorNode)body.getUserData();
@@ -154,7 +106,7 @@ public class Room {
 	
 	public void loadFromFile() {
 		RubeSceneLoader loader = new RubeSceneLoader(this.world);
-		RubeScene scene = loader.loadScene(this.roomNode.file);
+		RubeScene scene = loader.loadScene(this.roomNode.getFile());
 		
 	  TextureRegion texreg = new TextureRegion(this.palatte,0,0,this.palatteSize,1);
 		
@@ -174,9 +126,9 @@ public class Room {
 	}
 	
 	public Body putPlayerAtDoor(Player player, DoorNode doorNode, Vector2 offsetFromDoor) {
-		Vector2 doorCenter = doorNode.body.getWorldCenter();
+		Vector2 doorCenter = doorNode.getBody().getWorldCenter();
 		player.body.setTransform(doorCenter.x + offsetFromDoor.x, doorCenter.y + offsetFromDoor.y, player.body.getAngle());
-		return this.doors.get(0).body;
+		return this.doors.get(0).getBody();
 	}
 
 	private static final String BODY_TYPE = "type";
@@ -202,7 +154,7 @@ public class Room {
 
 	public void setupDoor(Body body, RubeScene scene, RoomNode roomNode) {
 		DoorNode door = roomNode.doorNodeForBodyPosition(body.getWorldCenter());
-		door.body = body;
+		door.setBody(body);
 		this.doors.add(door);
 		body.setUserData(door);
 		body.getFixtureList().get(0).setUserData("door");
