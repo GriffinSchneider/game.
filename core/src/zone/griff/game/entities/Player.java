@@ -70,7 +70,7 @@ public class Player {
 		PolygonShape shape = new PolygonShape();
 		FixtureDef fdef = new FixtureDef();
 		
-		Vector2 playerPos = new Vector2(0, 0);
+		Vector2 playerPos = new Vector2(8, 8);
 		bdef.type = BodyType.DynamicBody;
 		this.body = world.createBody(bdef);
 		this.body.setUserData("player");
@@ -125,6 +125,7 @@ public class Player {
 		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(this.body, texreg);
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
+		this.body.setTransform(playerPos, 0);
 	}
 	
 	public void jump() {

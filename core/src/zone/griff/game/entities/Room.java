@@ -37,14 +37,13 @@ import com.gushikustudios.rube.loader.RubeSceneLoader;
 public class Room {
 	
 	public class CameraBounds {
-		public float minX=0;
-		public float minY=0;
-		public float maxX=0;
-		public float maxY=0;
+		public float minX=Integer.MAX_VALUE;
+		public float minY=Integer.MAX_VALUE;
+		public float maxX=Integer.MIN_VALUE;
+		public float maxY=Integer.MIN_VALUE;
 	}
 	public CameraBounds cameraBounds;
 	
-	private FileHandle roomFile;
 	private World world;
 	
 	private ShaderProgram shader;
@@ -57,18 +56,69 @@ public class Room {
 
 	private Array<MovingPlatform> movingPlatforms;
 	
-	private Array<Body> doors;
 	
-	public Room(FileHandle roomFile, World world) {
-		this.roomFile = roomFile;
+	public static class RoomNode {
+		FileHandle file;
+		Array<DoorNode> doors;
+		
+		public RoomNode(FileHandle file) {
+			this.file = file;
+			doors = new Array<DoorNode>();
+		}
+		
+		public DoorNode doorNodeForBodyPosition(Vector2 bodyPos) {
+			int gridX = Box2DHelper.gridifyX(bodyPos);
+			int gridY = Box2DHelper.gridifyY(bodyPos);
+			for (DoorNode door : this.doors) {
+				if (door.gridX == gridX && door.gridY == gridY) {
+					return door;
+				}
+			}
+			throw new IllegalArgumentException("Couldn't find a door at that position!");
+		}
+
+		public void addDoor(DoorNode door) {
+			this.doors.add(door);
+			door.room = this;
+		}
+	}
+	
+	public static class DoorNode {
+		public int gridX;
+		public int gridY;
+		public RoomNode room;
+		public DoorNode linkedNode;
+		public Body body;
+		public DoorNode(int gridX, int gridY, RoomNode room) {
+			this.gridX = gridX;
+			this.gridY = gridY;
+			room.addDoor(this);
+		}
+		public void link(DoorNode other) {
+			this.linkedNode = other;
+			other.linkedNode = this;
+		}
+		public DoorNode(Vector2 gridPosition) {
+			this.gridX = (int)Math.floor(gridPosition.x);
+			this.gridY = (int)Math.floor(gridPosition.y);
+		}
+	}
+	
+	public DoorNode nodeForDoorBody(Body body) {
+		return (DoorNode)body.getUserData();
+	}
+	
+	public RoomNode roomNode;
+	private Array<DoorNode> doors;
+	
+	public Room(RoomNode roomNode, World world) {
+		this.roomNode = roomNode;
 		this.world = world;
 		
 		this.movingPlatforms = new Array<MovingPlatform>();
 		this.groundPolySprites = new Array<SpriteAndOutline>();
-		this.doors = new Array<Body>();
-		
+		this.doors = new Array<DoorNode>();
 		this.setupShader();
-
 	}
 	
 	public void setupShader() {
@@ -104,7 +154,7 @@ public class Room {
 	
 	public void loadFromFile() {
 		RubeSceneLoader loader = new RubeSceneLoader(this.world);
-		RubeScene scene = loader.loadScene(this.roomFile);
+		RubeScene scene = loader.loadScene(this.roomNode.file);
 		
 	  TextureRegion texreg = new TextureRegion(this.palatte,0,0,this.palatteSize,1);
 		
@@ -116,17 +166,17 @@ public class Room {
 			} else if (this.isCameraBoundsType(type)) {
 				this.setupCameraBounds(body, scene);
 			} else if (this.isDoorType(type)) {
-				this.setupDoor(body, scene);
+				this.setupDoor(body, scene, this.roomNode);
 			} else {
 				this.setupGroundPlatform(body, texreg, scene);
 			}
 		}
 	}
 	
-	public Body putPlayerAtDoor(Player player, Vector2 offsetFromDoor) {
-		Vector2 doorCenter = this.doors.get(0).getWorldCenter();
+	public Body putPlayerAtDoor(Player player, DoorNode doorNode, Vector2 offsetFromDoor) {
+		Vector2 doorCenter = doorNode.body.getWorldCenter();
 		player.body.setTransform(doorCenter.x + offsetFromDoor.x, doorCenter.y + offsetFromDoor.y, player.body.getAngle());
-		return this.doors.get(0);
+		return this.doors.get(0).body;
 	}
 
 	private static final String BODY_TYPE = "type";
@@ -150,8 +200,11 @@ public class Room {
 		return type != null && type.equals(BODY_TYPE_MOVING);
 	}
 
-	public void setupDoor(Body body, RubeScene scene) {
-		this.doors.add(body);
+	public void setupDoor(Body body, RubeScene scene, RoomNode roomNode) {
+		DoorNode door = roomNode.doorNodeForBodyPosition(body.getWorldCenter());
+		door.body = body;
+		this.doors.add(door);
+		body.setUserData(door);
 		body.getFixtureList().get(0).setUserData("door");
 	}
 
@@ -162,6 +215,7 @@ public class Room {
 			Shape shape = f.getShape();
 			Vector2 p = new Vector2().set(((CircleShape) shape).getPosition());
 			t.mul(p);
+			
 		  this.cameraBounds.minX = Math.min(p.x, this.cameraBounds.minX);
 			this.cameraBounds.minY = Math.min(p.y, this.cameraBounds.minY);
 			this.cameraBounds.maxX = Math.max(p.x, this.cameraBounds.maxX);
@@ -259,7 +313,7 @@ public class Room {
 		batch.flush();
 		for (MovingPlatform p : this.movingPlatforms) {
 			this.setupShaderForBody(v, p.platformBody, p.originalBodyWorldCenter, shader, camera, sceneManager);
-			p.render(batch);
+			p.draw(batch);
 			batch.flush();
 		}
 		
@@ -270,7 +324,7 @@ public class Room {
 			spriteAndOutline.drawOutline(batch);
 		}
 		for (MovingPlatform p : this.movingPlatforms) {
-			p.renderOutline(batch);
+			p.drawOutline(batch);
 		}
 
 		batch.end();

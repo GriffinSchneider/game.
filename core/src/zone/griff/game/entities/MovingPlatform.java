@@ -64,7 +64,7 @@ public class MovingPlatform {
 		Vector2Pool.release(v);
 	}
 	
-	public void render(PolygonSpriteBatch batch) {
+	public void draw(PolygonSpriteBatch batch) {
 		Vector2 v = Vector2Pool.obtain();
 		
 		v.set(this.platformBody.getWorldCenter());
@@ -79,7 +79,7 @@ public class MovingPlatform {
 		Vector2Pool.release(v);
 	}
 
-	public void renderOutline(PolygonSpriteBatch batch) {
+	public void drawOutline(PolygonSpriteBatch batch) {
 		this.platformSprite.drawOutline(batch);
 	}
 

@@ -1,11 +1,16 @@
 package zone.griff.game.scenes.box2d;
 
 import static zone.griff.game.scenes.box2d.B2DVars.PPM;
+
+import java.util.HashMap;
+
 import zone.griff.game.MyContactListener;
 import zone.griff.game.SceneManager;
 import zone.griff.game.entities.Player;
 import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.entities.Room;
+import zone.griff.game.entities.Room.DoorNode;
+import zone.griff.game.entities.Room.RoomNode;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.scenes.shader.ShaderBackground;
@@ -34,7 +39,6 @@ public class Box2dScene extends Scene {
 	private Box2DDebugRenderer b2dr;
 	private OrthographicCamera b2dCam;
 	
-	private boolean roomtoggle;
 	private Room currentRoom;
 
 	private Player player;
@@ -44,7 +48,7 @@ public class Box2dScene extends Scene {
 	private ShaderBackground background;
 	
 	private MyContactListener contactListener;
-
+	
 	// "buttons"
 	static final float moveLeftEnd = 0.1f;
 	static final float moveRightEnd = 0.3f;
@@ -64,13 +68,14 @@ public class Box2dScene extends Scene {
 
 		this.background = new ShaderBackground(sceneManager);
 		
-		this.currentRoom = new Room(Gdx.files.internal("levels/json/room0.json"), world);
-		this.currentRoom.loadFromFile();
 
 		this.player = new Player(this.world);
 		
 		this.contactListener = new MyContactListener(this.player);
 		this.world.setContactListener(this.contactListener);
+		
+		this.setupDoorGraph();
+		
 		
 		final Box2dScene t = this;
 		Gdx.input.setInputProcessor(new InputProcessor() {
@@ -104,6 +109,31 @@ public class Box2dScene extends Scene {
 		});
 	}
 	
+	public void setupDoorGraph() {
+		RoomNode r0 = new RoomNode(Gdx.files.internal("levels/json/room0.json"));
+		RoomNode r1 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
+		RoomNode r2 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
+		RoomNode r3 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
+
+		DoorNode d00 = new DoorNode(3, 1, r0);
+
+		DoorNode d10 = new DoorNode(0, 1, r1);
+		DoorNode d11 = new DoorNode(3, 1, r1);
+
+		DoorNode d20 = new DoorNode(0, 1, r2);
+		DoorNode d21 = new DoorNode(3, 1, r2);
+
+		DoorNode d30 = new DoorNode(0, 1, r3);
+		DoorNode d31 = new DoorNode(3, 1, r3);
+		
+		d00.link(d10);
+		d11.link(d20);
+		d21.link(d30);
+		
+		this.currentRoom = new Room(r0, world);
+		this.currentRoom.loadFromFile();
+	}
+	
 	@Override
 	public void resize (int width, int height) {
 		float camWidth = SceneManager.V_WIDTH / PPM;
@@ -113,7 +143,7 @@ public class Box2dScene extends Scene {
 	}
 	
 	
-	private Body lastDoor;
+	private DoorNode doorJustEntered;
 	public void update(float dt) {
 		this.updateInput(WORLD_STEP_TIME);
 		this.currentRoom.update(WORLD_STEP_TIME);
@@ -123,27 +153,24 @@ public class Box2dScene extends Scene {
 		
 		Body collidedDoor = this.contactListener.collidedDoor;
 		if (collidedDoor == null) {
-			this.lastDoor = null;
-		} else if (collidedDoor != this.lastDoor) {
+			this.doorJustEntered = null;
+		} else {
+
 			Vector2 offset = Vector2Pool.obtain().set(this.player.body.getWorldCenter());
 			offset.sub(this.contactListener.collidedDoor.getWorldCenter());
 			offset.scl(-1, 1);
 
-			this.currentRoom.dispose();
-			if (roomtoggle) {
-				this.currentRoom = new Room(Gdx.files.internal("levels/json/room0.json"), this.world);
-			} else {
-				this.currentRoom = new Room(Gdx.files.internal("levels/json/room1.json"), this.world);
+			DoorNode collidedNode = this.currentRoom.nodeForDoorBody(collidedDoor);
+			
+			if (collidedNode != this.doorJustEntered) {
+				this.currentRoom.dispose();
+				this.currentRoom = new Room(collidedNode.linkedNode.room, this.world);
+				this.currentRoom.loadFromFile();
+				this.currentRoom.putPlayerAtDoor(player, collidedNode.linkedNode, offset);
+				this.doorJustEntered = collidedNode.linkedNode;
+				Vector2Pool.release(offset);
 			}
-			roomtoggle = !roomtoggle;
-
-			this.currentRoom.loadFromFile();
-			
-			lastDoor = this.currentRoom.putPlayerAtDoor(this.player, offset);
-			
-			Vector2Pool.release(offset);
 		}
-
 	}
 	
 	public void updateCamera(float dt) {
