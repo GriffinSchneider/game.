@@ -51,7 +51,8 @@ public class Box2dScene extends Scene {
 	// "buttons"
 	static final float moveLeftEnd = 0.1f;
 	static final float moveRightEnd = 0.3f;
-	static final float jumpStart = 0.7f;
+	static final float jumpStart = 0.9f;
+	static final float dashStart = 0.7f;
 	
 	
 	public Box2dScene(SceneManager sceneManager) {
@@ -89,6 +90,8 @@ public class Box2dScene extends Scene {
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) { 
 				if (screenX/(float)t.sceneManager.screenWidth > jumpStart) {
 					t.jumpPressed();
+				} else if (screenX/(float)t.sceneManager.screenWidth > dashStart) {
+					t.dashPressed();
 				}
 				return false;
 			}
