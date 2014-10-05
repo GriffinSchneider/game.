@@ -31,7 +31,7 @@ public class Floor {
 					return door;
 				}
 			}
-			throw new IllegalArgumentException("Couldn't find a door at that position!");
+			throw new IllegalArgumentException("Couldn't find a door at " + gridX + ", " + gridY);
 		}
 
 		private void addDoor(DoorNode door) {
@@ -80,12 +80,12 @@ public class Floor {
 	
 	
 	public void generate() {
-		RoomNode r0 = new RoomNode(Gdx.files.internal("levels/json/room0.json"));
+		RoomNode r0 = new RoomNode(Gdx.files.internal("levels/json/untitled1.json"));
 		RoomNode r1 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
 		RoomNode r2 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
 		RoomNode r3 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
 
-		DoorNode d00 = new DoorNode(3, 1, r0);
+		DoorNode d00 = new DoorNode(0, -2, r0);
 
 		DoorNode d10 = new DoorNode(0, 1, r1);
 		DoorNode d11 = new DoorNode(3, 1, r1);
