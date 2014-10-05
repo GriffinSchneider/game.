@@ -133,7 +133,7 @@ public class Box2dScene extends Scene {
 			this.doorJustEntered = null;
 		} else {
 
-			Vector2 offset = Vector2Pool.obtain().set(this.player.body.getWorldCenter());
+			Vector2 offset = this.player.body.getWorldCenter();
 			offset.sub(this.contactListener.collidedDoor.getWorldCenter());
 			offset.scl(-1, 1);
 
@@ -146,7 +146,6 @@ public class Box2dScene extends Scene {
 				this.currentRoom.loadFromFile();
 				this.currentRoom.putPlayerAtDoor(player, linkedNode, offset);
 				this.doorJustEntered = linkedNode;
-				Vector2Pool.release(offset);
 			}
 		}
 	}
