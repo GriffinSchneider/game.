@@ -82,7 +82,6 @@ public class Room {
 		pixmap.drawPixel(3, 0, 0xF38630FF);
 		pixmap.drawPixel(4, 0, 0xFA6900FF);
 		this.palatte = new Texture(pixmap);
-	  this.palatte.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		pixmap.dispose();
 
 		this.shader = new ShaderProgram(
