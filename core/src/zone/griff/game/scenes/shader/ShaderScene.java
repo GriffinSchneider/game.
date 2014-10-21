@@ -3,16 +3,21 @@ package zone.griff.game.scenes.shader;
 import zone.griff.game.SceneManager;
 import zone.griff.game.scenes.Scene;
 
+import backgrounds.ShaderBackground;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 
 public class ShaderScene extends Scene {
 	
-	ShaderBackground background;
+	private ShaderBackground background;
+	private PolygonSpriteBatch polyBatch;
 
 	public ShaderScene(SceneManager game) {
 		super(game);
 		this.background = new ShaderBackground(game);
+		this.polyBatch = new PolygonSpriteBatch();
 	}
 
 	@Override
@@ -37,7 +42,7 @@ public class ShaderScene extends Scene {
 		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
 			return;
 		}
-		this.background.draw();
+		this.background.draw(this.polyBatch, null);
 	}
 	
 	@Override

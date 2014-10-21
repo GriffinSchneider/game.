@@ -1,54 +1,38 @@
-package zone.griff.game.scenes.shader;
+package backgrounds;
 
 import zone.griff.game.SceneManager;
+import zone.griff.game.util.PaletteManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 
-public class ShaderBackground {
-	
+public class ShaderBackground extends ParallaxBackground {
 	
 	public float parallaxX;
 	public float parallaxY;
-	
-	SceneManager sceneManager;
 	
 	ShaderProgram shader;
 	Mesh mesh;
 	FrameBuffer fbo;
 	SpriteBatch fboBatch;
 
-	Texture palatte;
-	int palatteSize;
-	
 	public ShaderBackground(SceneManager sceneManager) {
-		this.sceneManager = sceneManager;
-
-		this.palatteSize = 5;
-		Pixmap pixmap = new Pixmap(palatteSize, 1, Format.RGBA8888);
-		pixmap.drawPixel(0, 0, 0x69D2E7FF);
-		pixmap.drawPixel(1, 0, 0xA7DBD8FF);
-		pixmap.drawPixel(2, 0, 0xE0E4CCFF);
-		pixmap.drawPixel(3, 0, 0xF38630FF);
-		pixmap.drawPixel(4, 0, 0xFA6900FF);
-		this.palatte = new Texture(pixmap);
-		pixmap.dispose();
-		
+		super(sceneManager);
 		this.setupFBO();
 	}
 	
+	@Override
 	public void resize(int width, int height) {
-		
 		short indices[] = new short[] {0, 1, 2, 0, 2, 3};
 
 		float[] verts = this.squareVertices(-1, -1, 2, height);
@@ -88,8 +72,8 @@ public class ShaderBackground {
 
 	   this.fbo = new FrameBuffer(
 	  		 Pixmap.Format.RGB888, 
-	  		 this.sceneManager.screenWidth / 2,
-	  		 this.sceneManager.screenHeight / 2,
+	  		 this.sceneManager.screenWidth / 4,
+	  		 this.sceneManager.screenHeight / 4,
 	  		 true);
 	   this.fbo.getColorBufferTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	 
@@ -102,10 +86,11 @@ public class ShaderBackground {
 	
 	
 	private Matrix4 idMatrix = new Matrix4().idt();
-	public void draw() {
+	@Override
+	public void draw(PolygonSpriteBatch spriteBatch, OrthographicCamera camera) {
 		this.fbo.begin();
 		
-//		this.palatte.bind();
+		PaletteManager.getPalette().bind();
 		this.fbo.getColorBufferTexture().bind();
 		this.shader.begin();
 		
@@ -114,10 +99,8 @@ public class ShaderBackground {
 		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
 //		this.shader.setUniformi("previousFrame", 0);
 //		this.shader.setUniformi("palatte", 0);
-//		this.shader.setUniformf("palatteSize", palatteSize);
+//		this.shader.setUniformf("palatteSize", PaletteManager.getPaletteSize());
 		
-		
-
 		this.shader.setUniformf("parallaxX", this.parallaxX);
 		this.shader.setUniformf("parallaxY", this.parallaxY);
 		
@@ -133,7 +116,6 @@ public class ShaderBackground {
 				this.sceneManager.screenWidth, this.sceneManager.screenHeight, 
 				0, 0, 1, 1);
 		this.fboBatch.end();
-		
 	}
 
 	public void dispose() {

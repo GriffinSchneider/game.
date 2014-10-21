@@ -8,9 +8,11 @@ import zone.griff.game.entities.Floor.DoorNode;
 import zone.griff.game.entities.Player;
 import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.entities.Room;
-import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Scene;
-import zone.griff.game.scenes.shader.ShaderBackground;
+
+import backgrounds.GeometricBackground;
+import backgrounds.ParallaxBackground;
+import backgrounds.ShaderBackground;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -44,7 +46,7 @@ public class Box2dScene extends Scene {
 	
 	private PolygonSpriteBatch polyBatch;
 	
-	private ShaderBackground background;
+	private ParallaxBackground background;
 	
 	private MyContactListener contactListener;
 	
@@ -66,8 +68,8 @@ public class Box2dScene extends Scene {
 
 		this.polyBatch = new PolygonSpriteBatch();
 
-		this.background = new ShaderBackground(sceneManager);
-		
+//		this.background = new ShaderBackground(sceneManager);
+		this.background = new GeometricBackground(sceneManager);
 
 		this.player = new Player(this.world);
 		
@@ -124,6 +126,7 @@ public class Box2dScene extends Scene {
 	
 	
 	private DoorNode doorJustEntered;
+	@Override
 	public void update(float dt) {
 		this.updateInput(WORLD_STEP_TIME);
 		this.currentRoom.update(WORLD_STEP_TIME);
@@ -170,9 +173,6 @@ public class Box2dScene extends Scene {
 		}
 
 		this.b2dCam.update();
-
-		this.background.parallaxX = cameraCenter.x*0.0004f;
-		this.background.parallaxY = (cameraCenter.y + 500f)*0.0004f;
 	}
 	
 	public void jumpPressed() {
@@ -223,8 +223,16 @@ public class Box2dScene extends Scene {
 
 	@Override
 	public void render() {
-		this.background.draw();
+		
+		this.background.parallaxX = this.b2dCam.position.x*0.0004f;
+		this.background.parallaxY = (this.b2dCam.position.y + 500f)*0.0004f;
+
+		this.polyBatch.begin();
+		this.polyBatch.setProjectionMatrix(this.b2dCam.combined);
+		this.polyBatch.disableBlending();
+		this.background.draw(this.polyBatch, this.b2dCam);
 		this.currentRoom.draw(this.polyBatch, this.player, this.b2dCam, this.sceneManager);
+		this.polyBatch.end();
 //		b2dr.render(world, this.b2dCam.combined);
 	}
 	

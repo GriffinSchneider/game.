@@ -6,15 +6,12 @@ import zone.griff.game.entities.Floor.DoorNode;
 import zone.griff.game.entities.Floor.RoomNode;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.util.Box2DHelper;
+import zone.griff.game.util.PaletteManager;
 import zone.griff.game.util.SpriteAndOutline;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -47,14 +44,9 @@ public class Room {
 	private ShaderProgram shader;
 	private ShaderProgram outlineShader;
 
-	private Texture palatte;
-	private int palatteSize;
-
 	private Array<SpriteAndOutline> groundPolySprites;
 
 	private Array<MovingPlatform> movingPlatforms;
-	
-	
 	
 	public DoorNode nodeForDoorBody(Body body) {
 		return (DoorNode)body.getUserData();
@@ -74,16 +66,6 @@ public class Room {
 	}
 	
 	public void setupShader() {
-		this.palatteSize = 5;
-		Pixmap pixmap = new Pixmap(palatteSize, 1, Format.RGBA8888);
-		pixmap.drawPixel(0, 0, 0x69D2E7FF);
-		pixmap.drawPixel(1, 0, 0xA7DBD8FF);
-		pixmap.drawPixel(2, 0, 0xE0E4CCFF);
-		pixmap.drawPixel(3, 0, 0xF38630FF);
-		pixmap.drawPixel(4, 0, 0xFA6900FF);
-		this.palatte = new Texture(pixmap);
-		pixmap.dispose();
-
 		this.shader = new ShaderProgram(
 				Gdx.files.internal("shaders/default.vert"), 
 				Gdx.files.internal("shaders/wobblyCircles.frag"));
@@ -107,7 +89,7 @@ public class Room {
 		RubeSceneLoader loader = new RubeSceneLoader(this.world);
 		RubeScene scene = loader.loadScene(this.roomNode.getFile());
 		
-	  TextureRegion texreg = new TextureRegion(this.palatte,0,0,this.palatteSize,1);
+	  TextureRegion texreg = new TextureRegion(PaletteManager.getPalette(),0,0,PaletteManager.getPaletteSize(),1);
 		
 		for (Body body : scene.getBodies()) {
 			String type = this.getBodyType(body, scene); 
@@ -228,10 +210,8 @@ public class Room {
 	
 	public void draw(PolygonSpriteBatch batch, Player player, Camera camera, SceneManager sceneManager) {
 		Vector2 v = Vector2Pool.obtain();
-
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		batch.disableBlending();
+		
+		batch.flush();
 
 		batch.setShader(shader);
 		shader.setUniformf("iGlobalTime", sceneManager.gameTime);
@@ -242,13 +222,13 @@ public class Room {
 		shader.setUniformf("xOffset", v.x);
 		shader.setUniformf("yOffset", v.y);
 
-		shader.setUniformf("palatteSize", palatteSize);
+		shader.setUniformf("palatteSize", PaletteManager.getPaletteSize());
 
 		// sprite.draw() will call bind() on the sprite's texture.
-		// So, bind the palatte to texture #1, and then set the active texture to #0
-		// to stop sprite.draw() from binding over the palatte.
+		// So, bind the palette to texture #1, and then set the active texture to #0
+		// to stop sprite.draw() from binding over the palette.
 		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE1);
-		this.palatte.bind();
+		PaletteManager.getPalette().bind();
 		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0);
 
 		shader.setUniformi("palatte", 1);
@@ -278,8 +258,6 @@ public class Room {
 			p.drawOutline(batch);
 		}
 
-		batch.end();
-
 		Vector2Pool.release(v);
 	}
 	
@@ -303,9 +281,6 @@ public class Room {
 
 		this.groundPolySprites = null;
 		this.movingPlatforms = null;
-		
-		this.palatte.dispose();
 	}
-
 
 }
