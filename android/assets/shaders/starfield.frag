@@ -169,8 +169,8 @@ vec3 nrand3( vec2 co )
 void main() {
   vec2 uv = 2. * gl_FragCoord.xy / iResolution.xy - 1.;
   vec2 uvs = uv * iResolution.xy / max(iResolution.x, iResolution.y);
-  vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.);
-  p += .2 * vec3(parallaxX*20., parallaxY*6., 0.0); //sin(iGlobalTime / 128.));
+  vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.2, 0.);
+  p += .2 * vec3(parallaxX*20., parallaxY*6., sin(iGlobalTime / 128.));
 	
   float freqs[4];
   //Sound
@@ -179,11 +179,11 @@ void main() {
   freqs[2] = 0.5;
   freqs[3] = 0.4;
 
-  float t = field(p,freqs[2]);
+  float t = field2(p,freqs[2]);
   float v = (1. - exp((abs(uv.x) - 1.) * 6.)) * (1. - exp((abs(uv.y) - 1.) * 6.));
 	
   //Second Layer
-  vec3 p2 = vec3(uvs / (4.+sin(iGlobalTime*0.11)*0.2+0.2+sin(iGlobalTime*0.15)*0.3+0.4), 1.5) + vec3(2., -1.3, -1.);
+  vec3 p2 = vec3(uvs / (4.+sin(iGlobalTime*0.11)*0.2+0.2+sin(iGlobalTime*0.15)*0.3+0.4), 1.5) + vec3(2., -1.2, -1.);
   p2 += 0.25 * vec3(parallaxX*40., parallaxY*10., sin(iGlobalTime / 128.));
   float t2 = field2(p2,freqs[3]);
   vec4 c2 = mix(.4, 1., v) * vec4(1.3 * t2 * t2 * t2 ,1.8  * t2 * t2 , t2* freqs[0], t2);
