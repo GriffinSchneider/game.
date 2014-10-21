@@ -18,9 +18,6 @@ import com.badlogic.gdx.math.Matrix4;
 
 public class ShaderBackground extends ParallaxBackground {
 	
-	public float parallaxX;
-	public float parallaxY;
-	
 	ShaderProgram shader;
 	Mesh mesh;
 	FrameBuffer fbo;
