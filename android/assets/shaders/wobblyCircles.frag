@@ -54,7 +54,7 @@ void main(void) {
   vec4 col1 = texture2D(palatte, vec2(palatteIndex1, 0.0));
   vec4 col2 = texture2D(palatte, vec2(palatteIndex2, 0.0));
   
-  vec4 col = mix(col1, col2, smoothstep(0.0, 1.0, fract(d)));
+  vec4 col = mix(col1, col2, smoothstep(0.8, 1.0, fract(d)));
   gl_FragColor = vec4(col.x, col.y, col.z, 1 );
 }
 
