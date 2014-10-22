@@ -30,7 +30,7 @@ public class Box2dScene extends Scene {
 	// Tuning
 	private static Vector2 GRAVITY = new Vector2(0, -50);
 
-	private static float CAMERA_LERP_FACTOR = 0.1f;
+	private static float CAMERA_LERP_FACTOR = 4.0f;
 	
 	private static float WORLD_STEP_TIME = 1.0f/60.0f;
 	
@@ -80,8 +80,8 @@ public class Box2dScene extends Scene {
 		this.currentFloor.generate();
 		this.currentRoom = new Room(this.currentFloor.firstRoom, world);
 		this.currentRoom.loadFromFile();
-		
-		
+
+
 		final Box2dScene t = this;
 		Gdx.input.setInputProcessor(new InputProcessor() {
 			@Override
@@ -115,7 +115,7 @@ public class Box2dScene extends Scene {
 			}
 		});
 	}
-	
+
 	@Override
 	public void resize (int width, int height) {
 		float camWidth = SceneManager.V_WIDTH / PPM;
@@ -123,15 +123,21 @@ public class Box2dScene extends Scene {
 		b2dCam.setToOrtho(false, camWidth, camHeight);
 		this.background.resizeCamera(camWidth, camHeight);
 	}
-	
-	
+
+
 	private DoorNode doorJustEntered;
+	private double accumulator;
 	@Override
 	public void update(float dt) {
-		this.updateInput(WORLD_STEP_TIME);
-		this.currentRoom.update(WORLD_STEP_TIME);
-		this.player.update(WORLD_STEP_TIME, this.contactListener.currentPlayerKinematicGround());
-		world.step(WORLD_STEP_TIME, 6, 2);
+		accumulator += dt;
+		while (accumulator > WORLD_STEP_TIME) {
+			world.step(WORLD_STEP_TIME, 6, 2);
+			accumulator -= WORLD_STEP_TIME;
+		}
+
+		this.updateInput(dt);
+		this.currentRoom.update(dt);
+		this.player.update(dt, this.contactListener.currentPlayerKinematicGround());
 		this.updateCamera(dt);
 		
 		Body collidedDoor = this.contactListener.collidedDoor;
@@ -161,8 +167,8 @@ public class Box2dScene extends Scene {
 		Vector3 cameraCenter = this.b2dCam.position;
 		
 		cameraCenter.add(
-				(playerCenter.x - cameraCenter.x) * CAMERA_LERP_FACTOR,
-				(playerCenter.y - cameraCenter.y) * CAMERA_LERP_FACTOR,
+				(playerCenter.x - cameraCenter.x) * (CAMERA_LERP_FACTOR * dt),
+				(playerCenter.y - cameraCenter.y) * (CAMERA_LERP_FACTOR * dt),
 				0);
 		
 		if (this.currentRoom.cameraBounds != null) {
