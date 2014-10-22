@@ -5,12 +5,14 @@ import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.util.PaletteManager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.EarClippingTriangulator;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -28,19 +30,21 @@ public class GeometricBackground extends ParallaxBackground {
 
 	public GeometricBackground(SceneManager sceneManager) {
 		super(sceneManager);
-		
+	}
+
+	@Override
+	public void resizeCamera(float viewportWidth, float viewportHeight) {
 		this.sprites = new Array<DiamondSprite>();
 	  TextureRegion texreg = new TextureRegion(PaletteManager.getPalette(),0,0,PaletteManager.getPaletteSize(),1);
 		EarClippingTriangulator triangulator = 	new EarClippingTriangulator();
 		
-//		int numDiamonds = 30;
-		int numDiamonds = 7;
-		
+		int numDiamonds = 20;
+
 		float size;
 
 		for (int i = 0; i < numDiamonds; i++) {
 			
-			size = (float) (Math.sin(i*3) + 1.3) * 3;
+			size = MathUtils.random(2.5f, 5f);
 			
 			float[] vertices = new float[4 * 2];
 			
@@ -58,10 +62,10 @@ public class GeometricBackground extends ParallaxBackground {
 			
 			short triangles[] = triangulator.computeTriangles(vertices).toArray();
 			DiamondSprite sprite = new DiamondSprite(new PolygonRegion(texreg, vertices, triangles), size);
-
+			
 			sprite.setPosition(
-					i*1.5f,
-					(float)Math.sin(i)*4 + 10);
+					MathUtils.random(0, viewportWidth+size*2),
+					MathUtils.random(0, viewportHeight+size*2));
 
 			this.sprites.add(sprite);
 		}
@@ -79,7 +83,7 @@ public class GeometricBackground extends ParallaxBackground {
 		
 		for (int i = 0; i < this.sprites.size; i ++) {
 			DiamondSprite sprite = this.sprites.get(i);
-			float layerParallax = (i*6) / this.sprites.size;
+			float layerParallax = (i*3) / this.sprites.size;
 			
 			float cameraLeft = camera.position.x - camera.viewportWidth/2.0f - sprite.size;
 			float cameraBottom = camera.position.y - camera.viewportHeight/2.0f - sprite.size;

@@ -121,7 +121,7 @@ public class Box2dScene extends Scene {
 		float camWidth = SceneManager.V_WIDTH / PPM;
 		float camHeight = ((float)height)/((float)width)*camWidth;
 		b2dCam.setToOrtho(false, camWidth, camHeight);
-		this.background.resize(width, height);
+		this.background.resizeCamera(camWidth, camHeight);
 	}
 	
 	
@@ -223,11 +223,11 @@ public class Box2dScene extends Scene {
 
 	@Override
 	public void render() {
-		
 		this.background.parallaxX = this.b2dCam.position.x*0.0004f;
 		this.background.parallaxY = (this.b2dCam.position.y + 500f)*0.0004f;
 
 		this.polyBatch.begin();
+
 		this.polyBatch.setProjectionMatrix(this.b2dCam.combined);
 		this.polyBatch.disableBlending();
 		this.background.draw(this.polyBatch, this.b2dCam);

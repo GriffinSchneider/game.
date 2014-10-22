@@ -29,10 +29,12 @@ public class ShaderBackground extends ParallaxBackground {
 	}
 	
 	@Override
-	public void resize(int width, int height) {
+	public void resizeCamera(float width, float height) {
+		this.setupFBO();
+
 		short indices[] = new short[] {0, 1, 2, 0, 2, 3};
 
-		float[] verts = this.squareVertices(-1, -1, 2, height);
+		float[] verts = this.squareVertices(-1, -1, 2, 2);
 		Mesh mesh = new Mesh(true, 4, 6, VertexAttribute.Position());
 		mesh.setVertices(verts);
 		mesh.setIndices(indices);
@@ -45,8 +47,6 @@ public class ShaderBackground extends ParallaxBackground {
 		if (!this.shader.isCompiled()) {
 			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
 		}
-		
-		this.setupFBO();
 	}
 
 	public float[] squareVertices(float x, float y, float width, float height) {

@@ -22,7 +22,7 @@ public class ShaderScene extends Scene {
 
 	@Override
 	public void resize(int w, int h) {
-		this.background.resize(w, h);
+		this.background.resizeCamera(w, h);
 	}
 	
 
