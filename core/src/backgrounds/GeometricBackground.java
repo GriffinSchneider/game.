@@ -56,7 +56,7 @@ public class GeometricBackground extends ParallaxBackground {
 	  TextureRegion texreg = new TextureRegion(PaletteManager.getPaletteTexture(),0,0,PaletteManager.getPaletteSize(),1);
 		EarClippingTriangulator triangulator = 	new EarClippingTriangulator();
 		
-		int numDiamonds = 30;
+		int numDiamonds = 40;
 
 		float size;
 		float xPos;
@@ -64,7 +64,7 @@ public class GeometricBackground extends ParallaxBackground {
 
 		for (int i = 0; i < numDiamonds; i++) {
 			
-			size = MathUtils.random(2f, 4f);
+			size = MathUtils.random(1f, 3f);
 			xPos = MathUtils.random(0, viewportWidth+size*2);
 			yPos = MathUtils.random(0, viewportHeight+size*2);
 			Color color = new Color(PaletteManager.getPaletteColorAtIndex(MathUtils.random(1, 2)));
@@ -117,7 +117,7 @@ public class GeometricBackground extends ParallaxBackground {
 		
 		for (int i = 0; i < this.sprites.size; i ++) {
 			DiamondSprite sprite = this.sprites.get(i);
-			float layerParallax = ((i)*3) / this.sprites.size;
+			float layerParallax = ((float)(i*3)) / this.sprites.size;
 			
 			float cameraLeft = camera.position.x - camera.viewportWidth/2.0f - sprite.size;
 			float cameraBottom = camera.position.y - camera.viewportHeight/2.0f - sprite.size;
