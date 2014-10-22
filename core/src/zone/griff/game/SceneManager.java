@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.scenes.box2d.Box2dScene;
+import zone.griff.game.util.PaletteManager;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -65,6 +66,7 @@ public class SceneManager implements ApplicationListener {
 		for (Scene s : this.gameStates) {
 			s.dispose();
 		}
+		PaletteManager.dispose();
 	}
 
 	@Override

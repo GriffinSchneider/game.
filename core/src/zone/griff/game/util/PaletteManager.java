@@ -52,5 +52,9 @@ public class PaletteManager {
   public static int getPaletteColorAtIndex(int index) {
   	return getInstance().palette[index];
   }
+  
+  public static void dispose() {
+  	instance = null;
+  }
 
 }
