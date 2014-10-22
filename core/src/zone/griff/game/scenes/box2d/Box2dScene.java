@@ -130,15 +130,16 @@ public class Box2dScene extends Scene {
 	@Override
 	public void update(float dt) {
 		accumulator += dt;
-		while (accumulator > WORLD_STEP_TIME) {
-			world.step(WORLD_STEP_TIME, 6, 2);
-			accumulator -= WORLD_STEP_TIME;
+		float stepTime = dt < WORLD_STEP_TIME * 1.5f ? dt : WORLD_STEP_TIME;
+		
+		while (accumulator >= stepTime) {
+			world.step(stepTime, 6, 2);
+			accumulator -= stepTime;
 		}
-
-		this.updateInput(dt);
-		this.currentRoom.update(dt);
-		this.player.update(dt, this.contactListener.currentPlayerKinematicGround());
-		this.updateCamera(dt);
+		this.updateInput(stepTime);
+		this.currentRoom.update(stepTime);
+		this.player.update(stepTime, this.contactListener.currentPlayerKinematicGround());
+		this.updateCamera(stepTime);
 		
 		Body collidedDoor = this.contactListener.collidedDoor;
 		if (collidedDoor == null) {
