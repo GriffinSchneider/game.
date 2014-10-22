@@ -87,7 +87,7 @@ public class ShaderBackground extends ParallaxBackground {
 	public void draw(PolygonSpriteBatch spriteBatch, OrthographicCamera camera) {
 		this.fbo.begin();
 		
-		PaletteManager.getPalette().bind();
+		PaletteManager.getPaletteTexture().bind();
 		this.fbo.getColorBufferTexture().bind();
 		this.shader.begin();
 		

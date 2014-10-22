@@ -14,32 +14,43 @@ public class PaletteManager {
      return instance;
   }
   
-	private Texture palette;
-	private int paletteSize = 8;
+	private Texture paletteTexture;
+
+	private int[] palette;
 
   private PaletteManager() {
-		Pixmap pixmap = new Pixmap(this.paletteSize, 1, Format.RGBA8888);
-		pixmap.drawPixel(0, 0, 0x69D2E7FF);
-		pixmap.drawPixel(1, 0, 0xA7DBD8FF);
-		pixmap.drawPixel(2, 0, 0xE0E4CCFF);
-		pixmap.drawPixel(3, 0, 0xF38630FF);
-		pixmap.drawPixel(4, 0, 0xFA6900FF);
-		pixmap.drawPixel(5, 0, 0xFF4E50FF);
-		pixmap.drawPixel(6, 0, 0x48A940FF);
-		pixmap.drawPixel(7, 0, 0x67C827FF);
-		pixmap.drawPixel(8, 0, 0xFA6900FF);
+  	
+  	this.palette = new int[] {
+  		0x69D2E7FF, // Blue
+  		0xA7DBD8FF, // Light Blue
+  		0xE0E4CCFF, // Off-white
+  		0xF38630FF, // Light Orange
+  		0xFA6900FF, // Orange
+  		0xFF4E50FF, // Red
+  		0x48A940FF, // Dark Green
+  		0x67C827FF, // Green
+  	};
+  	
+		Pixmap pixmap = new Pixmap(this.palette.length, 1, Format.RGBA8888);
+		for (int i = 0; i < this.palette.length; i++) {
+			pixmap.drawPixel(i, 0, this.palette[i]);
+		}
 
-		this.palette = new Texture(pixmap);
-		this.palette.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		this.paletteTexture = new Texture(pixmap);
+		this.paletteTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		pixmap.dispose();
   }
 
-  public static Texture getPalette() {
-  	return getInstance().palette;
+  public static Texture getPaletteTexture() {
+  	return getInstance().paletteTexture;
   }
 
   public static int getPaletteSize() {
-  	return getInstance().paletteSize;
+  	return getInstance().palette.length;
+  }
+
+  public static int getPaletteColorAtIndex(int index) {
+  	return getInstance().palette[index];
   }
 
 }

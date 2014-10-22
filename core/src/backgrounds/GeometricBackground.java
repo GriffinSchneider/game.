@@ -6,11 +6,13 @@ import zone.griff.game.util.PaletteManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -19,71 +21,103 @@ import com.badlogic.gdx.utils.Array;
 public class GeometricBackground extends ParallaxBackground {
 	
 	private Array<DiamondSprite> sprites;
+	private ShaderProgram shader;
+	private Color backgroundColor;
 	
 	private class DiamondSprite extends PolygonSprite {
 		float size;
-		DiamondSprite(PolygonRegion region, float size) {
+		PolygonSprite outlineSprite;
+		DiamondSprite(PolygonRegion region, PolygonRegion outlineRegion, float size) {
 			super(region);
 			this.size = size;
+			this.outlineSprite = new PolygonSprite(outlineRegion);
+		}
+		@Override
+		public void setColor (Color tint) {
+			super.setColor(tint);
+			tint.mul(0.7f, 0.7f, 0.7f, 1);
+			this.outlineSprite.setColor(tint);
 		}
 	}
 
 	public GeometricBackground(SceneManager sceneManager) {
 		super(sceneManager);
+		
+		this.shader = new ShaderProgram(
+				Gdx.files.internal("shaders/default.vert"), 
+				Gdx.files.internal("shaders/vertcolor.frag"));
+		
+		this.backgroundColor = new Color(PaletteManager.getPaletteColorAtIndex(0));
 	}
 
 	@Override
 	public void resizeCamera(float viewportWidth, float viewportHeight) {
 		this.sprites = new Array<DiamondSprite>();
-	  TextureRegion texreg = new TextureRegion(PaletteManager.getPalette(),0,0,PaletteManager.getPaletteSize(),1);
+	  TextureRegion texreg = new TextureRegion(PaletteManager.getPaletteTexture(),0,0,PaletteManager.getPaletteSize(),1);
 		EarClippingTriangulator triangulator = 	new EarClippingTriangulator();
 		
-		int numDiamonds = 20;
+		int numDiamonds = 30;
 
 		float size;
+		float xPos;
+		float yPos;
 
 		for (int i = 0; i < numDiamonds; i++) {
 			
-			size = MathUtils.random(2.5f, 5f);
+			size = MathUtils.random(2f, 4f);
+			xPos = MathUtils.random(0, viewportWidth+size*2);
+			yPos = MathUtils.random(0, viewportHeight+size*2);
+			Color color = new Color(PaletteManager.getPaletteColorAtIndex(MathUtils.random(1, 2)));
 			
-			float[] vertices = new float[4 * 2];
+			PolygonRegion backgroundRegion = null;
 			
-			vertices[0] = 0;
-			vertices[1] = size;
-			
-			vertices[2] = -size;
-			vertices[3] = 0;
-			
-			vertices[4] = 0;
-			vertices[5] = -size;
-			
-			vertices[6] = size;
-			vertices[7] = 0;
-			
-			short triangles[] = triangulator.computeTriangles(vertices).toArray();
-			DiamondSprite sprite = new DiamondSprite(new PolygonRegion(texreg, vertices, triangles), size);
-			
-			sprite.setPosition(
-					MathUtils.random(0, viewportWidth+size*2),
-					MathUtils.random(0, viewportHeight+size*2));
+			float thisSize = size;
+			for (int k = 0; k < 2; k++) {
+				float[] vertices = new float[4 * 2];
 
-			this.sprites.add(sprite);
+				vertices[0] = 0;
+				vertices[1] = thisSize;
+
+				vertices[2] = -thisSize;
+				vertices[3] = 0;
+
+				vertices[4] = 0;
+				vertices[5] = -thisSize;
+
+				vertices[6] = thisSize;
+				vertices[7] = 0;
+
+				short triangles[] = triangulator.computeTriangles(vertices).toArray();
+				if (backgroundRegion == null) {
+					backgroundRegion = new PolygonRegion(texreg, vertices, triangles);
+				} else {
+					DiamondSprite sprite = new DiamondSprite(new PolygonRegion(texreg, vertices, triangles), backgroundRegion, size);
+					sprite.setPosition(xPos, yPos);
+					sprite.setColor(color);
+					this.sprites.add(sprite);
+				}
+
+				thisSize -= 0.08f;
+			}
 		}
 	}
-	
+
 	float lastParallaxX;
 	float lastParallaxY;
 
 	@Override
 	public void draw(PolygonSpriteBatch spriteBatch, OrthographicCamera camera) {
-		spriteBatch.setShader(null);
+		Gdx.graphics.getGL20().glClearColor(this.backgroundColor.r, this.backgroundColor.g, this.backgroundColor.b, 1 );
+		Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		spriteBatch.setShader(this.shader);
 		
 		float deltaX = this.parallaxX - this.lastParallaxX;
 		float deltaY = this.parallaxY - this.lastParallaxY;
 		
 		for (int i = 0; i < this.sprites.size; i ++) {
 			DiamondSprite sprite = this.sprites.get(i);
-			float layerParallax = (i*3) / this.sprites.size;
+			float layerParallax = ((i)*3) / this.sprites.size;
 			
 			float cameraLeft = camera.position.x - camera.viewportWidth/2.0f - sprite.size;
 			float cameraBottom = camera.position.y - camera.viewportHeight/2.0f - sprite.size;
@@ -102,8 +136,10 @@ public class GeometricBackground extends ParallaxBackground {
 			yDistFromBottom %= (camera.viewportHeight + sprite.size*2);
 			if (yDistFromBottom < 0) yDistFromBottom += camera.viewportHeight + sprite.size*2;
 
+			sprite.outlineSprite.setPosition(cameraLeft + xDistFromLeft, cameraBottom + yDistFromBottom);
+			sprite.outlineSprite.draw(spriteBatch);
+
 			sprite.setPosition(cameraLeft + xDistFromLeft, cameraBottom + yDistFromBottom);
-			
 			sprite.draw(spriteBatch);
 		}
 		

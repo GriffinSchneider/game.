@@ -89,7 +89,7 @@ public class Room {
 		RubeSceneLoader loader = new RubeSceneLoader(this.world);
 		RubeScene scene = loader.loadScene(this.roomNode.getFile());
 		
-	  TextureRegion texreg = new TextureRegion(PaletteManager.getPalette(),0,0,PaletteManager.getPaletteSize(),1);
+	  TextureRegion texreg = new TextureRegion(PaletteManager.getPaletteTexture(),0,0,PaletteManager.getPaletteSize(),1);
 		
 		for (Body body : scene.getBodies()) {
 			String type = this.getBodyType(body, scene); 
@@ -228,7 +228,7 @@ public class Room {
 		// So, bind the palette to texture #1, and then set the active texture to #0
 		// to stop sprite.draw() from binding over the palette.
 		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE1);
-		PaletteManager.getPalette().bind();
+		PaletteManager.getPaletteTexture().bind();
 		Gdx.gl20.glActiveTexture(GL20.GL_TEXTURE0);
 
 		shader.setUniformi("palatte", 1);
