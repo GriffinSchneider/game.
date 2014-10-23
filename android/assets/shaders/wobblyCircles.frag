@@ -51,8 +51,8 @@ void main(void) {
   float palatteIndex1 = d / palatteSize;
   float palatteIndex2 = mod(d+1.0, palatteSize) / palatteSize;
 
-  vec4 col1 = texture2D(palatte, vec2(palatteIndex1, 0.0));
-  vec4 col2 = texture2D(palatte, vec2(palatteIndex2, 0.0));
+  vec4 col1 = texture2D(u_texture, vec2(palatteIndex1, 0.0));
+  vec4 col2 = texture2D(u_texture, vec2(palatteIndex2, 0.0));
   
   vec4 col = mix(col1, col2, smoothstep(0.8, 1.0, fract(d)));
   gl_FragColor = vec4(col.x, col.y, col.z, 1 );

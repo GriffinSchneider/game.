@@ -1,7 +1,6 @@
 package backgrounds;
 
 import zone.griff.game.SceneManager;
-import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.util.PaletteManager;
 
 import com.badlogic.gdx.Gdx;
@@ -11,11 +10,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class GeometricBackground extends ParallaxBackground {
@@ -53,10 +50,9 @@ public class GeometricBackground extends ParallaxBackground {
 	@Override
 	public void resizeCamera(float viewportWidth, float viewportHeight) {
 		this.sprites = new Array<DiamondSprite>();
-	  TextureRegion texreg = new TextureRegion(PaletteManager.getPaletteTexture(),0,0,PaletteManager.getPaletteSize(),1);
 		EarClippingTriangulator triangulator = 	new EarClippingTriangulator();
 		
-		int numDiamonds = 40;
+		int numDiamonds = 60;
 
 		float size;
 		float xPos;
@@ -64,7 +60,7 @@ public class GeometricBackground extends ParallaxBackground {
 
 		for (int i = 0; i < numDiamonds; i++) {
 			
-			size = MathUtils.random(1f, 3f);
+			size = MathUtils.random(1f, 2f);
 			xPos = MathUtils.random(0, viewportWidth+size*2);
 			yPos = MathUtils.random(0, viewportHeight+size*2);
 			Color color = new Color(PaletteManager.getPaletteColorAtIndex(MathUtils.random(1, 2)));
@@ -89,9 +85,9 @@ public class GeometricBackground extends ParallaxBackground {
 
 				short triangles[] = triangulator.computeTriangles(vertices).toArray();
 				if (backgroundRegion == null) {
-					backgroundRegion = new PolygonRegion(texreg, vertices, triangles);
+					backgroundRegion = new PolygonRegion(PaletteManager.getPaletteTextureRegion(), vertices, triangles);
 				} else {
-					DiamondSprite sprite = new DiamondSprite(new PolygonRegion(texreg, vertices, triangles), backgroundRegion, size);
+					DiamondSprite sprite = new DiamondSprite(new PolygonRegion(PaletteManager.getPaletteTextureRegion(), vertices, triangles), backgroundRegion, size);
 					sprite.setPosition(xPos, yPos);
 					sprite.setColor(color);
 					this.sprites.add(sprite);
@@ -126,8 +122,8 @@ public class GeometricBackground extends ParallaxBackground {
 			float yDistFromBottom = sprite.getY() - cameraBottom;
 			
 			// Translate
-			xDistFromLeft -= deltaX*layerParallax*300;
-			yDistFromBottom -= deltaY*layerParallax*4;
+			xDistFromLeft -= deltaX*layerParallax*40;
+			yDistFromBottom -= deltaY*layerParallax*40;
 			
 			// Wrap
 			xDistFromLeft %= (camera.viewportWidth + sprite.size*2);
@@ -143,8 +139,16 @@ public class GeometricBackground extends ParallaxBackground {
 			sprite.draw(spriteBatch);
 		}
 		
+		spriteBatch.flush();
+		
 		this.lastParallaxX = this.parallaxX;
 		this.lastParallaxY = this.parallaxY;
+	}
+	
+	@Override
+	public void dispose() {
+		this.sprites = null;
+		this.shader.dispose();
 	}
 
 }

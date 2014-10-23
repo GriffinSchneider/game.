@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PaletteManager {
   private static PaletteManager instance = null;
@@ -15,6 +16,7 @@ public class PaletteManager {
   }
   
 	private Texture paletteTexture;
+	private TextureRegion paletteTextureRegion;
 
 	private int[] palette;
 
@@ -38,11 +40,18 @@ public class PaletteManager {
 
 		this.paletteTexture = new Texture(pixmap);
 		this.paletteTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		
+		this.paletteTextureRegion = new TextureRegion(this.paletteTexture);
+		
 		pixmap.dispose();
   }
 
   public static Texture getPaletteTexture() {
   	return getInstance().paletteTexture;
+  }
+
+  public static TextureRegion getPaletteTextureRegion() {
+  	return getInstance().paletteTextureRegion;
   }
 
   public static int getPaletteSize() {
@@ -54,6 +63,7 @@ public class PaletteManager {
   }
   
   public static void dispose() {
+  	instance.paletteTexture.dispose();
   	instance = null;
   }
 

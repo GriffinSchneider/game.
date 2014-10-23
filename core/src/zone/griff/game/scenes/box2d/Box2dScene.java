@@ -9,7 +9,7 @@ import zone.griff.game.entities.Player;
 import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.entities.Room;
 import zone.griff.game.scenes.Scene;
-
+import zone.griff.game.util.PaletteManager;
 import backgrounds.GeometricBackground;
 import backgrounds.ParallaxBackground;
 import backgrounds.ShaderBackground;
@@ -126,20 +126,24 @@ public class Box2dScene extends Scene {
 
 
 	private DoorNode doorJustEntered;
-	private double accumulator;
+	private float accumulator;
 	@Override
 	public void update(float dt) {
 		accumulator += dt;
-		float stepTime = dt < WORLD_STEP_TIME * 1.5f ? dt : WORLD_STEP_TIME;
+		
+		// If the time to simulate is less than 120% of the target step time,
+		// then just simulate the whole thing.
+		// Otherwise, go in steps of the target step time.
+		float stepTime = accumulator < WORLD_STEP_TIME * 1.2f ? accumulator : WORLD_STEP_TIME;
 		
 		while (accumulator >= stepTime) {
 			world.step(stepTime, 6, 2);
+			this.updateInput(stepTime);
+			this.currentRoom.update(stepTime);
+			this.player.update(stepTime, this.contactListener.currentPlayerKinematicGround());
+			this.updateCamera(stepTime);
 			accumulator -= stepTime;
 		}
-		this.updateInput(stepTime);
-		this.currentRoom.update(stepTime);
-		this.player.update(stepTime, this.contactListener.currentPlayerKinematicGround());
-		this.updateCamera(stepTime);
 		
 		Body collidedDoor = this.contactListener.collidedDoor;
 		if (collidedDoor == null) {
@@ -254,6 +258,7 @@ public class Box2dScene extends Scene {
 		this.polyBatch.dispose();
 		this.background.dispose();
 		this.currentRoom.dispose();
+		this.player.dispose();
 	}
 
 }

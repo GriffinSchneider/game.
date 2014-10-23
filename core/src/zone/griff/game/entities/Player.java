@@ -4,13 +4,10 @@ import static zone.griff.game.scenes.box2d.B2DVars.PPM;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.box2d.B2DVars;
 import zone.griff.game.util.Box2DHelper;
+import zone.griff.game.util.PaletteManager;
 import zone.griff.game.util.SpriteAndOutline;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -117,12 +114,7 @@ public class Player {
 		fdef.isSensor = true;
 		this.body.createFixture(fdef).setUserData("foot");
 		
-		Texture textureGround =  new Texture(Gdx.files.internal("badlogic.jpg"));
-	  textureGround.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-	  TextureRegion texreg = new TextureRegion(textureGround,0,0,1,1);
-	  texreg.setTexture(textureGround);
-		
-		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(this.body, texreg);
+		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(this.body, PaletteManager.getPaletteTextureRegion());
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
 		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
 		this.body.setTransform(playerPos, 0);
@@ -201,4 +193,7 @@ public class Player {
 		this.spriteAndOutline.drawOutline(batch);
 	}
 
+	public void dispose() {
+		this.body.getWorld().destroyBody(this.body);;
+	}
 }

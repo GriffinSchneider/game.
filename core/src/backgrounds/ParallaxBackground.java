@@ -16,13 +16,10 @@ public abstract class ParallaxBackground {
 		this.sceneManager = sceneManager;
 	}
 
-	public void draw(PolygonSpriteBatch spriteBatch, OrthographicCamera camera) {
-	}
+	public abstract void draw(PolygonSpriteBatch spriteBatch, OrthographicCamera camera);
 	
-	public void dispose() {
-	}
+	public abstract void dispose();
 	
-	public void resizeCamera(float viewportWidth, float viewportHeight) {
-	}
+	public void resizeCamera(float viewportWidth, float viewportHeight) {}
 
 }
