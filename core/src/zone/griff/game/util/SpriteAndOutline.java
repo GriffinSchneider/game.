@@ -1,21 +1,20 @@
 package zone.griff.game.util;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.utils.Array;
 
 public  class SpriteAndOutline {
 
-	private ArrayList<PolygonSprite> sprites;
+	private Array<PolygonSprite> sprites;
 	private PolygonSprite outline;
 	
-	public SpriteAndOutline(ArrayList<PolygonSprite> sprites, PolygonSprite outline) {
+	public SpriteAndOutline(Array<PolygonSprite> sprites, PolygonSprite outline) {
 		this.sprites = sprites;
 		this.outline = outline;
 	}
 
-	public ArrayList<PolygonSprite> getSprites() {
+	public Array<PolygonSprite> getSprites() {
 		return this.sprites;
 	}
 

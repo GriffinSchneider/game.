@@ -134,7 +134,9 @@ public class Box2dScene extends Scene {
 		// If the time to simulate is less than 120% of the target step time,
 		// then just simulate the whole thing.
 		// Otherwise, go in steps of the target step time.
-		float stepTime = accumulator < WORLD_STEP_TIME * 1.2f ? accumulator : WORLD_STEP_TIME;
+		float stepTime = WORLD_STEP_TIME;
+		stepTime = Math.max(WORLD_STEP_TIME * .8f, stepTime);
+		stepTime = Math.min(WORLD_STEP_TIME * 1.2f, stepTime);
 		
 		while (accumulator >= stepTime) {
 			world.step(stepTime, 6, 2);

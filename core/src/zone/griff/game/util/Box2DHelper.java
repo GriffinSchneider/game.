@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.Array;
 
 public class Box2DHelper {
 	
@@ -34,7 +35,7 @@ public class Box2DHelper {
 	
 	public static SpriteAndOutline polygonSpriteForBody(Body body, TextureRegion texreg) {
 
-		ArrayList<PolygonSprite> sprites = new ArrayList<PolygonSprite>();
+		Array<PolygonSprite> sprites = new Array<PolygonSprite>();
 		for (Fixture fixture : body.getFixtureList()) {
 			if (!fixture.isSensor()) {
 				sprites.add(spriteForFixture(fixture, texreg));
@@ -78,16 +79,16 @@ public class Box2DHelper {
 		Vector2 p1 = Vector2Pool.obtain();
 		Vector2 p2 = Vector2Pool.obtain();
 		
-		ArrayList<PolygonShape> shapes = new ArrayList<PolygonShape>();
+		Array<PolygonShape> shapes = new Array<PolygonShape>();
 		for (Fixture fixture : body.getFixtureList()) {
 			if (!fixture.isSensor()) {
 				shapes.add((PolygonShape) fixture.getShape());
 			}
 		}
 				
-		ArrayList<PointNode> verts = thing(shapes, body);
+		Array<PointNode> verts = thing(shapes, body);
 
-		int vertexCount = verts.size();
+		int vertexCount = verts.size;
 		float[] vertices = new float[vertexCount * 2 * 2];
 		
 		for (int k = 0; k < vertexCount; k++) {
@@ -159,7 +160,7 @@ public class Box2DHelper {
 	//   so remove both edges.
 	// - If all the shapes form a contiguous polygon with shared vertices, then we're 
 	//   left with 1 big cycle in  the graph. Read that cycle out and return it in an array.
-	private static ArrayList<PointNode> thing(ArrayList<PolygonShape> shapes, Body body) {
+	private static Array<PointNode> thing(Array<PolygonShape> shapes, Body body) {
 		Vector2 point = Vector2Pool.obtain();
 		Vector2 nextPoint = Vector2Pool.obtain();
 		
@@ -185,8 +186,8 @@ public class Box2DHelper {
 					map.put(nextNode.hashKey(), nextNode);
 				}
 
-				if (nextNode.nexts.contains(node)) {
-					nextNode.nexts.remove(node);
+				if (nextNode.nexts.contains(node, true)) {
+					nextNode.nexts.removeValue(node, true);
 				} else {
 					node.nexts.add(nextNode);
 				}
@@ -194,16 +195,16 @@ public class Box2DHelper {
 		}
 		
 		PointNode node = map.entrySet().iterator().next().getValue();
-		if (node.nexts.size() == 0) {
+		if (node.nexts.size == 0) {
 			node = map.entrySet().iterator().next().getValue();
 		}
 		PointNode firstNode = node;
-		ArrayList<PointNode> retVal = new ArrayList<PointNode>();
+		Array<PointNode> retVal = new Array<PointNode>();
 		int idx = 0;
 		while (true) {
 			Gdx.app.log("", "" + idx + "::  " + node.x + ", " + node.y + " | " + node.nexts);
 			retVal.add(node);
-			if (node.nexts.size() == 0) {
+			if (node.nexts.size == 0) {
 				break;
 			}
 			node = node.nexts.get(0);
@@ -224,12 +225,12 @@ public class Box2DHelper {
 		public float y;
 
 		// Nodes that this node has an edge pointed to
-		public ArrayList<PointNode> nexts;
+		public Array<PointNode> nexts;
 		
 		public PointNode(float x, float y) {
 			this.x = x;
 			this.y = y;
-			this.nexts = new ArrayList<PointNode>();
+			this.nexts = new Array<PointNode>();
 		}
 
 		public String hashKey() {
