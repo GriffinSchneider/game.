@@ -11,6 +11,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.profiling.GL20Profiler;
+import com.badlogic.gdx.graphics.profiling.GLProfiler;
 
 public class SceneManager implements ApplicationListener {
 
@@ -23,6 +25,7 @@ public class SceneManager implements ApplicationListener {
 	public int screenHeight;
 
 	public float gameTime;
+	private float timeSinceLastLog;
 	
 	private SpriteBatch sb;
 	public SpriteBatch getSpriteBatch() { return sb; }
@@ -46,6 +49,9 @@ public class SceneManager implements ApplicationListener {
 		if (didStartup) {
 			return;
 		}
+		
+		GL20Profiler.enable();
+		
 		didStartup = true;
 //		this.pushState(new ShaderScene(this));
 		this.pushState(new Box2dScene(this));
@@ -85,13 +91,20 @@ public class SceneManager implements ApplicationListener {
 	
 	@Override
 	public void render() {
-		fpsLogger.log();
-
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		float dt = Gdx.graphics.getDeltaTime();
+		this.timeSinceLastLog += dt;
 		this.gameTime += dt;
+		
+		if (this.timeSinceLastLog > 1) {
+			this.timeSinceLastLog = 0;
+			Gdx.app.log("Profile", "Texture Bindings: "+GL20Profiler.textureBindings);
+			Gdx.app.log("Profile", "Shader Switches: "+GL20Profiler.shaderSwitches);
+			Gdx.app.log("Profile", "Draw Calls: "+GL20Profiler.drawCalls);
+			Gdx.app.log("Profile", "Calls: "+GL20Profiler.calls);
+			Gdx.app.log("Profile", "----------------------------------------------------------------------------------------------------");
+		}
+		fpsLogger.log();
+		GL20Profiler.reset();
 
 		for (Scene scene : gameStates) {
 			scene.update(dt);
