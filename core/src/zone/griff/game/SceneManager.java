@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.scenes.box2d.Box2dScene;
+import zone.griff.game.util.FloorGenerator;
 import zone.griff.game.util.PaletteManager;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -49,6 +50,8 @@ public class SceneManager implements ApplicationListener {
 		if (didStartup) {
 			return;
 		}
+		
+	 FloorGenerator.doo();
 		
 		GL20Profiler.enable();
 		
