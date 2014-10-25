@@ -1,10 +1,12 @@
 package zone.griff.game.util;
 
-import java.util.Arrays;
+import org.jgrapht.Graph;
+import org.jgrapht.alg.ConnectivityInspector;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.ListenableUndirectedGraph;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 
 public class FloorGenerator {
 	
@@ -26,8 +28,14 @@ public class FloorGenerator {
 	static final int MAX_ROOM_WIDTH = 4;
 	
 	public static void doo() {
-		Array<GeneratedRoom> rooms = new Array<GeneratedRoom>();
+		
 		GeneratedRoom[][] roomMatrix = new GeneratedRoom[GRID_WIDTH][GRID_HEIGHT];
+
+		final ListenableUndirectedGraph<GeneratedRoom, DefaultEdge> roomGraph = 
+				new ListenableUndirectedGraph<GeneratedRoom, DefaultEdge>(DefaultEdge.class);
+//		ConnectivityInspector<GeneratedRoom, DefaultEdge> connectivity = 
+//				new ConnectivityInspector<GeneratedRoom, DefaultEdge>(roomGraph);
+		
 		for (int i = 0; i < roomMatrix.length; i++) {
 			roomMatrix[i] = new GeneratedRoom[GRID_HEIGHT];
 		}
@@ -44,19 +52,33 @@ public class FloorGenerator {
 			} while (roomMatrix[room.x][room.y] != null);
 			// Put the room there
 			roomMatrix[room.x][room.y] = room;
-			rooms.add(room);
+			roomGraph.addVertex(room);
 		}
 		
 		// Grow
 		for (int i = 0; i < 30; i++) {
-			for (GeneratedRoom room : rooms) {
+			for (GeneratedRoom room : roomGraph.vertexSet()) {
 				growRoom(room, roomMatrix);
 			}
 		}
 		
+		// Find connections
+		for (final GeneratedRoom room : roomGraph.vertexSet()) {
+			iterateAdjacent(room, roomMatrix, new RoomIterator() {
+				@Override
+				public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
+					GeneratedRoom adjacentRoom = roomMatrix[x][y];
+					if (adjacentRoom != null) {
+						roomGraph.addEdge(room, adjacentRoom);
+					}
+					return true;
+				}
+			});
+		}
+		
 		// Log
 		printLevel(roomMatrix);
-		printStats(rooms);
+		printStats(roomGraph);
 	}
 	
 	private static enum GrowDirection {
@@ -66,33 +88,92 @@ public class FloorGenerator {
 		GROW_DOWN,
 	}
 	
-	public static void growRoom(GeneratedRoom room, GeneratedRoom[][] roomMatrix) {
+	public static void growRoom(final GeneratedRoom room, GeneratedRoom[][] roomMatrix) {
 		// Sometimes, don't grow.
-		if (MathUtils.randomBoolean(0.7f)) {
+		if (MathUtils.randomBoolean(0.8f)) {
 			return;
 		}
-
+		
 		GrowDirection[] dirs = GrowDirection.values();
 		GrowDirection dir = dirs[MathUtils.random(dirs.length - 1)];
 		
-		boolean canGrow = true;
+		// Calculate what the room's dimensions will be after growing
+		int newX = room.x;
+		int newY = room.y;
+		int newW = room.w;
+		int newH = room.h;
+		switch (dir) {
+		case GROW_LEFT:
+			newX = room.x - 1;
+			newW = room.w + 1;
+			break;
+		case GROW_RIGHT:
+			newW = room.w + 1;
+			break;
+		case GROW_UP:
+			newY = room.y - 1;
+			newH = room.h + 1;
+			break;
+		case GROW_DOWN:
+			newH = room.h + 1;
+			break;
+		}
+
+		// If the growth would cause the room to go over the max room size, abort.
+		if (newW > MAX_ROOM_WIDTH || newH > MAX_ROOM_HEIGHT) {
+			return;
+		}
+		
+		// If the growth would cause the room to overlap with another room, abort.
+		boolean canGrow = iterateAdjacent(room, dir, roomMatrix, new RoomIterator() {
+			@Override
+			public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
+				return roomMatrix[x][y] == null;
+			}
+		});
+		if (!canGrow) {
+			return;
+		}
+
+		// Ok, now we can actually grow the room.
+		iterateAdjacent(room, dir, roomMatrix, new RoomIterator() {
+			@Override
+			public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
+				roomMatrix[x][y] = room;
+				return true;
+			}
+		});
+		room.x = newX;
+		room.y = newY;
+		room.w = newW;
+		room.h = newH;
+	}
+
+	public static interface RoomIterator {
+		boolean run(int x, int y, GeneratedRoom[][]roomMatrix);
+	}
+
+	public static boolean iterateAdjacent(GeneratedRoom room, GeneratedRoom[][] mat, RoomIterator iter) {
+		boolean retVal = true;
+		for (GrowDirection dir : GrowDirection.values()) {
+			retVal = retVal && iterateAdjacent(room, dir, mat, iter);
+		}
+		return retVal;
+	}
+
+	public static boolean iterateAdjacent(GeneratedRoom room, GrowDirection dir, GeneratedRoom[][] mat, RoomIterator iter) {
+		boolean retVal = false;
 		switch (dir) {
 		case GROW_LEFT:
 			//
 			// ·XX
 			// ·XX
 			//
-			if (room.x > 0) {
+			retVal = room.x > 0;
+			if (retVal) {
 				for (int y = room.y; y < room.y + room.h; y++) {
-					canGrow = canGrow && (roomMatrix[room.x - 1][y] == null);
+					retVal = retVal && iter.run(room.x - 1, y, mat);
 				}
-				canGrow = canGrow && room.w < MAX_ROOM_WIDTH;
-				if (!canGrow) return;
-				for (int y = room.y; y < room.y + room.h; y++) {
-					roomMatrix[room.x - 1][y] = room;
-				}
-				room.x--;
-				room.w++;
 			}
 			break;
 		case GROW_RIGHT:
@@ -100,16 +181,11 @@ public class FloorGenerator {
 			// XX·
 			// XX·
 			//
-			if (room.x + room.w < GRID_WIDTH) {
+			retVal = room.x + room.w < GRID_WIDTH;
+			if (retVal) {
 				for (int y = room.y; y < room.y + room.h; y++) {
-					canGrow = canGrow && (roomMatrix[room.x + room.w][y] == null);
+					retVal = retVal && iter.run(room.x + room.w, y, mat);
 				}
-				canGrow = canGrow && room.w < MAX_ROOM_WIDTH;
-				if (!canGrow) return;
-				for (int y = room.y; y < room.y + room.h; y++) {
-					roomMatrix[room.x + room.w][y] = room;
-				}
-				room.w++;
 			}
 			break;
 		case GROW_UP:
@@ -117,17 +193,11 @@ public class FloorGenerator {
 			// XX
 			// XX
 			//
-			if (room.y > 0) {
+			retVal = room.y > 0;
+			if (retVal) {
 				for (int x = room.x; x < room.x + room.w; x++) {
-					canGrow = canGrow && (roomMatrix[x][room.y - 1] == null);
+					retVal = retVal && iter.run(x, room.y - 1, mat);
 				}
-				canGrow = canGrow && room.h < MAX_ROOM_HEIGHT;
-				if (!canGrow) return;
-				for (int x = room.x; x < room.x + room.w; x++) {
-					roomMatrix[x][room.y - 1] = room;
-				}
-				room.y--;
-				room.h++;
 			}
 			break;
 		case GROW_DOWN:
@@ -135,20 +205,15 @@ public class FloorGenerator {
 			// XX
 			// XX
 			// ··
-			if (room.y + room.h < GRID_HEIGHT) {
+			retVal = room.y + room.h < GRID_HEIGHT;
+			if (retVal) {
 				for (int x = room.x; x < room.x + room.w; x++) {
-					canGrow = canGrow && (roomMatrix[x][room.y + room.h] == null);
+					retVal = retVal && iter.run(x, room.y + room.h, mat);
 				}
-				canGrow = canGrow && room.h < MAX_ROOM_HEIGHT;
-				if (!canGrow) return;
-				for (int x = room.x; x < room.x + room.w; x++) {
-					roomMatrix[x][room.y + room.h] = room;
-				}
-				room.h++;
 			}
-			
 			break;
 		}
+		return retVal;
 	}
 	
 	public static void printLevel(GeneratedRoom[][] roomMatrix) {
@@ -164,9 +229,9 @@ public class FloorGenerator {
 		Gdx.app.log("", string);
 	}
 
-	public static void printStats(Array<GeneratedRoom> rooms) {
+	public static void printStats(Graph<GeneratedRoom, DefaultEdge> rooms) {
 		String string = "----\n";
-		for (GeneratedRoom room : rooms) {
+		for (GeneratedRoom room : rooms.vertexSet()) {
 			string += room.w + "x" + room.h + "\n";
 		}
 		Gdx.app.log("", string);
