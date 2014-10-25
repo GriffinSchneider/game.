@@ -202,7 +202,7 @@ public class Box2DHelper {
 		Array<PointNode> retVal = new Array<PointNode>();
 		int idx = 0;
 		while (true) {
-			Gdx.app.log("", "" + idx + "::  " + node.x + ", " + node.y + " | " + node.nexts);
+//			Gdx.app.log("", "" + idx + "::  " + node.x + ", " + node.y + " | " + node.nexts);
 			retVal.add(node);
 			if (node.nexts.size == 0) {
 				break;

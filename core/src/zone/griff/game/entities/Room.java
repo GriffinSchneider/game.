@@ -93,7 +93,7 @@ public class Room {
 		
 		for (Body body : scene.getBodies()) {
 			String type = this.getBodyType(body, scene); 
-			Gdx.app.log("", "" + type);
+//			Gdx.app.log("", "" + type);
 			if (this.isMovingPlatformType(type)) {
 				this.setupMovingPlatform(body, texreg, scene);
 			} else if (this.isCameraBoundsType(type)) {
