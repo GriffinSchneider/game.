@@ -1,5 +1,7 @@
 package zone.griff.game.util;
 
+import java.util.Set;
+
 import org.jgrapht.Graph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
@@ -33,8 +35,6 @@ public class FloorGenerator {
 
 		final ListenableUndirectedGraph<GeneratedRoom, DefaultEdge> roomGraph = 
 				new ListenableUndirectedGraph<GeneratedRoom, DefaultEdge>(DefaultEdge.class);
-//		ConnectivityInspector<GeneratedRoom, DefaultEdge> connectivity = 
-//				new ConnectivityInspector<GeneratedRoom, DefaultEdge>(roomGraph);
 		
 		for (int i = 0; i < roomMatrix.length; i++) {
 			roomMatrix[i] = new GeneratedRoom[GRID_HEIGHT];
@@ -55,14 +55,14 @@ public class FloorGenerator {
 			roomGraph.addVertex(room);
 		}
 		
-		// Grow
+		// Grow rooms
 		for (int i = 0; i < 30; i++) {
 			for (GeneratedRoom room : roomGraph.vertexSet()) {
 				growRoom(room, roomMatrix);
 			}
 		}
 		
-		// Find connections
+		// Find connections (adjacent rooms)
 		for (final GeneratedRoom room : roomGraph.vertexSet()) {
 			iterateAdjacent(room, roomMatrix, new RoomIterator() {
 				@Override
@@ -74,6 +74,39 @@ public class FloorGenerator {
 					return true;
 				}
 			});
+		}
+		
+		
+		ConnectivityInspector<GeneratedRoom, DefaultEdge> connectivity = 
+				new ConnectivityInspector<GeneratedRoom, DefaultEdge>(roomGraph);
+
+		// Find the largest connected set of rooms
+		final Set<GeneratedRoom> maxConnectedSet;
+		{
+			int maxConnectedSetSize = 0;
+			Set<GeneratedRoom> maxConnectedSetTemp = null;
+			for (Set<GeneratedRoom> set : connectivity.connectedSets()) {
+				int size = set.size();
+				if (size > maxConnectedSetSize) {
+					maxConnectedSetSize = size;
+					maxConnectedSetTemp = set;
+				}
+			}
+			maxConnectedSet = maxConnectedSetTemp;
+		}
+		
+		// Cull rooms not in the largest connected set
+		for (final GeneratedRoom room : roomGraph.vertexSet()) {
+			if (!maxConnectedSet.contains(room)) {
+//				roomGraph.removeVertex(room);
+				iterateContained(room, roomMatrix, new RoomIterator() {
+					@Override
+					public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
+						roomMatrix[x][y] = null;
+						return true;
+					}
+				});
+			}
 		}
 		
 		// Log
@@ -151,6 +184,14 @@ public class FloorGenerator {
 
 	public static interface RoomIterator {
 		boolean run(int x, int y, GeneratedRoom[][]roomMatrix);
+	}
+
+	public static void iterateContained(GeneratedRoom room, GeneratedRoom[][] mat, RoomIterator iter) {
+		for (int x = room.x; x < room.x + room.w; x++) {
+			for (int y = room.y; y < room.y + room.h; y++) {
+				iter.run(x, y, mat);
+			}
+		}
 	}
 
 	public static boolean iterateAdjacent(GeneratedRoom room, GeneratedRoom[][] mat, RoomIterator iter) {
