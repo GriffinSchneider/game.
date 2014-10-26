@@ -2,11 +2,13 @@ package zone.griff.game.util;
 
 import java.util.Set;
 
+import org.jgrapht.EdgeFactory;
 import org.jgrapht.Graph;
-import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.ListenableDirectedWeightedGraph;
 import org.jgrapht.graph.ListenableUndirectedGraph;
+import org.jgrapht.graph.SimpleGraph;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
@@ -15,21 +17,56 @@ import com.badlogic.gdx.utils.Array;
 public class FloorGenerator {
 	
 	public static class GeneratedRoom {
-		public int x;
-		public int y;
-		public int w;
-		public int h;
+		private int x;
+		public int x() {return x;}
+		private int y;
+		public int y() {return y;}
+		private int w;
+		public int w() {return w;}
+		private int h;
+		public int h() {return h;}
+		
+		public void update(int x, int y, int w, int h) {
+			this.x = x;
+			this.y = y;
+			this.w = w;
+			this.h = h;
+		}
+		
+		public int maxX() {
+			return x + w - 1;
+		}
+
+		public int maxY() {
+			return y + h - 1;
+		}
+		
 		public int i;
 		@Override
 		public String toString() {
 			return Character.toString((char)i);
 		}
 	}
+
+	public static enum DoorDirection {
+		DOOR_UP,
+		DOOR_RIGHT
+	}
 	
-	public static class RoomGraph extends ListenableUndirectedGraph<GeneratedRoom, DefaultEdge> {
-		private static final long serialVersionUID = 1L;
+	public static class GeneratedDoor extends DefaultEdge {
+		private static final long serialVersionUID = -6681123121309612867L;
+		public int x;
+		public int y;
+		public DoorDirection dir;
+		public GeneratedDoor() {
+			super();
+		}
+	}
+	
+	public static class RoomGraph extends ListenableUndirectedGraph<GeneratedRoom, GeneratedDoor> {
+		private static final long serialVersionUID = 6334361573551242717L;
 		public RoomGraph() {
-			super(DefaultEdge.class);
+			super(GeneratedDoor.class);
 		}
 	}
 	
@@ -86,8 +123,8 @@ public class FloorGenerator {
 			});
 		}
 		
-		ConnectivityInspector<GeneratedRoom, DefaultEdge> connectivity = 
-				new ConnectivityInspector<GeneratedRoom, DefaultEdge>(roomGraph);
+		ConnectivityInspector<GeneratedRoom, GeneratedDoor> connectivity = 
+				new ConnectivityInspector<GeneratedRoom, GeneratedDoor>(roomGraph);
 
 		// Find the largest connected set of rooms
 		final Set<GeneratedRoom> maxConnectedSet;
@@ -120,6 +157,30 @@ public class FloorGenerator {
 					return true;
 				}
 			});
+		}
+		
+		// Setup door positions
+		for (GeneratedDoor door : roomGraph.edgeSet()) {
+			GeneratedRoom room1 = roomGraph.getEdgeSource(door);
+			GeneratedRoom room2 = roomGraph.getEdgeTarget(door);
+			// If there's overlap on the x axis
+			if (room1.x() <= room2.maxX() && room1.maxX() >= room2.x) {
+				int minOverlap = Math.max(room1.x(), room2.x());
+				int maxOverlap = Math.min(room1.maxX(), room2.maxX());
+				int middle = (minOverlap + maxOverlap) / 2;
+				door.dir = DoorDirection.DOOR_UP;
+				door.x = middle;
+				door.y = Math.min(room1.maxY(), room2.maxY());
+			}
+			// If there's overlap on the y axis
+			if (room1.y() <= room2.maxY() && room1.maxY() >= room2.y) {
+				int minOverlap = Math.max(room1.y(), room2.y());
+				int maxOverlap = Math.min(room1.maxY(), room2.maxY());
+				int middle = (minOverlap + maxOverlap) / 2;
+				door.dir = DoorDirection.DOOR_RIGHT;
+				door.x = Math.min(room1.maxX(), room2.maxX());
+				door.y = middle;
+			}
 		}
 
 		// Log
@@ -191,10 +252,7 @@ public class FloorGenerator {
 				return true;
 			}
 		});
-		room.x = newX;
-		room.y = newY;
-		room.w = newW;
-		room.h = newH;
+		room.update(newX, newY, newW, newH);
 	}
 
 	public static interface RoomIterator {
@@ -285,7 +343,7 @@ public class FloorGenerator {
 		Gdx.app.log("", string);
 	}
 
-	public static void printStats(Graph<GeneratedRoom, DefaultEdge> rooms) {
+	public static void printStats(Graph<GeneratedRoom, GeneratedDoor> rooms) {
 		String string = "----\n";
 		for (GeneratedRoom room : rooms.vertexSet()) {
 			string += room.w + "x" + room.h + "\n";
