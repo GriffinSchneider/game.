@@ -178,12 +178,13 @@ public class FloorGenerator {
 				}
 			});
 		}
-		
-		// Cull doors that don't break connectivity
+
 		roomGraph.addGraphListener(connectivity);
+
+		// Cull doors that don't break connectivity
 		GeneratedDoor[] doors = roomGraph.edgeSet().toArray(new GeneratedDoor[roomGraph.edgeSet().size()]);
 		for (int i = 0; i < doors.length; i++) {
-			GeneratedDoor door = (GeneratedDoor) doors[i];
+			GeneratedDoor door = doors[i];
 			roomGraph.removeEdge(door);
 			if (!connectivity.isGraphConnected()) {
 				roomGraph.addEdge(door.getSource(), door.getTarget());
@@ -229,8 +230,9 @@ public class FloorGenerator {
 	}
 	
 	public static void growRoom(final GeneratedRoom room, GeneratedRoom[][] roomMatrix) {
-		// Sometimes, don't grow.
-		if (MathUtils.randomBoolean(0.8f)) {
+		// Sometimes, don't grow. 1x1 rooms are more likely to grow.
+		float chanceToSkip = (room.h == 1 && room.w == 1) ? 0.3f : 0.8f;
+		if ( MathUtils.randomBoolean(chanceToSkip)) {
 			return;
 		}
 		
