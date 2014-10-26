@@ -2,6 +2,8 @@ package backgrounds;
 
 import zone.griff.game.SceneManager;
 import zone.griff.game.util.PaletteManager;
+import zone.griff.game.util.ShaderManager;
+import zone.griff.game.util.ShaderManager.Shader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,7 +20,6 @@ import com.badlogic.gdx.math.Matrix4;
 
 public class ShaderBackground extends ParallaxBackground {
 	
-	ShaderProgram shader;
 	Mesh mesh;
 	FrameBuffer fbo;
 	SpriteBatch fboBatch;
@@ -39,14 +40,6 @@ public class ShaderBackground extends ParallaxBackground {
 		mesh.setVertices(verts);
 		mesh.setIndices(indices);
 		this.mesh = mesh;
-
-		this.shader = new ShaderProgram(
-				Gdx.files.internal("shaders/default.vert"), 
-				Gdx.files.internal("shaders/starfield.frag"));
-
-		if (!this.shader.isCompiled()) {
-			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
-		}
 	}
 
 	public float[] squareVertices(float x, float y, float width, float height) {
@@ -89,21 +82,24 @@ public class ShaderBackground extends ParallaxBackground {
 		
 		PaletteManager.getPaletteTexture().bind();
 		this.fbo.getColorBufferTexture().bind();
-		this.shader.begin();
 		
-		this.shader.setUniformMatrix("u_projTrans", this.idMatrix);
-		this.shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
-		this.shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
+		ShaderProgram shader = ShaderManager.get(Shader.STARFIELD);
+		
+		shader.begin();
+		
+		shader.setUniformMatrix("u_projTrans", this.idMatrix);
+		shader.setUniformf("iGlobalTime", this.sceneManager.gameTime);
+		shader.setUniform3fv("iResolution", this.sceneManager.gameSizeArray, 0, 3);
 //		this.shader.setUniformi("previousFrame", 0);
 //		this.shader.setUniformi("palatte", 0);
 //		this.shader.setUniformf("palatteSize", PaletteManager.getPaletteSize());
 		
-		this.shader.setUniformf("parallaxX", this.parallaxX);
-		this.shader.setUniformf("parallaxY", this.parallaxY);
+		shader.setUniformf("parallaxX", this.parallaxX);
+		shader.setUniformf("parallaxY", this.parallaxY);
 		
-		this.mesh.render(this.shader, GL20.GL_TRIANGLES);
+		this.mesh.render(shader, GL20.GL_TRIANGLES);
 		
-		this.shader.end();
+		shader.end();
 		
 		this.fbo.end();
 		this.fboBatch.begin();
@@ -116,7 +112,6 @@ public class ShaderBackground extends ParallaxBackground {
 	}
 
 	public void dispose() {
-		this.shader.dispose();
 		this.fbo.dispose();
 		this.fboBatch.dispose();
 	}

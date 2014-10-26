@@ -3,18 +3,16 @@ package zone.griff.game;
 import java.util.Stack;
 
 import zone.griff.game.scenes.Scene;
-import zone.griff.game.scenes.box2d.Box2dScene;
 import zone.griff.game.scenes.map.MapScene;
 import zone.griff.game.util.PaletteManager;
+import zone.griff.game.util.ShaderManager;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.profiling.GL20Profiler;
-import com.badlogic.gdx.graphics.profiling.GLProfiler;
 
 public class SceneManager implements ApplicationListener {
 
@@ -75,6 +73,7 @@ public class SceneManager implements ApplicationListener {
 			s.dispose();
 		}
 		PaletteManager.dispose();
+		ShaderManager.dispose();
 	}
 
 	@Override

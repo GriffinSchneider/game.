@@ -7,6 +7,8 @@ import zone.griff.game.entities.Floor.RoomNode;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.util.Box2DHelper;
 import zone.griff.game.util.PaletteManager;
+import zone.griff.game.util.ShaderManager;
+import zone.griff.game.util.ShaderManager.Shader;
 import zone.griff.game.util.SpriteAndOutline;
 
 import com.badlogic.gdx.Gdx;
@@ -41,9 +43,6 @@ public class Room {
 	
 	private World world;
 	
-	private ShaderProgram shader;
-	private ShaderProgram outlineShader;
-
 	private Array<SpriteAndOutline> groundPolySprites;
 
 	private Array<MovingPlatform> movingPlatforms;
@@ -62,28 +61,7 @@ public class Room {
 		this.movingPlatforms = new Array<MovingPlatform>();
 		this.groundPolySprites = new Array<SpriteAndOutline>();
 		this.doors = new Array<DoorNode>();
-		this.setupShader();
 	}
-	
-	public void setupShader() {
-		this.shader = new ShaderProgram(
-				Gdx.files.internal("shaders/default.vert"), 
-				Gdx.files.internal("shaders/wobblyCircles.frag"));
-
-		if (!this.shader.isCompiled()) {
-			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
-		}
-
-		this.outlineShader = new ShaderProgram(
-				Gdx.files.internal("shaders/default.vert"), 
-				Gdx.files.internal("shaders/outline.frag"));
-
-		if (!this.outlineShader.isCompiled()) {
-			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.outlineShader.getLog() + "-----");
-		}
-	}
-
-	
 	
 	public void loadFromFile() {
 		RubeSceneLoader loader = new RubeSceneLoader(this.world);
@@ -213,6 +191,9 @@ public class Room {
 		
 		batch.flush();
 
+		ShaderProgram shader = ShaderManager.get(Shader.WOBBLY_CIRCLES);
+		ShaderProgram outlineShader = ShaderManager.get(Shader.OUTLINE);
+
 		batch.setShader(shader);
 		shader.setUniformf("iGlobalTime", sceneManager.gameTime);
 		shader.setUniform3fv("iResolution", sceneManager.gameSizeArray, 0, 3);
@@ -249,7 +230,7 @@ public class Room {
 		}
 		
 		batch.flush();
-		batch.setShader(this.outlineShader);
+		batch.setShader(outlineShader);
 		player.drawOutline(batch);
 		for (SpriteAndOutline spriteAndOutline : this.groundPolySprites) {
 			spriteAndOutline.drawOutline(batch);

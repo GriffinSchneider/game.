@@ -2,6 +2,8 @@ package backgrounds;
 
 import zone.griff.game.SceneManager;
 import zone.griff.game.util.PaletteManager;
+import zone.griff.game.util.ShaderManager;
+import zone.griff.game.util.ShaderManager.Shader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,7 +12,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
@@ -18,7 +19,6 @@ import com.badlogic.gdx.utils.Array;
 public class GeometricBackground extends ParallaxBackground {
 	
 	private Array<DiamondSprite> sprites;
-	private ShaderProgram shader;
 	private Color backgroundColor;
 	
 	private class DiamondSprite extends PolygonSprite {
@@ -39,11 +39,6 @@ public class GeometricBackground extends ParallaxBackground {
 
 	public GeometricBackground(SceneManager sceneManager) {
 		super(sceneManager);
-		
-		this.shader = new ShaderProgram(
-				Gdx.files.internal("shaders/default.vert"), 
-				Gdx.files.internal("shaders/vertcolor.frag"));
-		
 		this.backgroundColor = new Color(PaletteManager.getPaletteColorAtIndex(0));
 	}
 
@@ -106,7 +101,7 @@ public class GeometricBackground extends ParallaxBackground {
 		Gdx.graphics.getGL20().glClearColor(this.backgroundColor.r, this.backgroundColor.g, this.backgroundColor.b, 1 );
 		Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		spriteBatch.setShader(this.shader);
+		spriteBatch.setShader(ShaderManager.get(Shader.VERT_COLOR));
 		
 		float deltaX = this.parallaxX - this.lastParallaxX;
 		float deltaY = this.parallaxY - this.lastParallaxY;
@@ -148,7 +143,6 @@ public class GeometricBackground extends ParallaxBackground {
 	@Override
 	public void dispose() {
 		this.sprites = null;
-		this.shader.dispose();
 	}
 
 }

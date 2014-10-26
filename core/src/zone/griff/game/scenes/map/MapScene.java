@@ -9,10 +9,8 @@ import zone.griff.game.util.FloorGenerator.GeneratedRoom;
 import zone.griff.game.util.FloorGenerator.RoomGraph;
 import zone.griff.game.util.PaletteManager;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,28 +20,18 @@ public class MapScene extends Scene {
 	
 	private class RoomSprite {
 		PolygonSprite sprite;
-		PolygonSprite outlineSprite;
 		GeneratedRoom room;
 	}
 
 	private RoomGraph roomGraph;
 	private Array<RoomSprite> roomSprites;
 	private OrthographicCamera camera;
-	private ShaderProgram outlineShader;
 
 	public MapScene(SceneManager game) {
 		super(game);
 		this.roomGraph = FloorGenerator.generateFloor();
 		this.camera = new OrthographicCamera();
 		this.constructSprites();
-		
-		this.outlineShader = new ShaderProgram(
-				Gdx.files.internal("shaders/default.vert"), 
-				Gdx.files.internal("shaders/outline.frag"));
-
-		if (!this.outlineShader.isCompiled()) {
-			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.outlineShader.getLog() + "-----");
-		}
 	}
 
 	private void constructSprites() {

@@ -1,11 +1,9 @@
 package zone.griff.game.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import zone.griff.game.pools.Vector2Pool;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
