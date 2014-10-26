@@ -3,6 +3,7 @@ package zone.griff.game.util;
 import java.util.Set;
 
 import org.jgrapht.Graph;
+import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.ListenableUndirectedGraph;
@@ -12,29 +13,34 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class FloorGenerator {
 	
-	private static class GeneratedRoom {
-		int x;
-		int y;
-		int w;
-		int h;
-		int i;
+	public static class GeneratedRoom {
+		public int x;
+		public int y;
+		public int w;
+		public int h;
+		public int i;
 		@Override
 		public String toString() {
 			return Character.toString((char)i);
 		}
 	}
 	
-	static final int GRID_WIDTH = 30;
-	static final int GRID_HEIGHT = 30;
+	public static class RoomGraph extends ListenableUndirectedGraph<GeneratedRoom, DefaultEdge> {
+		private static final long serialVersionUID = 1L;
+		public RoomGraph() {
+			super(DefaultEdge.class);
+		}
+	}
+	
+	static final int GRID_WIDTH = 40;
+	static final int GRID_HEIGHT = 10;
 	static final int MAX_ROOM_HEIGHT = 4;
 	static final int MAX_ROOM_WIDTH = 4;
 	
-	public static void doo() {
-		
+	public static RoomGraph generateFloor() {
 		GeneratedRoom[][] roomMatrix = new GeneratedRoom[GRID_WIDTH][GRID_HEIGHT];
 
-		final ListenableUndirectedGraph<GeneratedRoom, DefaultEdge> roomGraph = 
-				new ListenableUndirectedGraph<GeneratedRoom, DefaultEdge>(DefaultEdge.class);
+		final RoomGraph roomGraph = new RoomGraph();
 		
 		for (int i = 0; i < roomMatrix.length; i++) {
 			roomMatrix[i] = new GeneratedRoom[GRID_HEIGHT];
@@ -76,7 +82,6 @@ public class FloorGenerator {
 			});
 		}
 		
-		
 		ConnectivityInspector<GeneratedRoom, DefaultEdge> connectivity = 
 				new ConnectivityInspector<GeneratedRoom, DefaultEdge>(roomGraph);
 
@@ -112,6 +117,8 @@ public class FloorGenerator {
 		// Log
 		printLevel(roomMatrix);
 		printStats(roomGraph);
+		
+		return roomGraph;
 	}
 	
 	private static enum GrowDirection {
@@ -144,11 +151,11 @@ public class FloorGenerator {
 			newW = room.w + 1;
 			break;
 		case GROW_UP:
-			newY = room.y - 1;
 			newH = room.h + 1;
 			break;
 		case GROW_DOWN:
 			newH = room.h + 1;
+			newY = room.y - 1;
 			break;
 		}
 
@@ -234,10 +241,10 @@ public class FloorGenerator {
 			// XX
 			// XX
 			//
-			retVal = room.y > 0;
+			retVal = room.y + room.h < GRID_HEIGHT;
 			if (retVal) {
 				for (int x = room.x; x < room.x + room.w; x++) {
-					retVal = retVal && iter.run(x, room.y - 1, mat);
+					retVal = retVal && iter.run(x, room.y + room.h, mat);
 				}
 			}
 			break;
@@ -246,10 +253,10 @@ public class FloorGenerator {
 			// XX
 			// XX
 			// ··
-			retVal = room.y + room.h < GRID_HEIGHT;
+			retVal = room.y > 0;
 			if (retVal) {
 				for (int x = room.x; x < room.x + room.w; x++) {
-					retVal = retVal && iter.run(x, room.y + room.h, mat);
+					retVal = retVal && iter.run(x, room.y - 1, mat);
 				}
 			}
 			break;
@@ -259,8 +266,8 @@ public class FloorGenerator {
 	
 	public static void printLevel(GeneratedRoom[][] roomMatrix) {
 		String string = "-------\n";
-		for (int x = 0; x < roomMatrix.length; x++) {
-			for (int y = 0; y < roomMatrix[0].length; y++) {
+		for (int y = roomMatrix[0].length - 1; y >= 0; y--) {
+			for (int x = 0; x < roomMatrix.length; x++) {
 				GeneratedRoom room = roomMatrix[x][y];
 				string += room==null ? " " : room.toString();
 			}

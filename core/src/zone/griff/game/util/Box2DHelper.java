@@ -51,6 +51,14 @@ public class Box2DHelper {
 		Body body = fixture.getBody();
 		PolygonShape shape = (PolygonShape)fixture.getShape();
 
+		return spriteForShapeOnBody(shape, body, texreg);
+	}
+	
+	public static PolygonSprite spriteForShape(PolygonShape shape, TextureRegion texreg) {
+		return spriteForShapeOnBody(shape, null, texreg);
+	}
+
+	public static PolygonSprite spriteForShapeOnBody(PolygonShape shape, Body body, TextureRegion texreg) {
 		Vector2 tmp = Vector2Pool.obtain();
 
 		// Copy the shape's vertices into an array, adjusting them into world space.
@@ -58,7 +66,9 @@ public class Box2DHelper {
 		float[] vertices = new float[vertexCount * 2];
 		for (int k = 0; k < vertexCount; k++) {
 			shape.getVertex(k, tmp);
-			adjustPointForBody(tmp, body);
+			if (body != null) {
+				adjustPointForBody(tmp, body);
+			}
 			vertices[k * 2] = tmp.x;
 			vertices[k * 2 + 1] = tmp.y;
 		}
@@ -146,6 +156,7 @@ public class Box2DHelper {
 
 		return new PolygonSprite(new PolygonRegion(texreg, vertices, triangles));
 	}
+	
 	
 	private static void adjustPointForBody(Vector2 point, Body body) {
 		point.rotate(body.getAngle() * MathUtils.radiansToDegrees);

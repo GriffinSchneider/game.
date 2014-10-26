@@ -4,13 +4,14 @@ import java.util.Stack;
 
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.scenes.box2d.Box2dScene;
-import zone.griff.game.util.FloorGenerator;
+import zone.griff.game.scenes.map.MapScene;
 import zone.griff.game.util.PaletteManager;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.profiling.GL20Profiler;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
@@ -28,8 +29,8 @@ public class SceneManager implements ApplicationListener {
 	public float gameTime;
 	private float timeSinceLastLog;
 	
-	private SpriteBatch sb;
-	public SpriteBatch getSpriteBatch() { return sb; }
+	private PolygonSpriteBatch spriteBatch;
+	public PolygonSpriteBatch getSpriteBatch() { return this.spriteBatch; }
 	
 	private Stack<Scene> gameStates;
 
@@ -40,9 +41,8 @@ public class SceneManager implements ApplicationListener {
 	public void create() {
 		this.gameTime = 0;
 		this.fpsLogger = new FPSLogger();
-		this.sb = new SpriteBatch();
 		this.gameStates = new Stack<Scene>();
-		
+		this.spriteBatch = new PolygonSpriteBatch();
 	}
 	
 	boolean didStartup;
@@ -51,13 +51,12 @@ public class SceneManager implements ApplicationListener {
 			return;
 		}
 		
-	 FloorGenerator.doo();
-		
 		GL20Profiler.enable();
 		
 		didStartup = true;
 //		this.pushState(new ShaderScene(this));
-		this.pushState(new Box2dScene(this));
+//		this.pushState(new Box2dScene(this));
+		this.pushState(new MapScene(this));
 	}
 
 	@Override
@@ -98,15 +97,15 @@ public class SceneManager implements ApplicationListener {
 		this.timeSinceLastLog += dt;
 		this.gameTime += dt;
 		
-		if (this.timeSinceLastLog > 1) {
-			this.timeSinceLastLog = 0;
-			Gdx.app.log("Profile", "Texture Bindings: "+GL20Profiler.textureBindings);
-			Gdx.app.log("Profile", "Shader Switches: "+GL20Profiler.shaderSwitches);
-			Gdx.app.log("Profile", "Draw Calls: "+GL20Profiler.drawCalls);
-			Gdx.app.log("Profile", "Calls: "+GL20Profiler.calls);
-			Gdx.app.log("Profile", "----------------------------------------------------------------------------------------------------");
-		}
-		fpsLogger.log();
+//		if (this.timeSinceLastLog > 1) {
+//			this.timeSinceLastLog = 0;
+//			Gdx.app.log("Profile", "Texture Bindings: "+GL20Profiler.textureBindings);
+//			Gdx.app.log("Profile", "Shader Switches: "+GL20Profiler.shaderSwitches);
+//			Gdx.app.log("Profile", "Draw Calls: "+GL20Profiler.drawCalls);
+//			Gdx.app.log("Profile", "Calls: "+GL20Profiler.calls);
+//			Gdx.app.log("Profile", "----------------------------------------------------------------------------------------------------");
+//		}
+//		fpsLogger.log();
 		GL20Profiler.reset();
 
 		for (Scene scene : gameStates) {

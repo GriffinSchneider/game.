@@ -78,8 +78,8 @@ public class Room {
 				Gdx.files.internal("shaders/default.vert"), 
 				Gdx.files.internal("shaders/outline.frag"));
 
-		if (!this.shader.isCompiled()) {
-			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.shader.getLog() + "-----");
+		if (!this.outlineShader.isCompiled()) {
+			Gdx.app.log("Shader",  "compile errors!\n-----\n" + this.outlineShader.getLog() + "-----");
 		}
 	}
 

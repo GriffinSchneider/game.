@@ -44,7 +44,6 @@ public class Box2dScene extends Scene {
 
 	private Player player;
 	
-	private PolygonSpriteBatch polyBatch;
 	
 	private ParallaxBackground background;
 	
@@ -65,8 +64,6 @@ public class Box2dScene extends Scene {
 		this.b2dr = new Box2DDebugRenderer();
 		
 		this.b2dCam = new OrthographicCamera();
-
-		this.polyBatch = new PolygonSpriteBatch();
 
 //		this.background = new ShaderBackground(sceneManager);
 		this.background = new GeometricBackground(sceneManager);
@@ -239,13 +236,13 @@ public class Box2dScene extends Scene {
 		this.background.parallaxX = this.b2dCam.position.x*0.0004f;
 		this.background.parallaxY = (this.b2dCam.position.y + 500f)*0.0004f;
 
-		this.polyBatch.begin();
+		this.spriteBatch.begin();
 
-		this.polyBatch.setProjectionMatrix(this.b2dCam.combined);
-		this.polyBatch.disableBlending();
-		this.background.draw(this.polyBatch, this.b2dCam);
-		this.currentRoom.draw(this.polyBatch, this.player, this.b2dCam, this.sceneManager);
-		this.polyBatch.end();
+		this.spriteBatch.setProjectionMatrix(this.b2dCam.combined);
+		this.spriteBatch.disableBlending();
+		this.background.draw(this.spriteBatch, this.b2dCam);
+		this.currentRoom.draw(this.spriteBatch, this.player, this.b2dCam, this.sceneManager);
+		this.spriteBatch.end();
 //		b2dr.render(world, this.b2dCam.combined);
 	}
 	
@@ -257,7 +254,6 @@ public class Box2dScene extends Scene {
 
 	@Override
 	public void dispose() {
-		this.polyBatch.dispose();
 		this.background.dispose();
 		this.currentRoom.dispose();
 		this.player.dispose();

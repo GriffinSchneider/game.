@@ -63,8 +63,10 @@ public class PaletteManager {
   }
   
   public static void dispose() {
-  	instance.paletteTexture.dispose();
-  	instance = null;
+  	if (instance != null) {
+  		instance.paletteTexture.dispose();
+  		instance = null;
+  	}
   }
 
 }
