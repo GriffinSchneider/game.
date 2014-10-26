@@ -93,6 +93,8 @@ public class SceneManager implements ApplicationListener {
 	
 	@Override
 	public void render() {
+		Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		float dt = Gdx.graphics.getDeltaTime();
 		this.timeSinceLastLog += dt;
 		this.gameTime += dt;
