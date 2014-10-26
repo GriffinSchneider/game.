@@ -1,5 +1,7 @@
 package zone.griff.game.util;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jgrapht.EdgeFactory;
@@ -58,6 +60,13 @@ public class FloorGenerator {
 		public int x;
 		public int y;
 		public DoorDirection dir;
+		
+		public GeneratedRoom getSource() {
+			return (GeneratedRoom) super.getSource();
+		}
+		public GeneratedRoom getTarget() {
+			return (GeneratedRoom) super.getTarget();
+		}
 		public GeneratedDoor() {
 			super();
 		}
@@ -157,6 +166,17 @@ public class FloorGenerator {
 					return true;
 				}
 			});
+		}
+		
+		// Cull doors that don't break connectivity
+		roomGraph.addGraphListener(connectivity);
+		GeneratedDoor[] doors = roomGraph.edgeSet().toArray(new GeneratedDoor[roomGraph.edgeSet().size()]);
+		for (int i = 0; i < doors.length; i++) {
+			GeneratedDoor door = (GeneratedDoor) doors[i];
+			roomGraph.removeEdge(door);
+			if (!connectivity.isGraphConnected()) {
+				roomGraph.addEdge(door.getSource(), door.getTarget());
+			}
 		}
 		
 		// Setup door positions
