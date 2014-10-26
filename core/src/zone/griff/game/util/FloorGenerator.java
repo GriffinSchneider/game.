@@ -113,13 +113,28 @@ public class FloorGenerator {
 			roomGraph.addVertex(room);
 		}
 		
-		// Grow rooms
+		// Grow rooms. 1x1 rooms are more likely to grow.
 		for (int i = 0; i < GROW_ITERATIONS; i++) {
 			for (GeneratedRoom room : roomGraph.vertexSet()) {
-				growRoom(room, roomMatrix);
+				float chanceToGrow = (room.h == 1 && room.w == 1) ? 0.7f : 0.2f;
+				if (MathUtils.randomBoolean(chanceToGrow)) {
+					growRoom(room, roomMatrix);
+				}
 			}
 		}
 		
+		// Cull 1x1 rooms
+		{
+			GeneratedRoom[] roomsArray = new GeneratedRoom[roomGraph.vertexSet().size()];
+			roomGraph.vertexSet().toArray(roomsArray);
+			for (int i = 0; i < roomsArray.length; i++) {
+				final GeneratedRoom room = roomsArray[i];
+				if (room.w == 1 && room.h == 1) {
+					removeRoom(room, roomMatrix, roomGraph);
+				}
+			}
+		}
+
 		// Find connections (adjacent rooms)
 		for (final GeneratedRoom room : roomGraph.vertexSet()) {
 			iterateAdjacent(room, roomMatrix, new RoomIterator() {
@@ -139,6 +154,7 @@ public class FloorGenerator {
 		
 		ConnectivityInspector<GeneratedRoom, GeneratedDoor> connectivity = 
 				new ConnectivityInspector<GeneratedRoom, GeneratedDoor>(roomGraph);
+		
 
 		// Find the largest connected set of rooms
 		final Set<GeneratedRoom> maxConnectedSet;
@@ -162,32 +178,28 @@ public class FloorGenerator {
 		}
 		
 		// Cull rooms not in the largest connected set
-		Array<GeneratedRoom> roomsToRemove = new Array<GeneratedRoom>();
-		for (final GeneratedRoom room : roomGraph.vertexSet()) {
-			if (!maxConnectedSet.contains(room)) {
-				roomsToRemove.add(room);
-			}
-		}
-		for (GeneratedRoom room : roomsToRemove) {
-			roomGraph.removeVertex(room);
-			iterateContained(room, roomMatrix, new RoomIterator() {
-				@Override
-				public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
-					roomMatrix[x][y] = null;
-					return true;
+		{
+			GeneratedRoom[] roomsArray = new GeneratedRoom[roomGraph.vertexSet().size()];
+			roomGraph.vertexSet().toArray(roomsArray);
+			for (int i = 0; i < roomsArray.length; i++) {
+				final GeneratedRoom room = roomsArray[i];
+				if (!maxConnectedSet.contains(room)) {
+					removeRoom(room, roomMatrix, roomGraph);
 				}
-			});
+			}
 		}
 
 		roomGraph.addGraphListener(connectivity);
 
 		// Cull doors that don't break connectivity
-		GeneratedDoor[] doors = roomGraph.edgeSet().toArray(new GeneratedDoor[roomGraph.edgeSet().size()]);
-		for (int i = 0; i < doors.length; i++) {
-			GeneratedDoor door = doors[i];
-			roomGraph.removeEdge(door);
-			if (!connectivity.isGraphConnected()) {
-				roomGraph.addEdge(door.getSource(), door.getTarget());
+		{
+			GeneratedDoor[] doors = roomGraph.edgeSet().toArray(new GeneratedDoor[roomGraph.edgeSet().size()]);
+			for (int i = 0; i < doors.length; i++) {
+				GeneratedDoor door = doors[i];
+				roomGraph.removeEdge(door);
+				if (!connectivity.isGraphConnected()) {
+					roomGraph.addEdge(door.getSource(), door.getTarget());
+				}
 			}
 		}
 		
@@ -230,12 +242,6 @@ public class FloorGenerator {
 	}
 	
 	public static void growRoom(final GeneratedRoom room, GeneratedRoom[][] roomMatrix) {
-		// Sometimes, don't grow. 1x1 rooms are more likely to grow.
-		float chanceToSkip = (room.h == 1 && room.w == 1) ? 0.3f : 0.8f;
-		if ( MathUtils.randomBoolean(chanceToSkip)) {
-			return;
-		}
-		
 		GrowDirection[] dirs = GrowDirection.values();
 		GrowDirection dir = dirs[MathUtils.random(dirs.length - 1)];
 		
@@ -290,6 +296,17 @@ public class FloorGenerator {
 
 	public static interface RoomIterator {
 		boolean run(int x, int y, GeneratedRoom[][]roomMatrix);
+	}
+
+	public static void removeRoom(GeneratedRoom room, GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
+		roomGraph.removeVertex(room);
+		iterateContained(room, roomMatrix, new RoomIterator() {
+			@Override
+			public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
+				roomMatrix[x][y] = null;
+				return true;
+			}
+		});
 	}
 
 	public static void iterateContained(GeneratedRoom room, GeneratedRoom[][] mat, RoomIterator iter) {
