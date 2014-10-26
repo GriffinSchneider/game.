@@ -84,8 +84,10 @@ public class FloorGenerator {
 	static final int MAX_ROOM_HEIGHT = 3;
 	static final int MAX_ROOM_WIDTH = 3;
 
-	static final int ROOM_COUNT = 60;
-	static final int GROW_ITERATIONS = 30;
+	static final int SEED_ROOM_COUNT = 100;
+	static final int MIN_CONNECTED_ROOM_COUNT = 40;
+	static final int MAX_DOORS_PER_ROOM = 2;
+	static final int GROW_ITERATIONS = 40;
 	
 	public static RoomGraph generateFloor() {
 		GeneratedRoom[][] roomMatrix = new GeneratedRoom[GRID_WIDTH][GRID_HEIGHT];
@@ -97,7 +99,7 @@ public class FloorGenerator {
 		}
 
 		// Place rooms
-		for (int i = 47; i < 47 + ROOM_COUNT; i++) {
+		for (int i = 47; i < 47 + SEED_ROOM_COUNT; i++) {
 			GeneratedRoom room = new GeneratedRoom();
 			room.i = i;
 			room.w = 1;
@@ -125,7 +127,10 @@ public class FloorGenerator {
 				public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
 					GeneratedRoom adjacentRoom = roomMatrix[x][y];
 					if (adjacentRoom != null) {
-						roomGraph.addEdge(room, adjacentRoom);
+						if (roomGraph.edgesOf(room).size() < MAX_DOORS_PER_ROOM &&
+								roomGraph.edgesOf(adjacentRoom).size() < MAX_DOORS_PER_ROOM) {
+							roomGraph.addEdge(room, adjacentRoom);
+						}
 					}
 					return true;
 				}
@@ -148,6 +153,12 @@ public class FloorGenerator {
 				}
 			}
 			maxConnectedSet = maxConnectedSetTemp;
+		}
+		
+		// If the largest connected set is too small, then reject this floor
+		// and generate again.
+		if (maxConnectedSet.size() < MIN_CONNECTED_ROOM_COUNT) {
+			return generateFloor();
 		}
 		
 		// Cull rooms not in the largest connected set
