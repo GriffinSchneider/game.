@@ -7,10 +7,14 @@ import zone.griff.game.util.Box2DHelper;
 import zone.griff.game.util.FloorGenerator;
 import zone.griff.game.util.FloorGenerator.GeneratedRoom;
 import zone.griff.game.util.FloorGenerator.RoomGraph;
+import zone.griff.game.util.ShaderManager.Shader;
 import zone.griff.game.util.PaletteManager;
+import zone.griff.game.util.ShaderManager;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -44,16 +48,18 @@ public class MapScene extends Scene {
 			
 			PolygonShape shape = new PolygonShape();
 			shape.setAsBox(
-					((float)room.w)/2.0f - 0.1f, 
-					((float)room.h)/2.0f - 0.1f,
+					(room.w)/2.0f,
+					(room.h)/2.0f,
 					new Vector2(
-							room.x+((float)room.w/2.0f), 
-							room.y+((float)room.h/2.0f)),
+							room.x+(room.w/2.0f), 
+							room.y+(room.h/2.0f)),
 					0);
 			
 			RoomSprite roomSprite = new RoomSprite();
 			roomSprite.sprite = Box2DHelper.spriteForShape(shape, PaletteManager.getPaletteTextureRegion());
 			roomSprite.room = room;
+			int c = PaletteManager.getPaletteColorAtIndex(MathUtils.random(PaletteManager.getPaletteSize() - 1));
+			roomSprite.sprite.setColor(new Color(c));
 			this.roomSprites.add(roomSprite);
 		}
 	}
@@ -63,8 +69,8 @@ public class MapScene extends Scene {
 		float camWidth = SceneManager.V_WIDTH / PPM;
 		float camHeight = ((float)height)/((float)width)*camWidth;
 		this.camera.setToOrtho(false, camWidth, camHeight);
-		this.camera.zoom = 4f;
-		this.camera.translate(4, 0);
+		this.camera.zoom = 3f;
+		this.camera.translate(11, 0);
 		this.camera.update();
 	}
 	
@@ -84,6 +90,7 @@ public class MapScene extends Scene {
 		this.spriteBatch.begin();
 
 		this.spriteBatch.setProjectionMatrix(this.camera.combined);
+		this.spriteBatch.setShader(ShaderManager.get(Shader.VERT_COLOR));
 		
 		for (RoomSprite sprite : this.roomSprites) {
 			sprite.sprite.draw(this.spriteBatch);
