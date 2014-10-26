@@ -101,19 +101,23 @@ public class FloorGenerator {
 		}
 		
 		// Cull rooms not in the largest connected set
+		Array<GeneratedRoom> roomsToRemove = new Array<GeneratedRoom>();
 		for (final GeneratedRoom room : roomGraph.vertexSet()) {
 			if (!maxConnectedSet.contains(room)) {
-//				roomGraph.removeVertex(room);
-				iterateContained(room, roomMatrix, new RoomIterator() {
-					@Override
-					public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
-						roomMatrix[x][y] = null;
-						return true;
-					}
-				});
+				roomsToRemove.add(room);
 			}
 		}
-		
+		for (GeneratedRoom room : roomsToRemove) {
+			roomGraph.removeVertex(room);
+			iterateContained(room, roomMatrix, new RoomIterator() {
+				@Override
+				public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
+					roomMatrix[x][y] = null;
+					return true;
+				}
+			});
+		}
+
 		// Log
 		printLevel(roomMatrix);
 		printStats(roomGraph);
