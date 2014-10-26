@@ -10,6 +10,7 @@ import org.jgrapht.graph.ListenableUndirectedGraph;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 
 public class FloorGenerator {
 	
@@ -32,10 +33,13 @@ public class FloorGenerator {
 		}
 	}
 	
-	static final int GRID_WIDTH = 40;
-	static final int GRID_HEIGHT = 10;
-	static final int MAX_ROOM_HEIGHT = 4;
-	static final int MAX_ROOM_WIDTH = 4;
+	static final int GRID_WIDTH = 25;
+	static final int GRID_HEIGHT = 15;
+	static final int MAX_ROOM_HEIGHT = 3;
+	static final int MAX_ROOM_WIDTH = 3;
+
+	static final int ROOM_COUNT = 60;
+	static final int GROW_ITERATIONS = 30;
 	
 	public static RoomGraph generateFloor() {
 		GeneratedRoom[][] roomMatrix = new GeneratedRoom[GRID_WIDTH][GRID_HEIGHT];
@@ -47,7 +51,7 @@ public class FloorGenerator {
 		}
 
 		// Place rooms
-		for (int i = 47; i < 126; i++) {
+		for (int i = 47; i < 47 + ROOM_COUNT; i++) {
 			GeneratedRoom room = new GeneratedRoom();
 			room.i = i;
 			room.w = 1;
@@ -62,7 +66,7 @@ public class FloorGenerator {
 		}
 		
 		// Grow rooms
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < GROW_ITERATIONS; i++) {
 			for (GeneratedRoom room : roomGraph.vertexSet()) {
 				growRoom(room, roomMatrix);
 			}
