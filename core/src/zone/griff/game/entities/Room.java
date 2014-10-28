@@ -186,7 +186,7 @@ public class Room {
 	}
 	
 	
-	public void draw(PolygonSpriteBatch batch, Player player, Camera camera, SceneManager sceneManager) {
+	public void draw(PolygonSpriteBatch batch, Player player, Camera camera, SceneManager sceneManager, float interpolationAlpha) {
 		Vector2 v = Vector2Pool.obtain();
 		
 		batch.flush();
@@ -220,7 +220,7 @@ public class Room {
 
 		batch.flush();
 		this.setupShaderForBody(v, player.body, player.originalBodyWorldCenter, shader, camera, sceneManager);
-		player.draw(batch);
+		player.draw(batch, interpolationAlpha);
 		
 		batch.flush();
 		for (MovingPlatform p : this.movingPlatforms) {

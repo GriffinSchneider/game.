@@ -8,6 +8,7 @@ import zone.griff.game.entities.Floor.DoorNode;
 import zone.griff.game.entities.Player;
 import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.entities.Room;
+import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.util.PaletteManager;
 import backgrounds.GeometricBackground;
@@ -124,25 +125,27 @@ public class Box2dScene extends Scene {
 
 	private DoorNode doorJustEntered;
 	private float accumulator;
+	private float interpolationAlpha;
 	@Override
 	public void update(float dt) {
-		accumulator += dt;
 		
-		// If the time to simulate is less than 120% of the target step time,
-		// then just simulate the whole thing.
-		// Otherwise, go in steps of the target step time.
-		float stepTime = dt;
-		stepTime = Math.max(WORLD_STEP_TIME * .8f, stepTime);
-		stepTime = Math.min(WORLD_STEP_TIME * 1.2f, stepTime);
-		
-		while (accumulator >= stepTime) {
-			world.step(stepTime, 6, 2);
-			this.updateInput(stepTime);
-			this.currentRoom.update(stepTime);
-			this.player.update(stepTime, this.contactListener.currentPlayerKinematicGround());
-			this.updateCamera(stepTime);
-			accumulator -= stepTime;
+		float frameTime = dt;
+		if (frameTime > 0.25f) {
+			frameTime = 0.25f;
 		}
+		
+		this.accumulator += frameTime;
+		
+		while (this.accumulator >= WORLD_STEP_TIME) {
+			this.world.step(WORLD_STEP_TIME, 6, 2);
+			this.updateInput(WORLD_STEP_TIME);
+			this.currentRoom.update(WORLD_STEP_TIME);
+			this.player.update(WORLD_STEP_TIME, this.contactListener.currentPlayerKinematicGround());
+			this.accumulator -= WORLD_STEP_TIME;
+		}
+		
+		this.interpolationAlpha = this.accumulator / WORLD_STEP_TIME;
+		this.updateCamera(frameTime);
 		
 		Body collidedDoor = this.contactListener.collidedDoor;
 		if (collidedDoor == null) {
@@ -167,7 +170,9 @@ public class Box2dScene extends Scene {
 	}
 	
 	public void updateCamera(float dt) {
-		Vector2 playerCenter = this.player.body.getWorldCenter();
+		Vector2 playerCenter = Vector2Pool.obtain();
+		this.player.getInterpolatedPosition(playerCenter, dt);;
+
 		Vector3 cameraCenter = this.b2dCam.position;
 		
 		cameraCenter.add(
@@ -183,6 +188,8 @@ public class Box2dScene extends Scene {
 		}
 
 		this.b2dCam.update();
+		
+		Vector2Pool.release(playerCenter);
 	}
 	
 	public void jumpPressed() {
@@ -232,7 +239,7 @@ public class Box2dScene extends Scene {
 	}
 
 	@Override
-	public void render() {
+	public void render() {		
 		this.background.parallaxX = this.b2dCam.position.x*0.0004f;
 		this.background.parallaxY = (this.b2dCam.position.y + 500f)*0.0004f;
 
@@ -241,7 +248,7 @@ public class Box2dScene extends Scene {
 		this.spriteBatch.setProjectionMatrix(this.b2dCam.combined);
 		this.spriteBatch.disableBlending();
 		this.background.draw(this.spriteBatch, this.b2dCam);
-		this.currentRoom.draw(this.spriteBatch, this.player, this.b2dCam, this.sceneManager);
+		this.currentRoom.draw(this.spriteBatch, this.player, this.b2dCam, this.sceneManager, this.interpolationAlpha);
 		this.spriteBatch.end();
 //		b2dr.render(world, this.b2dCam.combined);
 	}

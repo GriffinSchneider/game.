@@ -166,6 +166,8 @@ public class Player {
 		Vector2Pool.release(groundVelocity);
 	}
 	
+	private Vector2 lastPosition = new Vector2();
+	private Vector2 lastPosition2 = new Vector2();
 	
 	public void update(float dt, Body currentPlayerKinematicGround) {
 		if (this.isDashing) {
@@ -178,15 +180,28 @@ public class Player {
 		} else {
 			this.move(dt, currentPlayerKinematicGround);
 		}
+		
+		this.lastPosition.set(this.lastPosition2);
+		this.lastPosition2.set(this.body.getWorldCenter());
 	}
 	
-	public void draw(PolygonSpriteBatch batch) {
-		Vector2 v = Vector2Pool.obtain();
+	
+	public void getInterpolatedPosition(Vector2 v, float interpolationAlpha) {
 		v.set(this.body.getWorldCenter());
+		v.scl(interpolationAlpha);
+		v.add(
+				this.lastPosition.x * (1.0f - interpolationAlpha),
+				this.lastPosition.y * (1.0f - interpolationAlpha));
+	}
+	
+	public void draw(PolygonSpriteBatch batch, float interpolationAlpha) {
+		Vector2 currentPosition = Vector2Pool.obtain();
+		this.getInterpolatedPosition(currentPosition, interpolationAlpha);
+		
 		this.spriteAndOutline.setRotation(this.body.getAngle() * MathUtils.radiansToDegrees);
-		this.spriteAndOutline.setPosition(v.x, v.y);
+		this.spriteAndOutline.setPosition(currentPosition.x, currentPosition.y);
 		this.spriteAndOutline.drawSprite(batch);
-		Vector2Pool.release(v);
+		Vector2Pool.release(currentPosition);
 	}
 
 	public void drawOutline(PolygonSpriteBatch batch) {
