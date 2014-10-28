@@ -88,11 +88,11 @@ public class MapScene extends Scene {
 
 	@Override
 	public void resize(int width, int height) {
+		this.camera.zoom = 2.5f;
 		float camWidth = SceneManager.V_WIDTH / PPM;
 		float camHeight = ((float)height)/((float)width)*camWidth;
 		this.camera.setToOrtho(false, camWidth, camHeight);
-		this.camera.zoom = 2f;
-		this.camera.translate(6, 0);
+		this.camera.position.set(14, 6.5f, 1);
 		this.camera.update();
 	}
 	
