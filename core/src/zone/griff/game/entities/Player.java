@@ -108,16 +108,17 @@ public class Player {
 
 		// Jump sensor
 		shape.setAsBox(6 / PPM, 6 / PPM, new Vector2(0, -8 / PPM), 0);
+		fdef.density = 0f;
 		fdef.shape = shape;
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
 		fdef.isSensor = true;
 		this.body.createFixture(fdef).setUserData("foot");
-		
+
 		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(this.body, PaletteManager.getPaletteTextureRegion());
-		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
-		this.spriteAndOutline.setOrigin(playerPos.x, playerPos.y);
-		this.body.setTransform(playerPos, 0);
+		this.spriteAndOutline.setOrigin(0, 0);
+		
+		this.body.setTransform(new Vector2(playerPos.x, playerPos.y), 0);
 	}
 	
 	public void jump() {
