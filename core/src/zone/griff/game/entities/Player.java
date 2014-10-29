@@ -168,7 +168,10 @@ public class Player {
 	}
 	
 	private Vector2 lastPosition = new Vector2();
-	private Vector2 lastPosition2 = new Vector2();
+	private Vector2 currentPosition = new Vector2();
+
+	private float lastAngle;
+	private float currentAngle;
 	
 	public void update(float dt, Body currentPlayerKinematicGround) {
 		if (this.isDashing) {
@@ -182,24 +185,31 @@ public class Player {
 			this.move(dt, currentPlayerKinematicGround);
 		}
 		
-		this.lastPosition.set(this.lastPosition2);
-		this.lastPosition2.set(this.body.getWorldCenter());
+		this.lastPosition.set(this.currentPosition);
+		this.currentPosition.set(this.body.getWorldCenter());
+		
+		lastAngle = currentAngle;
+		currentAngle = this.body.getAngle();
 	}
 	
 	
 	public void getInterpolatedPosition(Vector2 v, float interpolationAlpha) {
-		v.set(this.body.getWorldCenter());
+		v.set(currentPosition);
 		v.scl(interpolationAlpha);
 		v.add(
 				this.lastPosition.x * (1.0f - interpolationAlpha),
 				this.lastPosition.y * (1.0f - interpolationAlpha));
 	}
 	
+	public float getInterpolatedAngle(float interpolationAlpha) {
+		return (this.currentAngle * interpolationAlpha) + (this.lastAngle * (1.0f - interpolationAlpha));
+	}
+	
 	public void draw(PolygonSpriteBatch batch, float interpolationAlpha) {
 		Vector2 currentPosition = Vector2Pool.obtain();
 		this.getInterpolatedPosition(currentPosition, interpolationAlpha);
 		
-		this.spriteAndOutline.setRotation(this.body.getAngle() * MathUtils.radiansToDegrees);
+		this.spriteAndOutline.setRotation(this.getInterpolatedAngle(interpolationAlpha) * MathUtils.radiansToDegrees);
 		this.spriteAndOutline.setPosition(currentPosition.x, currentPosition.y);
 		this.spriteAndOutline.drawSprite(batch);
 		Vector2Pool.release(currentPosition);
