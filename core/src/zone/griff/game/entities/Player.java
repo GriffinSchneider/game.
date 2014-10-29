@@ -3,6 +3,7 @@ package zone.griff.game.entities;
 import static zone.griff.game.scenes.box2d.B2DVars.PPM;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.box2d.B2DVars;
+import zone.griff.game.util.BodyInterpolator;
 import zone.griff.game.util.Box2DHelper;
 import zone.griff.game.util.PaletteManager;
 import zone.griff.game.util.SpriteAndOutline;
@@ -34,7 +35,16 @@ public class Player {
 		NONE, RIGHT, LEFT
 	}
 	
-	public Body body;
+	private BodyInterpolator interp;
+	public void getInterpolatedPosition(Vector2 v, float interpolationAlpha) {
+		interp.getInterpolatedPosition(v, interpolationAlpha);
+	}
+
+	private Body body;
+	public Body getBody() {
+		return this.body;
+	}
+
 	public Fixture mainFixture;
 	
 	public Vector2 originalBodyWorldCenter;
@@ -70,7 +80,9 @@ public class Player {
 		Vector2 playerPos = new Vector2(8, 8);
 		bdef.type = BodyType.DynamicBody;
 		this.body = world.createBody(bdef);
-		this.body.setUserData("player");
+		body.setUserData("player");
+		
+		this.interp = new BodyInterpolator(body);
 		
 		float w = 10 / PPM;
 		float h = 10 / PPM;
@@ -103,7 +115,7 @@ public class Player {
 		fdef.restitution = 0.0f;
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
-		this.mainFixture = this.body.createFixture(fdef);
+		this.mainFixture = body.createFixture(fdef);
 		this.mainFixture.setUserData("player");
 
 		// Jump sensor
@@ -113,12 +125,12 @@ public class Player {
 		fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
 		fdef.filter.maskBits = B2DVars.BIT_GROUND;
 		fdef.isSensor = true;
-		this.body.createFixture(fdef).setUserData("foot");
+		body.createFixture(fdef).setUserData("foot");
 
-		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(this.body, PaletteManager.getPaletteTextureRegion());
+		this.spriteAndOutline = Box2DHelper.polygonSpriteForBody(body, PaletteManager.getPaletteTextureRegion());
 		this.spriteAndOutline.setOrigin(0, 0);
 		
-		this.body.setTransform(new Vector2(playerPos.x, playerPos.y), 0);
+		body.setTransform(new Vector2(playerPos.x, playerPos.y), 0);
 	}
 	
 	public void jump() {
@@ -167,13 +179,8 @@ public class Player {
 		Vector2Pool.release(groundVelocity);
 	}
 	
-	private Vector2 lastPosition = new Vector2();
-	private Vector2 currentPosition = new Vector2();
-
-	private float lastAngle;
-	private float currentAngle;
-	
 	public void update(float dt, Body currentPlayerKinematicGround) {
+		this.interp.update(dt);
 		if (this.isDashing) {
 			this.dashTimer += dt;
 			this.body.setLinearVelocity(PLAYER_DASH_X_VELOCITY * (this.lastMovingDir == MoveDirection.RIGHT ? 1 : -1), 0);
@@ -184,32 +191,13 @@ public class Player {
 		} else {
 			this.move(dt, currentPlayerKinematicGround);
 		}
-		
-		this.lastPosition.set(this.currentPosition);
-		this.currentPosition.set(this.body.getWorldCenter());
-		
-		lastAngle = currentAngle;
-		currentAngle = this.body.getAngle();
 	}
 	
-	
-	public void getInterpolatedPosition(Vector2 v, float interpolationAlpha) {
-		v.set(currentPosition);
-		v.scl(interpolationAlpha);
-		v.add(
-				this.lastPosition.x * (1.0f - interpolationAlpha),
-				this.lastPosition.y * (1.0f - interpolationAlpha));
-	}
-	
-	public float getInterpolatedAngle(float interpolationAlpha) {
-		return (this.currentAngle * interpolationAlpha) + (this.lastAngle * (1.0f - interpolationAlpha));
-	}
 	
 	public void draw(PolygonSpriteBatch batch, float interpolationAlpha) {
 		Vector2 currentPosition = Vector2Pool.obtain();
-		this.getInterpolatedPosition(currentPosition, interpolationAlpha);
-		
-		this.spriteAndOutline.setRotation(this.getInterpolatedAngle(interpolationAlpha) * MathUtils.radiansToDegrees);
+		this.interp.getInterpolatedPosition(currentPosition, interpolationAlpha);
+		this.spriteAndOutline.setRotation(this.interp.getInterpolatedAngle(interpolationAlpha) * MathUtils.radiansToDegrees);
 		this.spriteAndOutline.setPosition(currentPosition.x, currentPosition.y);
 		this.spriteAndOutline.drawSprite(batch);
 		Vector2Pool.release(currentPosition);
@@ -220,6 +208,7 @@ public class Player {
 	}
 
 	public void dispose() {
-		this.body.getWorld().destroyBody(this.body);;
+		this.interp.dispose();
+		this.interp = null;
 	}
 }

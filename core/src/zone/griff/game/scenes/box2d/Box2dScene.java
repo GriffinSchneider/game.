@@ -10,16 +10,13 @@ import zone.griff.game.entities.Player.MoveDirection;
 import zone.griff.game.entities.Room;
 import zone.griff.game.pools.Vector2Pool;
 import zone.griff.game.scenes.Scene;
-import zone.griff.game.util.PaletteManager;
 import backgrounds.GeometricBackground;
 import backgrounds.ParallaxBackground;
-import backgrounds.ShaderBackground;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -152,7 +149,7 @@ public class Box2dScene extends Scene {
 			this.doorJustEntered = null;
 		} else {
 
-			Vector2 offset = this.player.body.getWorldCenter();
+			Vector2 offset = this.player.getBody().getWorldCenter();
 			offset.sub(this.contactListener.collidedDoor.getWorldCenter());
 			offset.scl(-1, 1);
 

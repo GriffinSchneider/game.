@@ -1,6 +1,7 @@
 package zone.griff.game.entities;
 
 import zone.griff.game.pools.Vector2Pool;
+import zone.griff.game.util.BodyInterpolator;
 import zone.griff.game.util.SpriteAndOutline;
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
@@ -13,7 +14,11 @@ public class MovingPlatform {
 	
 	public static float MOVING_PALATFORM_VELOCITY = 3f;
 	
-	public Body platformBody;
+	private Body platformBody;
+	public Body getBody() {
+		return this.platformBody;
+	}
+	private BodyInterpolator interp;
 
 	private Array<Vector2> targetBodies;
 	private int currentTargetBodyIndex;
@@ -28,6 +33,7 @@ public class MovingPlatform {
 
 	public MovingPlatform(Body platform, Array<Vector2> targets, SpriteAndOutline sprite) {
 		this.platformBody = platform;
+		this.interp = new BodyInterpolator(platform);
 		this.targetBodies = targets;
 		this.currentTargetBodyIndex = 0;
 		this.platformSprite = sprite;
@@ -39,6 +45,7 @@ public class MovingPlatform {
 	}
 	
 	public void update(float dt) {
+		this.interp.update(dt);
 		Vector2 v = Vector2Pool.obtain();
 		
 		Vector2 currentTargetPoint = this.targetBodies.get(this.currentTargetBodyIndex);
@@ -64,15 +71,15 @@ public class MovingPlatform {
 		Vector2Pool.release(v);
 	}
 	
-	public void draw(PolygonSpriteBatch batch) {
+	public void draw(PolygonSpriteBatch batch, float interpolationAlpha) {
 		Vector2 v = Vector2Pool.obtain();
 		
-		v.set(this.platformBody.getWorldCenter());
+		this.interp.getInterpolatedPosition(v, interpolationAlpha);
 		v.sub(this.originalBodyWorldCenter);
 		
 		v.add(originalSpritePosition);
 		
-		this.platformSprite.setRotation(this.platformBody.getAngle() * MathUtils.radiansToDegrees);
+		this.platformSprite.setRotation(this.interp.getInterpolatedAngle(interpolationAlpha) * MathUtils.radiansToDegrees);
 		this.platformSprite.setPosition(v.x, v.y);
 		this.platformSprite.drawSprite(batch);
 
@@ -82,5 +89,5 @@ public class MovingPlatform {
 	public void drawOutline(PolygonSpriteBatch batch) {
 		this.platformSprite.drawOutline(batch);
 	}
-
+	
 }

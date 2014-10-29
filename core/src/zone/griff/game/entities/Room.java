@@ -86,7 +86,7 @@ public class Room {
 	
 	public Body putPlayerAtDoor(Player player, DoorNode doorNode, Vector2 offsetFromDoor) {
 		Vector2 doorCenter = doorNode.getBody().getWorldCenter();
-		player.body.setTransform(doorCenter.x + offsetFromDoor.x, doorCenter.y + offsetFromDoor.y, player.body.getAngle());
+		player.getBody().setTransform(doorCenter.x + offsetFromDoor.x, doorCenter.y + offsetFromDoor.y, player.getBody().getAngle());
 		return this.doors.get(0).getBody();
 	}
 
@@ -219,13 +219,13 @@ public class Room {
 		}
 
 		batch.flush();
-		this.setupShaderForBody(v, player.body, player.originalBodyWorldCenter, shader, camera, sceneManager);
+		this.setupShaderForBody(v, player.getBody(), player.originalBodyWorldCenter, shader, camera, sceneManager);
 		player.draw(batch, interpolationAlpha);
 		
 		batch.flush();
 		for (MovingPlatform p : this.movingPlatforms) {
-			this.setupShaderForBody(v, p.platformBody, p.originalBodyWorldCenter, shader, camera, sceneManager);
-			p.draw(batch);
+			this.setupShaderForBody(v, p.getBody(), p.originalBodyWorldCenter, shader, camera, sceneManager);
+			p.draw(batch, interpolationAlpha);
 			batch.flush();
 		}
 		
