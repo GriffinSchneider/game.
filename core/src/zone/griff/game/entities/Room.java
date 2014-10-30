@@ -5,6 +5,7 @@ import zone.griff.game.SceneManager;
 import zone.griff.game.entities.Floor.DoorNode;
 import zone.griff.game.entities.Floor.RoomNode;
 import zone.griff.game.pools.Vector2Pool;
+import zone.griff.game.util.BodyInterpolator;
 import zone.griff.game.util.Box2DHelper;
 import zone.griff.game.util.PaletteManager;
 import zone.griff.game.util.ShaderManager;
@@ -219,12 +220,24 @@ public class Room {
 		}
 
 		batch.flush();
-		this.setupShaderForBody(v, player.getBody(), player.originalBodyWorldCenter, shader, camera, sceneManager);
+		this.setupShaderForBody(
+				player.getInterpolatedPosition(interpolationAlpha),
+				player.getInterpolatedAngle(interpolationAlpha),
+				player.originalBodyWorldCenter,
+				shader,
+				camera,
+				sceneManager);
 		player.draw(batch, interpolationAlpha);
 		
 		batch.flush();
 		for (MovingPlatform p : this.movingPlatforms) {
-			this.setupShaderForBody(v, p.getBody(), p.originalBodyWorldCenter, shader, camera, sceneManager);
+			this.setupShaderForBody(
+					p.getInterpolatedPosition(interpolationAlpha),
+					p.getInterpolatedAngle(interpolationAlpha),
+					p.originalBodyWorldCenter,
+					shader,
+					camera,
+					sceneManager);
 			p.draw(batch, interpolationAlpha);
 			batch.flush();
 		}
@@ -242,13 +255,10 @@ public class Room {
 		Vector2Pool.release(v);
 	}
 	
-	private void setupShaderForBody(Vector2 tempVector, Body body, Vector2 originalWorldCenter, ShaderProgram shader, Camera camera, SceneManager sceneManager) {
-		tempVector.set(originalWorldCenter);
-		tempVector.sub(body.getWorldCenter());
-		tempVector.add(camera.position.x, camera.position.y);
-		tempVector.scl(PPM*sceneManager.screenWidth/500);
-		shader.setUniformf("xOffset", tempVector.x);
-		shader.setUniformf("yOffset", tempVector.y);
+	private void setupShaderForBody(Vector2 position, float rotation, Vector2 originalWorldCenter, ShaderProgram shader, Camera camera, SceneManager sceneManager) {
+		float f = PPM*sceneManager.screenWidth/500;
+		shader.setUniformf("xOffset", f * (originalWorldCenter.x - position.x + camera.position.x));
+		shader.setUniformf("yOffset", f * (originalWorldCenter.y - position.y + camera.position.y));
 	}
 
 	public void dispose() {

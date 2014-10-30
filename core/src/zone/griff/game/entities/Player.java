@@ -36,9 +36,13 @@ public class Player {
 	}
 	
 	private BodyInterpolator interp;
-	public void getInterpolatedPosition(Vector2 v, float interpolationAlpha) {
-		interp.getInterpolatedPosition(v, interpolationAlpha);
+	public Vector2 getInterpolatedPosition(float interpolationAlpha) {
+		return interp.getInterpolatedPosition(interpolationAlpha);
 	}
+	public float getInterpolatedAngle(float interpolationAlpha) {
+		return interp.getInterpolatedAngle(interpolationAlpha);
+	}
+
 
 	private Body body;
 	public Body getBody() {
@@ -195,12 +199,10 @@ public class Player {
 	
 	
 	public void draw(PolygonSpriteBatch batch, float interpolationAlpha) {
-		Vector2 currentPosition = Vector2Pool.obtain();
-		this.interp.getInterpolatedPosition(currentPosition, interpolationAlpha);
+		Vector2 currentPosition = this.interp.getInterpolatedPosition(interpolationAlpha);
 		this.spriteAndOutline.setRotation(this.interp.getInterpolatedAngle(interpolationAlpha) * MathUtils.radiansToDegrees);
 		this.spriteAndOutline.setPosition(currentPosition.x, currentPosition.y);
 		this.spriteAndOutline.drawSprite(batch);
-		Vector2Pool.release(currentPosition);
 	}
 
 	public void drawOutline(PolygonSpriteBatch batch) {

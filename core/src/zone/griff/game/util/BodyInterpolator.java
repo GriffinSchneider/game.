@@ -25,12 +25,14 @@ public class BodyInterpolator {
 		currentAngle = this.body.getAngle();
 	}
 	
-	public void getInterpolatedPosition(Vector2 v, float interpolationAlpha) {
-		v.set(currentPosition);
-		v.scl(interpolationAlpha);
-		v.add(
+	private Vector2 interpolatedPosition = new Vector2();
+	public Vector2 getInterpolatedPosition(float interpolationAlpha) {
+		interpolatedPosition.set(currentPosition);
+		interpolatedPosition.scl(interpolationAlpha);
+		interpolatedPosition.add(
 				this.lastPosition.x * (1.0f - interpolationAlpha),
 				this.lastPosition.y * (1.0f - interpolationAlpha));
+		return interpolatedPosition;
 	}
 	
 	public float getInterpolatedAngle(float interpolationAlpha) {

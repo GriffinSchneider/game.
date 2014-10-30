@@ -142,7 +142,7 @@ public class Box2dScene extends Scene {
 		}
 		
 		this.interpolationAlpha = this.accumulator / WORLD_STEP_TIME;
-		this.updateCamera(frameTime);
+		this.updateCamera(frameTime, interpolationAlpha);
 		
 		Body collidedDoor = this.contactListener.collidedDoor;
 		if (collidedDoor == null) {
@@ -166,9 +166,8 @@ public class Box2dScene extends Scene {
 		}
 	}
 	
-	public void updateCamera(float dt) {
-		Vector2 playerCenter = Vector2Pool.obtain();
-		this.player.getInterpolatedPosition(playerCenter, dt);;
+	public void updateCamera(float dt, float interpolationAlpha) {
+		Vector2 playerCenter = this.player.getInterpolatedPosition(interpolationAlpha);
 
 		Vector3 cameraCenter = this.b2dCam.position;
 		
@@ -185,8 +184,6 @@ public class Box2dScene extends Scene {
 		}
 
 		this.b2dCam.update();
-		
-		Vector2Pool.release(playerCenter);
 	}
 	
 	public void jumpPressed() {

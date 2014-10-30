@@ -18,7 +18,14 @@ public class MovingPlatform {
 	public Body getBody() {
 		return this.platformBody;
 	}
+
 	private BodyInterpolator interp;
+	public Vector2 getInterpolatedPosition(float interpolationAlpha) {
+		return interp.getInterpolatedPosition(interpolationAlpha);
+	}
+	public float getInterpolatedAngle(float interpolationAlpha) {
+		return interp.getInterpolatedAngle(interpolationAlpha);
+	}
 
 	private Array<Vector2> targetBodies;
 	private int currentTargetBodyIndex;
@@ -72,9 +79,7 @@ public class MovingPlatform {
 	}
 	
 	public void draw(PolygonSpriteBatch batch, float interpolationAlpha) {
-		Vector2 v = Vector2Pool.obtain();
-		
-		this.interp.getInterpolatedPosition(v, interpolationAlpha);
+		Vector2 v = this.interp.getInterpolatedPosition(interpolationAlpha);
 		v.sub(this.originalBodyWorldCenter);
 		
 		v.add(originalSpritePosition);
@@ -82,8 +87,6 @@ public class MovingPlatform {
 		this.platformSprite.setRotation(this.interp.getInterpolatedAngle(interpolationAlpha) * MathUtils.radiansToDegrees);
 		this.platformSprite.setPosition(v.x, v.y);
 		this.platformSprite.drawSprite(batch);
-
-		Vector2Pool.release(v);
 	}
 
 	public void drawOutline(PolygonSpriteBatch batch) {
