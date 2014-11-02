@@ -25,7 +25,7 @@ public class Player {
 
 	private static float PLAYER_MOVEMENT_X_VELOCITY = 8.f;
 	private static float PLAYER_MOVEMENT_MULTIPLIER = 0.4f;
-	private static float PLAYER_JUMP_Y_VELOCITY = 15;  
+	private static float PLAYER_JUMP_Y_VELOCITY = 17;  
 	private static float PLAYER_STOPPING_MULTIPLIER = 4f;
 
 	private static float PLAYER_DASH_X_VELOCITY = 18.0f;
