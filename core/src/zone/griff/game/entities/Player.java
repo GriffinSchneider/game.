@@ -140,6 +140,13 @@ public class Player {
 	public void jump() {
 		this.body.setLinearVelocity(this.body.getLinearVelocity().x, PLAYER_JUMP_Y_VELOCITY);
 	}
+
+	public void killJump() {
+		Vector2 v = this.body.getLinearVelocity();
+		if (v.y > 0) {
+			this.body.setLinearVelocity(v.x, v.y / 1.7f);
+		}
+	}
 	
 	public void dash() {
 		if (!this.isDashing) {

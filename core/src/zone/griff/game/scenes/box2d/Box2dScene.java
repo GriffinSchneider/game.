@@ -80,7 +80,12 @@ public class Box2dScene extends Scene {
 		final Box2dScene t = this;
 		Gdx.input.setInputProcessor(new InputProcessor() {
 			@Override
-			public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
+			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+				if (screenX/(float)t.sceneManager.screenWidth > jumpStart) {
+					t.jumpReleased();
+				}
+				return false;
+			}
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
 			@Override
@@ -96,7 +101,12 @@ public class Box2dScene extends Scene {
 			public boolean scrolled(int amount) { return false; }
 			@Override public boolean mouseMoved(int screenX, int screenY) { return false; }
 			@Override
-			public boolean keyUp(int keycode) { return false; }
+			public boolean keyUp(int keycode) {
+				if (keycode == Keys.SPACE) {
+					t.jumpReleased();
+				}
+				return false;
+			}
 			@Override
 			public boolean keyTyped(char character) { return false; }
 			@Override
@@ -191,6 +201,10 @@ public class Box2dScene extends Scene {
 			this.contactListener.playerJumped();
 			this.player.jump();
 		}
+	}
+
+	public void jumpReleased() {
+		this.player.killJump();
 	}
 	
 	public void dashPressed() {
