@@ -85,16 +85,16 @@ public class Floor {
 		RoomNode r2 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
 		RoomNode r3 = new RoomNode(Gdx.files.internal("levels/json/room1.json"));
 
-		DoorNode d00 = new DoorNode(0, -2, r0);
+		DoorNode d00 = new DoorNode(0, -1, r0);
 
-		DoorNode d10 = new DoorNode(0, 1, r1);
-		DoorNode d11 = new DoorNode(3, 1, r1);
+		DoorNode d10 = new DoorNode(-1, 0, r1);
+		DoorNode d11 = new DoorNode(1, 0, r1);
 
-		DoorNode d20 = new DoorNode(0, 1, r2);
-		DoorNode d21 = new DoorNode(3, 1, r2);
+		DoorNode d20 = new DoorNode(-1, 0, r2);
+		DoorNode d21 = new DoorNode(1, 0, r2);
 
-		DoorNode d30 = new DoorNode(0, 1, r3);
-		DoorNode d31 = new DoorNode(3, 1, r3);
+		DoorNode d30 = new DoorNode(-1, 0, r3);
+		DoorNode d31 = new DoorNode(1, 0, r3);
 		
 		d00.link(d10);
 		d11.link(d20);

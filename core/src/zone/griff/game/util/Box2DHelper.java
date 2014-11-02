@@ -23,12 +23,14 @@ public class Box2DHelper {
 		return ud != null && ud instanceof String && ((String)ud).equals("player");
 	}
 	
+	private static final float GRID_SIZE = 17;
+	
 	public static int gridifyX(Vector2 point) {
-		return (int)Math.floor(point.x / 10.0f);
+		return (int)Math.floor(point.x / GRID_SIZE);
 	}
 
 	public static int gridifyY(Vector2 point) {
-		return (int)Math.floor(point.y / 10.0f);
+		return (int)Math.floor(point.y / GRID_SIZE);
 	}
 	
 	public static SpriteAndOutline polygonSpriteForBody(Body body, TextureRegion texreg) {
