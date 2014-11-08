@@ -51,26 +51,21 @@ public class FloorGenerator {
 		
 		public String doorString(RoomGraph roomGraph) {
 
-			int numAdjacent = this.w*2 + this.h*2;
-			
 			final StringBuilder string = new StringBuilder("");
-			for (int i = 0; i < numAdjacent; i++) {
-				string.append('o');
-			}
 			
 			final Set<GeneratedDoor> doors = roomGraph.edgesOf(this);
 			
 			AllAdjacentGridsIterator iter = new AllAdjacentGridsIterator(this);
-			int i = -1;
 			while(iter.hasNext()) {
-				i++;
 				IntVector2 grid = iter.next();
-				if (!isInGrid(grid)) continue;
+				boolean hasDoor = false;
 				for (GeneratedDoor door : doors) {
 					if (door.overlapsGridPosition(grid)) {
-						string.setCharAt(i, 'd');
+						hasDoor = true;
+						break;
 					}
 				}
+				string.append(hasDoor ? 'd' : 'o');
 			}
 
 			return string.toString();
@@ -125,7 +120,6 @@ public class FloorGenerator {
 
 	static final int SEED_ROOM_COUNT = 80;
 	static final int MIN_CONNECTED_ROOM_COUNT = 40;
-	static final int MAX_DOORS_PER_ROOM = 2;
 	static final int GROW_ITERATIONS = 40;
 	
 	public static RoomGraph generateFloor() {
