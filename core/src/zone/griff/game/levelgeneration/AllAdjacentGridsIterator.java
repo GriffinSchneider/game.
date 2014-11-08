@@ -1,10 +1,10 @@
-package zone.griff.game.util;
+package zone.griff.game.levelgeneration;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import zone.griff.game.util.FloorGenerator.GeneratedRoom;
-import zone.griff.game.util.FloorGenerator.GrowDirection;
+import zone.griff.game.levelgeneration.FloorGenerator.GeneratedRoom;
+import zone.griff.game.levelgeneration.FloorGenerator.GrowDirection;
 
 // Adjacent squares are ordered like:
 //

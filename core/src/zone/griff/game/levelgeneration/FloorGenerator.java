@@ -1,4 +1,4 @@
-package zone.griff.game.util;
+package zone.griff.game.levelgeneration;
 
 import java.util.Set;
 

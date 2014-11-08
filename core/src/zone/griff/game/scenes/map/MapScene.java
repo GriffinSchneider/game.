@@ -2,13 +2,13 @@ package zone.griff.game.scenes.map;
 
 import static zone.griff.game.scenes.box2d.B2DVars.PPM;
 import zone.griff.game.SceneManager;
+import zone.griff.game.levelgeneration.FloorGenerator;
+import zone.griff.game.levelgeneration.FloorGenerator.DoorDirection;
+import zone.griff.game.levelgeneration.FloorGenerator.GeneratedDoor;
+import zone.griff.game.levelgeneration.FloorGenerator.GeneratedRoom;
+import zone.griff.game.levelgeneration.FloorGenerator.RoomGraph;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.util.Box2DHelper;
-import zone.griff.game.util.FloorGenerator;
-import zone.griff.game.util.FloorGenerator.DoorDirection;
-import zone.griff.game.util.FloorGenerator.GeneratedDoor;
-import zone.griff.game.util.FloorGenerator.GeneratedRoom;
-import zone.griff.game.util.FloorGenerator.RoomGraph;
 import zone.griff.game.util.ShaderManager.Shader;
 import zone.griff.game.util.PaletteManager;
 import zone.griff.game.util.ShaderManager;
