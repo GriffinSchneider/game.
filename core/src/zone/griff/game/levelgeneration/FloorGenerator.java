@@ -3,8 +3,9 @@ package zone.griff.game.levelgeneration;
 import java.util.Set;
 
 import org.jgrapht.alg.ConnectivityInspector;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.ListenableUndirectedGraph;
+
+import zone.griff.game.levelgeneration.GeneratedDoor.DoorDirection;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,94 +17,6 @@ public class FloorGenerator {
 		GROW_LEFT,
 		GROW_RIGHT,
 		GROW_UP,
-	}
-	
-	public static class GeneratedRoom {
-		private int x;
-		public int x() {return x;}
-		private int y;
-		public int y() {return y;}
-		private int w;
-		public int w() {return w;}
-		private int h;
-		public int h() {return h;}
-		
-		public void update(int x, int y, int w, int h) {
-			this.x = x;
-			this.y = y;
-			this.w = w;
-			this.h = h;
-		}
-		
-		public int maxX() {
-			return x + w - 1;
-		}
-
-		public int maxY() {
-			return y + h - 1;
-		}
-		
-		public int i;
-		@Override
-		public String toString() {
-			return Character.toString((char)i);
-		}
-		
-		public String doorString(RoomGraph roomGraph) {
-
-			final StringBuilder string = new StringBuilder("");
-			
-			final Set<GeneratedDoor> doors = roomGraph.edgesOf(this);
-			
-			AllAdjacentGridsIterator iter = new AllAdjacentGridsIterator(this);
-			while(iter.hasNext()) {
-				IntVector2 grid = iter.next();
-				boolean hasDoor = false;
-				for (GeneratedDoor door : doors) {
-					if (door.overlapsGridPosition(grid)) {
-						hasDoor = true;
-						break;
-					}
-				}
-				string.append(hasDoor ? 'd' : 'o');
-			}
-
-			return string.toString();
-		}
-	}
-
-	public static enum DoorDirection {
-		DOOR_UP,
-		DOOR_RIGHT
-	}
-	
-	public static class GeneratedDoor extends DefaultEdge {
-		
-		private static final long serialVersionUID = -6681123121309612867L;
-		public int x;
-		public int y;
-		public DoorDirection dir;
-		
-		public GeneratedDoor() {
-			super();
-		}
-		
-		public GeneratedRoom getSource() {
-			return (GeneratedRoom) super.getSource();
-		}
-		
-		public GeneratedRoom getTarget() {
-			return (GeneratedRoom) super.getTarget();
-		}
-		
-		// Is the given grid square one of the squares linked by this door?
-		public boolean overlapsGridPosition(IntVector2 grid) {
-			return 
-					(this.x == grid.x && this.y == grid.y) ||
-					(this.dir == DoorDirection.DOOR_UP && this.x == grid.x && this.y+1 == grid.y) ||
-					(this.dir == DoorDirection.DOOR_RIGHT && this.x+1 == grid.x && this.y == grid.y);
-		}
-		
 	}
 	
 	public static class RoomGraph extends ListenableUndirectedGraph<GeneratedRoom, GeneratedDoor> {
@@ -135,23 +48,22 @@ public class FloorGenerator {
 		// Place rooms
 		for (int i = 33; i < 33 + SEED_ROOM_COUNT; i++) {
 			if (i == 127) { continue; }
-			GeneratedRoom room = new GeneratedRoom();
-			room.i = i;
-			room.w = 1;
-			room.h = 1;
+			int x, y;
 			do { // Look for an empty square for this room
-				room.x = MathUtils.random(GRID_WIDTH - 1);
-				room.y = MathUtils.random(GRID_HEIGHT - 1);
-			} while (roomMatrix[room.x][room.y] != null);
+				x = MathUtils.random(GRID_WIDTH - 1);
+				y = MathUtils.random(GRID_HEIGHT - 1);
+			} while (roomMatrix[x][y] != null);
 			// Put the room there
-			roomMatrix[room.x][room.y] = room;
+			GeneratedRoom room = new GeneratedRoom(x, y);
+			room.i = i;
+			roomMatrix[x][y] = room;
 			roomGraph.addVertex(room);
 		}
 		
 		// Grow rooms. 1x1 rooms are more likely to grow.
 		for (int i = 0; i < GROW_ITERATIONS; i++) {
 			for (GeneratedRoom room : roomGraph.vertexSet()) {
-				float chanceToGrow = (room.h == 1 && room.w == 1) ? 0.7f : 0.2f;
+				float chanceToGrow = (room.h() == 1 && room.w() == 1) ? 0.7f : 0.2f;
 				if (MathUtils.randomBoolean(chanceToGrow)) {
 					growRoom(room, roomMatrix);
 				}
@@ -164,7 +76,7 @@ public class FloorGenerator {
 			roomGraph.vertexSet().toArray(roomsArray);
 			for (int i = 0; i < roomsArray.length; i++) {
 				final GeneratedRoom room = roomsArray[i];
-				if (room.w == 1 && room.h == 1) {
+				if (room.w() == 1 && room.h() == 1) {
 					removeRoom(room, roomMatrix, roomGraph);
 				}
 			}
@@ -242,7 +154,7 @@ public class FloorGenerator {
 			GeneratedRoom room1 = roomGraph.getEdgeSource(door);
 			GeneratedRoom room2 = roomGraph.getEdgeTarget(door);
 			// If there's overlap on the x axis
-			if (room1.x() <= room2.maxX() && room1.maxX() >= room2.x) {
+			if (room1.x() <= room2.maxX() && room1.maxX() >= room2.x()) {
 				int minOverlap = Math.max(room1.x(), room2.x());
 				int maxOverlap = Math.min(room1.maxX(), room2.maxX());
 				int middle = (minOverlap + maxOverlap) / 2;
@@ -251,7 +163,7 @@ public class FloorGenerator {
 				door.y = Math.min(room1.maxY(), room2.maxY());
 			}
 			// If there's overlap on the y axis
-			if (room1.y() <= room2.maxY() && room1.maxY() >= room2.y) {
+			if (room1.y() <= room2.maxY() && room1.maxY() >= room2.y()) {
 				int minOverlap = Math.max(room1.y(), room2.y());
 				int maxOverlap = Math.min(room1.maxY(), room2.maxY());
 				int middle = (minOverlap + maxOverlap) / 2;
@@ -273,7 +185,7 @@ public class FloorGenerator {
 	}
 	
 	private static int maxDoorsForRoom(GeneratedRoom room) {
-		if (room.h + room.w > 4) {
+		if (room.h() + room.w() > 4) {
 			return 3;
 		} else {
 			return 2;
@@ -285,24 +197,21 @@ public class FloorGenerator {
 		GrowDirection dir = dirs[MathUtils.random(dirs.length - 1)];
 		
 		// Calculate what the room's dimensions will be after growing
-		int newX = room.x;
-		int newY = room.y;
-		int newW = room.w;
-		int newH = room.h;
+		int newX = room.x();
+		int newY = room.y();
+		int newW = room.w();
+		int newH = room.h();
 		switch (dir) {
 		case GROW_LEFT:
-			newX = room.x - 1;
-			newW = room.w + 1;
-			break;
+			newX--;
 		case GROW_RIGHT:
-			newW = room.w + 1;
+			newW++;
 			break;
-		case GROW_UP:
-			newH = room.h + 1;
-			break;
+
 		case GROW_DOWN:
-			newH = room.h + 1;
-			newY = room.y - 1;
+			newY--;
+		case GROW_UP:
+			newH++;
 			break;
 		}
 
@@ -331,8 +240,6 @@ public class FloorGenerator {
 		room.update(newX, newY, newW, newH);
 	}
 
-
-
 	public static void removeRoom(GeneratedRoom room, final GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
 		roomGraph.removeVertex(room);
 		iterateContained(room, new RoomIterator() {
@@ -349,14 +256,12 @@ public class FloorGenerator {
 	}
 
 	public static void iterateContained(GeneratedRoom room, RoomIterator iter) {
-		for (int x = room.x; x < room.x + room.w; x++) {
-			for (int y = room.y; y < room.y + room.h; y++) {
+		for (int x = room.x(); x < room.x() + room.w(); x++) {
+			for (int y = room.y(); y < room.y() + room.h(); y++) {
 				iter.run(x, y);
 			}
 		}
 	}
-
-	
 	
 	
 	public static void printLevel(GeneratedRoom[][] roomMatrix) {
@@ -376,7 +281,7 @@ public class FloorGenerator {
  		final StringBuilder string = new StringBuilder("----\n");
  		for (GeneratedRoom room : rooms.vertexSet()) {
  			string.append(room.toString() + ": ");
- 			string.append(room.w + "x" + room.h + " ");
+ 			string.append(room.w() + "x" + room.h() + " ");
  			string.append(room.doorString(rooms));
  			string.append("\n");
  		}
