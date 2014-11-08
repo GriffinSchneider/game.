@@ -1,23 +1,22 @@
 package zone.griff.game.util;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.Graph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.ListenableDirectedWeightedGraph;
 import org.jgrapht.graph.ListenableUndirectedGraph;
-import org.jgrapht.graph.SimpleGraph;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 
 public class FloorGenerator {
+
+	public static enum GrowDirection {
+		GROW_DOWN,
+		GROW_LEFT,
+		GROW_RIGHT,
+		GROW_UP,
+	}
 	
 	public static class GeneratedRoom {
 		private int x;
@@ -49,6 +48,33 @@ public class FloorGenerator {
 		public String toString() {
 			return Character.toString((char)i);
 		}
+		
+		public String doorString(RoomGraph roomGraph) {
+
+			int numAdjacent = this.w*2 + this.h*2;
+			
+			final StringBuilder string = new StringBuilder("");
+			for (int i = 0; i < numAdjacent; i++) {
+				string.append('o');
+			}
+			
+			final Set<GeneratedDoor> doors = roomGraph.edgesOf(this);
+			
+			AllAdjacentGridsIterator iter = new AllAdjacentGridsIterator(this);
+			int i = -1;
+			while(iter.hasNext()) {
+				i++;
+				IntVector2 grid = iter.next();
+				if (!isInGrid(grid)) continue;
+				for (GeneratedDoor door : doors) {
+					if (door.overlapsGridPosition(grid)) {
+						string.setCharAt(i, 'd');
+					}
+				}
+			}
+
+			return string.toString();
+		}
 	}
 
 	public static enum DoorDirection {
@@ -57,20 +83,32 @@ public class FloorGenerator {
 	}
 	
 	public static class GeneratedDoor extends DefaultEdge {
+		
 		private static final long serialVersionUID = -6681123121309612867L;
 		public int x;
 		public int y;
 		public DoorDirection dir;
 		
-		public GeneratedRoom getSource() {
-			return (GeneratedRoom) super.getSource();
-		}
-		public GeneratedRoom getTarget() {
-			return (GeneratedRoom) super.getTarget();
-		}
 		public GeneratedDoor() {
 			super();
 		}
+		
+		public GeneratedRoom getSource() {
+			return (GeneratedRoom) super.getSource();
+		}
+		
+		public GeneratedRoom getTarget() {
+			return (GeneratedRoom) super.getTarget();
+		}
+		
+		// Is the given grid square one of the squares linked by this door?
+		public boolean overlapsGridPosition(IntVector2 grid) {
+			return 
+					(this.x == grid.x && this.y == grid.y) ||
+					(this.dir == DoorDirection.DOOR_UP && this.x == grid.x && this.y+1 == grid.y) ||
+					(this.dir == DoorDirection.DOOR_RIGHT && this.x+1 == grid.x && this.y == grid.y);
+		}
+		
 	}
 	
 	public static class RoomGraph extends ListenableUndirectedGraph<GeneratedRoom, GeneratedDoor> {
@@ -91,8 +129,8 @@ public class FloorGenerator {
 	static final int GROW_ITERATIONS = 40;
 	
 	public static RoomGraph generateFloor() {
-		MathUtils.random = new Random(420);
-		GeneratedRoom[][] roomMatrix = new GeneratedRoom[GRID_WIDTH][GRID_HEIGHT];
+//		MathUtils.random = new Random(420);
+		final GeneratedRoom[][] roomMatrix = new GeneratedRoom[GRID_WIDTH][GRID_HEIGHT];
 
 		final RoomGraph roomGraph = new RoomGraph();
 		
@@ -140,19 +178,18 @@ public class FloorGenerator {
 
 		// Find connections (adjacent rooms)
 		for (final GeneratedRoom room : roomGraph.vertexSet()) {
-			iterateAdjacent(room, roomMatrix, new RoomIterator() {
-				@Override
-				public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
-					GeneratedRoom adjacentRoom = roomMatrix[x][y];
-					if (adjacentRoom != null) {
-						if (roomGraph.edgesOf(room).size() < maxDoorsForRoom(room) &&
-								roomGraph.edgesOf(adjacentRoom).size() < maxDoorsForRoom(adjacentRoom)) {
-							roomGraph.addEdge(room, adjacentRoom);
-						}
+			AllAdjacentGridsIterator iter = new AllAdjacentGridsIterator(room);
+			while(iter.hasNext()) {
+				IntVector2 grid = iter.next();
+				if (!isInGrid(grid)) continue;
+				GeneratedRoom adjacentRoom = roomMatrix[grid.x][grid.y];
+				if (adjacentRoom != null) {
+					if (roomGraph.edgesOf(room).size() < maxDoorsForRoom(room) &&
+							roomGraph.edgesOf(adjacentRoom).size() < maxDoorsForRoom(adjacentRoom)) {
+						roomGraph.addEdge(room, adjacentRoom);
 					}
-					return true;
 				}
-			}, false);
+			}
 		}
 		
 		ConnectivityInspector<GeneratedRoom, GeneratedDoor> connectivity = 
@@ -176,6 +213,7 @@ public class FloorGenerator {
 		// If the largest connected set is too small, then reject this floor
 		// and generate again.
 		if (maxConnectedSet.size() < MIN_CONNECTED_ROOM_COUNT) {
+			Gdx.app.log("", String.format("Only %d rooms, regenerating floor!", maxConnectedSet.size()));
 			return generateFloor();
 		}
 		
@@ -230,10 +268,14 @@ public class FloorGenerator {
 		}
 
 		// Log
-//		printLevel(roomMatrix);
+		printLevel(roomMatrix);
 		printStats(roomGraph, roomMatrix);
 		
 		return roomGraph;
+	}
+	
+	private static boolean isInGrid(IntVector2 v) {
+		return v.x > 0 && v.y > 0 && v.x < GRID_WIDTH && v.y < GRID_HEIGHT;
 	}
 	
 	private static int maxDoorsForRoom(GeneratedRoom room) {
@@ -244,14 +286,7 @@ public class FloorGenerator {
 		}
 	}
 	
-	private static enum GrowDirection {
-		GROW_LEFT,
-		GROW_RIGHT,
-		GROW_UP,
-		GROW_DOWN,
-	}
-	
-	public static void growRoom(final GeneratedRoom room, GeneratedRoom[][] roomMatrix) {
+	public static void growRoom(final GeneratedRoom room, final GeneratedRoom[][] roomMatrix) {
 		GrowDirection[] dirs = GrowDirection.values();
 		GrowDirection dir = dirs[MathUtils.random(dirs.length - 1)];
 		
@@ -283,112 +318,52 @@ public class FloorGenerator {
 		}
 		
 		// If the growth would cause the room to overlap with another room, abort.
-		boolean canGrow = iterateAdjacent(room, dir, roomMatrix, new RoomIterator() {
-			@Override
-			public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
-				return roomMatrix[x][y] == null;
-			}
-		}, false);
+		boolean canGrow = true;
+		AdjacentGridsIterator iter = new AdjacentGridsIterator(room, dir);
+		while(canGrow && iter.hasNext()) {
+			IntVector2 grid = iter.next();
+			canGrow = isInGrid(grid) && roomMatrix[grid.x][grid.y] == null;
+		}
 		if (!canGrow) {
 			return;
 		}
 
 		// Ok, now we can actually grow the room.
-		iterateAdjacent(room, dir, roomMatrix, new RoomIterator() {
-			@Override
-			public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
-				roomMatrix[x][y] = room;
-				return true;
-			}
-		}, false);
+		iter = new AdjacentGridsIterator(room, dir);
+		while(iter.hasNext()) {
+			IntVector2 grid = iter.next();
+			roomMatrix[grid.x][grid.y] = room;
+		}
 		room.update(newX, newY, newW, newH);
 	}
 
-	public static interface RoomIterator {
-		boolean run(int x, int y, GeneratedRoom[][]roomMatrix);
-	}
 
-	public static void removeRoom(GeneratedRoom room, GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
+
+	public static void removeRoom(GeneratedRoom room, final GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
 		roomGraph.removeVertex(room);
-		iterateContained(room, roomMatrix, new RoomIterator() {
+		iterateContained(room, new RoomIterator() {
 			@Override
-			public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
+			public boolean run(int x, int y) {
 				roomMatrix[x][y] = null;
 				return true;
 			}
 		});
 	}
 
-	public static void iterateContained(GeneratedRoom room, GeneratedRoom[][] mat, RoomIterator iter) {
+	public static interface RoomIterator {
+		boolean run(int x, int y);
+	}
+
+	public static void iterateContained(GeneratedRoom room, RoomIterator iter) {
 		for (int x = room.x; x < room.x + room.w; x++) {
 			for (int y = room.y; y < room.y + room.h; y++) {
-				iter.run(x, y, mat);
+				iter.run(x, y);
 			}
 		}
 	}
 
-	public static boolean iterateAdjacent(GeneratedRoom room, GeneratedRoom[][] mat, RoomIterator iter, boolean iterateOusideGrid) {
-		boolean retVal = true;
-		for (GrowDirection dir : GrowDirection.values()) {
-			retVal = iterateAdjacent(room, dir, mat, iter, iterateOusideGrid) && retVal;
-		}
-		return retVal;
-	}
-
-	public static boolean iterateAdjacent(GeneratedRoom room, GrowDirection dir, GeneratedRoom[][] mat, RoomIterator iter, boolean iterateOutsideGrid) {
-		boolean retVal = false;
-		switch (dir) {
-		case GROW_LEFT:
-			//
-			// ·XX
-			// ·XX
-			//
-			retVal = room.x > 0 || iterateOutsideGrid;
-			if (retVal) {
-				for (int y = room.y; y < room.y + room.h; y++) {
-					retVal = iter.run(room.x - 1, y, mat) && retVal;
-				}
-			}
-			break;
-		case GROW_RIGHT:
-			//
-			// XX·
-			// XX·
-			//
-			retVal = room.x + room.w < GRID_WIDTH  || iterateOutsideGrid;
-			if (retVal) {
-				for (int y = room.y; y < room.y + room.h; y++) {
-					retVal = iter.run(room.x + room.w, y, mat) && retVal;
-				}
-			}
-			break;
-		case GROW_UP:
-			// ··
-			// XX
-			// XX
-			//
-			retVal = room.y + room.h < GRID_HEIGHT  || iterateOutsideGrid;
-			if (retVal) {
-				for (int x = room.x; x < room.x + room.w; x++) {
-					retVal = iter.run(x, room.y + room.h, mat) && retVal;
-				}
-			}
-			break;
-		case GROW_DOWN:
-			// 
-			// XX
-			// XX
-			// ··
-			retVal = room.y > 0  || iterateOutsideGrid;
-			if (retVal) {
-				for (int x = room.x; x < room.x + room.w; x++) {
-					retVal = iter.run(x, room.y - 1, mat) && retVal;
-				}
-			}
-			break;
-		}
-		return retVal;
-	}
+	
+	
 	
 	public static void printLevel(GeneratedRoom[][] roomMatrix) {
 		String string = "-------\n";
@@ -403,34 +378,15 @@ public class FloorGenerator {
 		Gdx.app.log("", string);
 	}
 
-	public static void printStats(final Graph<GeneratedRoom, GeneratedDoor> rooms, GeneratedRoom[][] roomMatrix) {
-		final StringBuilder string = new StringBuilder("----\n");
-		for (GeneratedRoom room : rooms.vertexSet()) {
-//			string.append(room.toString() + ": ");
-			string.append(room.w + "x" + room.h + " ");
-			final Set<GeneratedDoor> doors = rooms.edgesOf(room);
-			iterateAdjacent(room, roomMatrix, new RoomIterator() {
-				@Override
-				public boolean run(int x, int y, GeneratedRoom[][] roomMatrix) {
-					boolean hasDoor = false;
-					for (GeneratedDoor door : doors) {
-						if ((door.x == x && door.y == y) ||
-								(door.dir == DoorDirection.DOOR_UP && door.x == x && door.y+1 == y) ||
-								(door.dir == DoorDirection.DOOR_RIGHT && door.x+1 == x && door.y== y)) {
-							hasDoor = true;
-						}
-					}
-					if (hasDoor) {
-							string.append("d");
-					} else {
-							string.append("o");
-					}
-					return true;
-				}
-			}, true);
-			string.append("\n");
-		}
-		Gdx.app.log("", string.toString());
+	public static void printStats(final RoomGraph rooms, final GeneratedRoom[][] roomMatrix) {
+ 		final StringBuilder string = new StringBuilder("----\n");
+ 		for (GeneratedRoom room : rooms.vertexSet()) {
+ 			string.append(room.toString() + ": ");
+ 			string.append(room.w + "x" + room.h + " ");
+ 			string.append(room.doorString(rooms));
+ 			string.append("\n");
+ 		}
+ 		Gdx.app.log("", string.toString());
 	}
 
 }
