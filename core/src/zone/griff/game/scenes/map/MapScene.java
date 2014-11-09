@@ -2,11 +2,11 @@ package zone.griff.game.scenes.map;
 
 import static zone.griff.game.scenes.box2d.B2DVars.PPM;
 import zone.griff.game.SceneManager;
-import zone.griff.game.levelgeneration.FloorGenerator;
 import zone.griff.game.levelgeneration.FloorGenerator.RoomGraph;
 import zone.griff.game.levelgeneration.GeneratedDoor;
 import zone.griff.game.levelgeneration.GeneratedDoor.DoorDirection;
 import zone.griff.game.levelgeneration.GeneratedRoom;
+import zone.griff.game.levelgeneration.RoomGrowingFloorGenerator;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.util.Box2DHelper;
 import zone.griff.game.util.PaletteManager;
@@ -38,7 +38,7 @@ public class MapScene extends Scene {
 
 	public MapScene(SceneManager game) {
 		super(game);
-		this.roomGraph = FloorGenerator.generateFloor();
+		this.roomGraph = RoomGrowingFloorGenerator.getInstance().generateFloor();
 		this.camera = new OrthographicCamera();
 		this.constructSprites();
 	}
