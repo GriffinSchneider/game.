@@ -10,6 +10,7 @@ public class RoomPickingFloorGenerator extends FloorGenerator {
      return instance;
   }
 	
+	@Override
 	protected RoomGraph generateFloor(GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
 		// TODO
 		return null;

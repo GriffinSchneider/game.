@@ -32,9 +32,21 @@ public abstract class FloorGenerator {
 		return generateFloor(roomMatrix, roomGraph);
 	}
 
-	protected abstract RoomGraph generateFloor(GeneratedRoom[][] roomMatrix, RoomGraph roomGraph);
+	protected abstract RoomGraph generateFloor(GeneratedRoom[][] roomMatrix, RoomGraph roomGraph);	
+	
+	protected static boolean isInGrid(IntVector2 v) {
+		return v.x > 0 && v.y > 0 && v.x < GRID_WIDTH && v.y < GRID_HEIGHT;
+	}
+	
+	protected static int maxDoorsForRoom(GeneratedRoom room) {
+		if (room.h() + room.w() > 4) {
+			return 3;
+		} else {
+			return 2;
+		}
+	}
 
-	public void removeRoom(GeneratedRoom room, final GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
+	protected void removeRoom(GeneratedRoom room, final GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
 		roomGraph.removeVertex(room);
 		iterateContained(room, new RoomIterator() {
 			@Override
@@ -45,11 +57,11 @@ public abstract class FloorGenerator {
 		});
 	}
 
-	public interface RoomIterator {
+	protected interface RoomIterator {
 		boolean run(int x, int y);
 	}
 
-	public void iterateContained(GeneratedRoom room, RoomIterator iter) {
+	protected void iterateContained(GeneratedRoom room, RoomIterator iter) {
 		for (int x = room.x(); x < room.x() + room.w(); x++) {
 			for (int y = room.y(); y < room.y() + room.h(); y++) {
 				iter.run(x, y);
@@ -57,7 +69,7 @@ public abstract class FloorGenerator {
 		}
 	}
 	
-	public void printLevel(GeneratedRoom[][] roomMatrix) {
+	protected void printLevel(GeneratedRoom[][] roomMatrix) {
 		String string = "-------\n";
 		for (int y = roomMatrix[0].length - 1; y >= 0; y--) {
 			for (int x = 0; x < roomMatrix.length; x++) {
@@ -70,7 +82,7 @@ public abstract class FloorGenerator {
 		Gdx.app.log("", string);
 	}
 
-	public void printStats(final RoomGraph rooms, final GeneratedRoom[][] roomMatrix) {
+	protected void printStats(final RoomGraph rooms, final GeneratedRoom[][] roomMatrix) {
  		final StringBuilder string = new StringBuilder("----\n");
  		for (GeneratedRoom room : rooms.vertexSet()) {
  			string.append(room.toString() + ": ");

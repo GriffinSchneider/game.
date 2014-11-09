@@ -25,6 +25,7 @@ public class RoomGrowingFloorGenerator extends FloorGenerator {
 	static final int MIN_CONNECTED_ROOM_COUNT = 40;
 	static final int GROW_ITERATIONS = 40;
 	
+	@Override
 	protected RoomGraph generateFloor(GeneratedRoom[][] roomMatrix, RoomGraph roomGraph) {
 //		MathUtils.random = new Random(420);
 
@@ -161,18 +162,6 @@ public class RoomGrowingFloorGenerator extends FloorGenerator {
 		printStats(roomGraph, roomMatrix);
 		
 		return roomGraph;
-	}
-	
-	private static boolean isInGrid(IntVector2 v) {
-		return v.x > 0 && v.y > 0 && v.x < GRID_WIDTH && v.y < GRID_HEIGHT;
-	}
-	
-	private static int maxDoorsForRoom(GeneratedRoom room) {
-		if (room.h() + room.w() > 4) {
-			return 3;
-		} else {
-			return 2;
-		}
 	}
 	
 	public static void growRoom(final GeneratedRoom room, final GeneratedRoom[][] roomMatrix) {
