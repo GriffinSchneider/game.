@@ -3,6 +3,7 @@ package zone.griff.game;
 import java.util.Stack;
 
 import zone.griff.game.scenes.Scene;
+import zone.griff.game.scenes.box2d.Box2dScene;
 import zone.griff.game.scenes.map.MapScene;
 import zone.griff.game.util.PaletteManager;
 import zone.griff.game.util.ShaderManager;
@@ -53,8 +54,8 @@ public class SceneManager implements ApplicationListener {
 		
 		didStartup = true;
 //		this.pushState(new ShaderScene(this));
-//		this.pushState(new Box2dScene(this));
-		this.pushState(new MapScene(this));
+		this.pushState(new Box2dScene(this));
+//		this.pushState(new MapScene(this));
 	}
 
 	@Override

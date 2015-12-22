@@ -6,6 +6,8 @@ public class GeneratedDoor extends DefaultEdge {
 	
 	public static enum DoorDirection {
 		DOOR_UP,
+		DOOR_DOWN,
+		DOOR_LEFT,
 		DOOR_RIGHT
 	}
 
@@ -28,10 +30,12 @@ public class GeneratedDoor extends DefaultEdge {
 	
 	// Is the given grid square one of the squares linked by this door?
 	public boolean overlapsGridPosition(IntVector2 grid) {
-		return 
-				(this.x == grid.x && this.y == grid.y) ||
-				(this.dir == DoorDirection.DOOR_UP && this.x == grid.x && this.y+1 == grid.y) ||
-				(this.dir == DoorDirection.DOOR_RIGHT && this.x+1 == grid.x && this.y == grid.y);
-	}
-	
+    return
+        (this.x == grid.x && this.y == grid.y) ||
+        (this.dir == DoorDirection.DOOR_UP    && this.x   == grid.x && this.y+1 == grid.y) ||
+        (this.dir == DoorDirection.DOOR_DOWN  && this.x   == grid.x && this.y-1 == grid.y) ||
+        (this.dir == DoorDirection.DOOR_LEFT  && this.x-1 == grid.x && this.y   == grid.y) ||
+        (this.dir == DoorDirection.DOOR_RIGHT && this.x+1 == grid.x && this.y   == grid.y);
+  }
+
 }

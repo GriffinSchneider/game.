@@ -67,4 +67,10 @@ public class AdjacentGridsIterator implements Iterator<IntVector2> {
   public boolean hasNext() {
 		return index < numAdjacent;
   }
+
+	@Override
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
+
 }

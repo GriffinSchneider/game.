@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
 
 import zone.griff.game.levelgeneration.FloorGenerator.GrowDirection;
 
+import javax.naming.OperationNotSupportedException;
+
 // Adjacent squares are ordered like:
 //
 //    7 8
@@ -27,9 +29,9 @@ public  class AllAdjacentGridsIterator implements Iterator<IntVector2> {
 		this.numAdjacent = room.w()*2 + room.h()*2;
 		
 		this.down = new AdjacentGridsIterator(room, GrowDirection.GROW_DOWN);
-		this.up = new AdjacentGridsIterator(room, GrowDirection.GROW_UP);
 		this.left = new AdjacentGridsIterator(room, GrowDirection.GROW_LEFT);
 		this.right = new AdjacentGridsIterator(room, GrowDirection.GROW_RIGHT);
+		this.up = new AdjacentGridsIterator(room, GrowDirection.GROW_UP);
 	}
 
   @Override
@@ -57,4 +59,10 @@ public  class AllAdjacentGridsIterator implements Iterator<IntVector2> {
   public boolean hasNext() {
 		return index < numAdjacent;
   }
+
+	@Override
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
+
 }
