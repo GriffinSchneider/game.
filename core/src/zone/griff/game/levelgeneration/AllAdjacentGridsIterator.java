@@ -28,10 +28,10 @@ public  class AllAdjacentGridsIterator implements Iterator<IntVector2> {
 		this.room = room;
 		this.numAdjacent = room.w()*2 + room.h()*2;
 		
-		this.down = new AdjacentGridsIterator(room, GrowDirection.GROW_DOWN);
-		this.left = new AdjacentGridsIterator(room, GrowDirection.GROW_LEFT);
+		this.down  = new AdjacentGridsIterator(room, GrowDirection.GROW_DOWN);
+		this.left  = new AdjacentGridsIterator(room, GrowDirection.GROW_LEFT);
 		this.right = new AdjacentGridsIterator(room, GrowDirection.GROW_RIGHT);
-		this.up = new AdjacentGridsIterator(room, GrowDirection.GROW_UP);
+		this.up    = new AdjacentGridsIterator(room, GrowDirection.GROW_UP);
 	}
 
   @Override

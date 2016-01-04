@@ -6,7 +6,6 @@ import zone.griff.game.levelgeneration.FloorGenerator.RoomGraph;
 import zone.griff.game.levelgeneration.GeneratedDoor;
 import zone.griff.game.levelgeneration.GeneratedDoor.DoorDirection;
 import zone.griff.game.levelgeneration.GeneratedRoom;
-import zone.griff.game.levelgeneration.RoomGrowingFloorGenerator;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.util.Box2DHelper;
 import zone.griff.game.util.PaletteManager;
@@ -38,7 +37,8 @@ public class MapScene extends Scene {
 
 	public MapScene(SceneManager game) {
 		super(game);
-		this.roomGraph = RoomGrowingFloorGenerator.getInstance().generateFloor();
+		this.roomGraph = null; // TODO
+//		this.roomGraph = RoomGrowingFloorGenerator.getInstance().generateFloor();
 		this.camera = new OrthographicCamera();
 		this.constructSprites();
 	}

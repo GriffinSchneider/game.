@@ -2,6 +2,7 @@ package zone.griff.game;
 
 import java.util.Stack;
 
+import zone.griff.game.entities.DoesItWork;
 import zone.griff.game.scenes.Scene;
 import zone.griff.game.scenes.box2d.Box2dScene;
 import zone.griff.game.scenes.map.MapScene;
@@ -49,13 +50,16 @@ public class SceneManager implements ApplicationListener {
 		if (didStartup) {
 			return;
 		}
+
+		DoesItWork diw = new DoesItWork();
+		Gdx.app.log("sdf", diw.thing());
 		
 		GL20Profiler.enable();
 		
 		didStartup = true;
 //		this.pushState(new ShaderScene(this));
-		this.pushState(new Box2dScene(this));
-//		this.pushState(new MapScene(this));
+//		this.pushState(new Box2dScene(this));
+		this.pushState(new MapScene(this));
 	}
 
 	@Override
